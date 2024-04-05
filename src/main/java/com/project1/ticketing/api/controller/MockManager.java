@@ -11,40 +11,40 @@ import java.util.*;
 public class MockManager {
 
     Map<Long, Map<String, Long>> waitQueue = new HashMap<>(); // 콘서트별로 queue를 따로 둔다.
-    Map<Long, Long> waitingNumMap = new HashMap<>();
+    Map<Long, Integer> waitingNumMap = new HashMap<>();
     Map<Long, List<String>> concertTimeMap; // TODO: ConcertTime: String => ZonedDateTime
     Map<String, List<Long>> timeSeatMap;
 
 
     // put dummy data
-    List<Long> concertList = new ArrayList<>(Arrays.asList(123L, 234L, 345L, 456L, 567L));
-
-    List<String> concertTimeList = new ArrayList<>(
-            Arrays.asList(
-                    "2024-01-11-21:00:00",
-                    "2024-01-11-21:00:00",
-                    "2024-01-12-21:00:00",
-                    "2024-01-13-21:00:00",
-                    "2024-01-14-21:00:00"
-            ));
-
-    for (int i = 0; i < concertList.size(); i++) {
-        long concertId = concertList.get(i);
-        String concertTime = concertTimeList.get(i);
-        concertTimeMap.put(concertId, concertTime);
-    }
-
-    // timeSeatMap 초기화
-    for (String time: concertTimeList) {
-    timeSeatMap.put(time, new ArrayList<>());
-    // 좌석 정보를 추가하는 코드
-    // 예시로서 더미 좌석 정보를 추가합니다.
-        for (int i=0;i<50;i++){
-            timeSeatMap.get(time).add((long) i);
-        }
-
-    }
-
+//    ArrayList<Long> concertList = new ArrayList<>(Arrays.asList(123L, 234L, 345L, 456L, 567L));
+//
+//    ArrayList<String> concertTimeList = new ArrayList<>(
+//            Arrays.asList(
+//                    "2024-01-11-21:00:00",
+//                    "2024-01-11-21:00:00",
+//                    "2024-01-12-21:00:00",
+//                    "2024-01-13-21:00:00",
+//                    "2024-01-14-21:00:00"
+//            ));
+//
+//    for (int i = 0; i < concertList.size(); i++) {
+//        long concertId = concertList.get(i);
+//        String concertTime = concertTimeList.get(i);
+//        concertTimeMap.put(concertId, concertTime);
+//    }
+//
+//    // timeSeatMap 초기화
+//    for (String time: concertTimeList) {
+//    timeSeatMap.put(time, new ArrayList<>());
+//    // 좌석 정보를 추가하는 코드
+//    // 예시로서 더미 좌석 정보를 추가합니다.
+//        for (int i=0;i<50;i++){
+//            timeSeatMap.get(time).add((long) i);
+//        }
+//
+//    }
+//
 
 
 
@@ -52,9 +52,9 @@ public class MockManager {
     public TokenResponseDTO insertInQueue(long concertId, long userId, String token) {
         Map<String, Long> TokenWaitNumMap = waitQueue.getOrDefault(concertId, new HashMap<>());
 
-        long waitingNum = ++waitingNumMap.getOrDefault(concertId, 0);
+        int waitingNum = waitingNumMap.getOrDefault(concertId, 0);
 
-        TokenWaitNumMap.put(token, waitingNum);
+        waitingNumMap.put(concertId, ++waitingNum);
 
         return new TokenResponseDTO(userId, token, waitingNum);
 
@@ -79,28 +79,26 @@ public class MockManager {
         return new ConcertResponseDTO(concertId, concertTime, seatList);
     }
 
-    public ReservationResponseDTO makeReservation(ReservationRequestDTO reservationRequestDTO) {
-
-    }
-
-    public ReservationResponseDTO checkReservation(long userId) {
-    }
-
-    public PointResponseDTO chargePoint(PointRequestDTO pointRequestDTO) {
-    }
-
-    public PointResponseDTO checkPoint(PointRequestDTO pointRequestDTO) {
-    }
-
-    public PaymentResponseDTO pay(PaymentRequestDTO paymentRequestDTO) {
-    }
-
-    public PaymentResponseDTO checkPayment(long userId) {
-
-
-        return new PaymentResponseDTO()
-
-    }
+//    public ReservationResponseDTO makeReservation(ReservationRequestDTO reservationRequestDTO) {
+//
+//    }
+//
+//    public ReservationResponseDTO checkReservation(long userId) {
+//    }
+//
+//    public PointResponseDTO chargePoint(PointRequestDTO pointRequestDTO) {
+//    }
+//
+//    public PointResponseDTO checkPoint(PointRequestDTO pointRequestDTO) {
+//    }
+//
+//    public PaymentResponseDTO pay(PaymentRequestDTO paymentRequestDTO) {
+//    }
+//
+//    public PaymentResponseDTO checkPayment(long userId) {
+//
+//
+//    }
 
 
 

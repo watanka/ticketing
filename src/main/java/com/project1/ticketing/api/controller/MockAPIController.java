@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-
 public class MockAPIController {
 
     MockManager mockManager;
@@ -69,62 +68,62 @@ public class MockAPIController {
 
     }
 
-
-    /***************
-     * RESERVATION *
-     ***************/
-
-    @PostMapping("/reservation") // token_id, user_id, concert_time, seat_num
-    public ResponseEntity<ReservationResponseDTO> makeReservation(@RequestBody ReservationRequestDTO reservationRequestDTO){
-
-        ReservationResponseDTO reservationResponseDTO = mockManager.makeReservation(reservationRequestDTO);
-
-        return ResponseEntity.ok().body(reservationResponseDTO);
-
-    }
-
-    @GetMapping("/reservation/{user_id}") // user_id, concert_time, seat_num
-    public ResponseEntity<ReservationResponseDTO> checkReservation(@PathVariable(value="user_id") long userId){
-        ReservationResponseDTO reservationResponseDTO = mockManager.checkReservation(userId);
-
-        return ResponseEntity.ok().body(reservationResponseDTO);
-    }
-
-
-    /*********
-     * POINT *
-     *********/
-    @PostMapping("/points/{user_id}")
-    public ResponseEntity<PointResponseDTO> charge(@RequestBody PointRequestDTO pointRequestDTO){
-        PointResponseDTO pointResponseDTO = mockManager.chargePoint(pointRequestDTO);
-
-        return ResponseEntity.ok().body(pointResponseDTO);
-    }
-
-    @PostMapping("/points/{user_id}")
-    public ResponseEntity<PointResponseDTO> checkPoint(@RequestBody PointRequestDTO pointRequestDTO){
-        PointResponseDTO pointResponseDTO = mockManager.checkPoint(pointRequestDTO);
-
-        return ResponseEntity.ok().body(pointResponseDTO);
-    }
-
-    /***********
-     * PAYMENT *
-     ***********/
-    @PostMapping("/payment") // Query: reservation_id
-    public ResponseEntity<PaymentResponseDTO> pay(@RequestBody PaymentRequestDTO paymentRequestDTO){
-        PaymentResponseDTO paymentResponseDTO = mockManager.pay(paymentRequestDTO);
-
-        return ResponseEntity.ok().body(paymentResponseDTO);
-
-    }
-
-    @GetMapping("/payment/{user_id}") // Query: reservation_id
-    public ResponseEntity<PaymentResponseDTO> checkPayment(@PathVariable(value="user_id") long userId){
-        PaymentResponseDTO paymentResponseDTO = mockManager.checkPayment(userId);
-
-        return ResponseEntity.ok().body(paymentResponseDTO);
-
-    }
+//
+//    /***************
+//     * RESERVATION *
+//     ***************/
+//
+//    @PostMapping("/reservation") // token_id, user_id, concert_time, seat_num
+//    public ResponseEntity<ReservationResponseDTO> makeReservation(@RequestBody ReservationRequestDTO reservationRequestDTO){
+//
+//        ReservationResponseDTO reservationResponseDTO = mockManager.makeReservation(reservationRequestDTO);
+//
+//        return ResponseEntity.ok().body(reservationResponseDTO);
+//
+//    }
+//
+//    @GetMapping("/reservation/{user_id}") // user_id, concert_time, seat_num
+//    public ResponseEntity<ReservationResponseDTO> checkReservation(@PathVariable(value="user_id") long userId){
+//        ReservationResponseDTO reservationResponseDTO = mockManager.checkReservation(userId);
+//
+//        return ResponseEntity.ok().body(reservationResponseDTO);
+//    }
+//
+//
+//    /*********
+//     * POINT *
+//     *********/
+//    @PostMapping("/points/{user_id}")
+//    public ResponseEntity<PointResponseDTO> charge(@RequestBody PointRequestDTO pointRequestDTO){
+//        PointResponseDTO pointResponseDTO = mockManager.chargePoint(pointRequestDTO);
+//
+//        return ResponseEntity.ok().body(pointResponseDTO);
+//    }
+//
+//    @PostMapping("/points/{user_id}")
+//    public ResponseEntity<PointResponseDTO> checkPoint(@RequestBody PointRequestDTO pointRequestDTO){
+//        PointResponseDTO pointResponseDTO = mockManager.checkPoint(pointRequestDTO);
+//
+//        return ResponseEntity.ok().body(pointResponseDTO);
+//    }
+//
+//    /***********
+//     * PAYMENT *
+//     ***********/
+//    @PostMapping("/payment") // Query: reservation_id
+//    public ResponseEntity<PaymentResponseDTO> pay(@RequestBody PaymentRequestDTO paymentRequestDTO){
+//        PaymentResponseDTO paymentResponseDTO = mockManager.pay(paymentRequestDTO);
+//
+//        return ResponseEntity.ok().body(paymentResponseDTO);
+//
+//    }
+//
+//    @GetMapping("/payment/{user_id}") // Query: reservation_id
+//    public ResponseEntity<PaymentResponseDTO> checkPayment(@PathVariable(value="user_id") long userId){
+//        PaymentResponseDTO paymentResponseDTO = mockManager.checkPayment(userId);
+//
+//        return ResponseEntity.ok().body(paymentResponseDTO);
+//
+//    }
 
 }
