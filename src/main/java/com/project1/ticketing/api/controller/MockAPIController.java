@@ -1,12 +1,5 @@
 package com.project1.ticketing.api.controller;
-
-
-import com.project1.ticketing.api.dto.request.PaymentRequestDTO;
-import com.project1.ticketing.api.dto.request.PointRequestDTO;
-import com.project1.ticketing.api.dto.request.ReservationRequestDTO;
 import com.project1.ticketing.api.dto.response.*;
-import jakarta.servlet.http.HttpServletRequest;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
