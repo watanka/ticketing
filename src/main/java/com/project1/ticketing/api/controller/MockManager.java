@@ -4,10 +4,13 @@ import com.project1.ticketing.api.dto.request.PaymentRequestDTO;
 import com.project1.ticketing.api.dto.request.PointRequestDTO;
 import com.project1.ticketing.api.dto.request.ReservationRequestDTO;
 import com.project1.ticketing.api.dto.response.*;
+import org.springframework.stereotype.Component;
 
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
+
+@Component
 public class MockManager {
 
     Map<Long, Map<String, Long>> waitQueue = new HashMap<>(); // 콘서트별로 queue를 따로 둔다.
