@@ -29,17 +29,17 @@ public class ConcertService implements IConcertService{ // 우선 서비스로 �
 
     // 콘서트 예약 가능 날짜 조회
 
-    private List<Concert> getConcert(){
+    public List<Concert> getConcert(){
         return concertRepository.getAll();
     }
-    private List<ConcertTime> getConcertDate(long concertId){
+    public List<ConcertTime> getConcertTime(long concertId){
         return concertTimeRepository.getAllByConcertId(concertId);
     }
 
 
     // 콘서트 예약 가능 좌석 조회
-    private Optional<Seat> getAllSeat(long concertId, long concertDateId){
-        return seatRepository.getAllByConcertAndConcertDate(concertId, concertDateId);
+    public List<Seat> getAllSeat(long concertId, long concertDateId){
+        return seatRepository.getAllByConcertAndConcertTime(concertId, concertDateId);
     }
 
 }
