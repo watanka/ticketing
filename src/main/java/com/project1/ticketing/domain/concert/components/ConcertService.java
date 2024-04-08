@@ -11,6 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class ConcertService { // 우선 서비스로 정의하고, 필요하면 기능 나누기
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Optional;
+
+public class ConcertService implements IConcertService{ // 우선 서비스로 정의하고, 필요하면 기능 나누기
 
     ConcertRepository concertRepository;
     ConcertTimeRepository concertTimeRepository;
