@@ -26,16 +26,16 @@ public class MockAPIController {
         return ResponseEntity.ok().body(tokenResponseDTO);
     }
 
-    @GetMapping("/queue/{concert_id}")
-    public ResponseEntity<TokenResponseDTO> checkWaitNum(@PathVariable(value="concert_id") long concertId, @RequestParam(value="user_id") long userId){
-
-        //TODO: 유저ID로 토큰찾는 로직이 필요함
-        String token = "AAAA-BBBB-CCCC-DDDD";
-
-        TokenResponseDTO tokenResponseDTO = mockManager.getWaitNumByToken(concertId, userId, token);
-
-        return ResponseEntity.ok().body(tokenResponseDTO);
-    }
+//    @GetMapping("/queue/{concert_id}")
+//    public ResponseEntity<TokenResponseDTO> checkWaitNum(@PathVariable(value="concert_id") long concertId, @RequestParam(value="user_id") long userId){
+//
+//        //TODO: 유저ID로 토큰찾는 로직이 필요함
+//        String token = "AAAA-BBBB-CCCC-DDDD";
+//
+//        TokenResponseDTO tokenResponseDTO = mockManager.getWaitNumByToken(concertId, userId, token);
+//
+//        return ResponseEntity.ok().body(tokenResponseDTO);
+//    }
 
     /***********
      * CONCERT *
@@ -50,16 +50,16 @@ public class MockAPIController {
 
     }
 
-    @GetMapping("/concerts/{concert_id}")
-    public ResponseEntity<ConcertResponseDTO> getAvailableSeat(
-            @PathVariable(value="concert_id") long concertId,
-            @RequestParam(value="concert_time") String concertTime){
-
-        ConcertResponseDTO concertResponseDTO = mockManager.getAvailableSeat(concertId, concertTime);
-
-        return ResponseEntity.ok().body(concertResponseDTO);
-
-    }
+//    @GetMapping("/concerts/{concert_id}")
+//    public ResponseEntity<ConcertResponseDTO> getAvailableSeat(
+//            @PathVariable(value="concert_id") long concertId,
+//            @RequestParam(value="concert_time") String concertTime){
+//
+//        ConcertResponseDTO concertResponseDTO = mockManager.getAvailableSeat(concertId, concertTime);
+//
+//        return ResponseEntity.ok().body(concertResponseDTO);
+//
+//    }
 
 //
 //    /***************
