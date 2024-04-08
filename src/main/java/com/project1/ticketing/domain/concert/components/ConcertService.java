@@ -1,6 +1,5 @@
 package com.project1.ticketing.domain.concert.components;
 
-import com.project1.ticketing.api.dto.response.ConcertResponseDTO;
 import com.project1.ticketing.domain.concert.models.Concert;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
@@ -8,6 +7,10 @@ import com.project1.ticketing.domain.concert.repository.ConcertRepository;
 import com.project1.ticketing.domain.concert.repository.ConcertTimeRepository;
 import com.project1.ticketing.domain.concert.repository.SeatRepository;
 
+import java.util.List;
+import java.util.Optional;
+
+public class ConcertService { // 우선 서비스로 정의하고, 필요하면 기능 나누기
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -24,19 +27,19 @@ public class ConcertService implements IConcertService{ // 우선 서비스로 �
         this.seatRepository = seatRepository;
     }
 
-    @Override
-    public List<ConcertResponseDTO> getConcert() {
-        return null;
+    // 콘서트 예약 가능 날짜 조회
+
+    public List<Concert> getConcert(){
+        return concertRepository.getAll();
+    }
+    public List<ConcertTime> getConcertTime(long concertId){
+        return concertTimeRepository.getAllByConcertId(concertId);
     }
 
-    @Override
-    public ConcertResponseDTO getConcertDate(long concertId) {
-        return null;
-    }
 
-    @Override
-    public List<ConcertResponseDTO> getAllSeat(long concertId, long concertTimeId) {
-        return null;
+    // 콘서트 예약 가능 좌석 조회
+    public List<Seat> getAllSeat(long concertId, long concertDateId){
+        return seatRepository.getAllByConcertAndConcertTime(concertId, concertDateId);
     }
 
 }
