@@ -1,9 +1,10 @@
 package com.project1.ticketing;
 
-import org.springframework.stereotype.Service;
+import com.project1.ticketing.domain.token.models.TokenStatus;
 
 public class Token{
     private String uuid;
+    private String tokenId;
     private TokenStatus status;
     private long waitingNum;
 
@@ -12,6 +13,8 @@ public class Token{
         this.uuid = uuid;
         this.status = TokenStatus.WAIT;
     }
+
+
 
     public Token(String uuid, TokenStatus status, long waitingNum){
         this.uuid = uuid;
