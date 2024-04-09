@@ -87,6 +87,34 @@ public class MockAPIController {
 
     }
 
+    @GetMapping("/reservations/users/{user_id}") // user_id, concert_time, seat_num
+    public ResponseEntity<ReservationResponseDTO> checkReservation(@PathVariable(value="user_id") long userId){
+        ReservationResponseDTO reservationResponseDTO = mockManager.checkReservation(userId);
+
+        return ResponseEntity.ok().body(reservationResponseDTO);
+    }
+
+
+    /*********
+     * POINT *
+     *********/
+    @PostMapping("/points")
+    public ResponseEntity<PointResponseDTO> updpatePoint(@RequestBody PointRequestDTO pointRequestDTO){
+        PointResponseDTO pointResponseDTO = mockManager.updatePoint(pointRequestDTO);
+
+        return ResponseEntity.ok().body(pointResponseDTO);
+    }
+
+    @GetMapping("/points/{user_id}")
+    public ResponseEntity<PointResponseDTO> checkPoint(@PathVariable(value="user_id") long userId){
+        PointResponseDTO pointResponseDTO = mockManager.checkPoint(userId);
+
+        return ResponseEntity.ok().body(pointResponseDTO);
+    }
+
+    /***********
+     * PAYMENT *
+     ***********/
 //    @GetMapping("/reservation/{user_id}") // user_id, concert_time, seat_num
 //    public ResponseEntity<ReservationResponseDTO> checkReservation(@PathVariable(value="user_id") long userId){
 //        ReservationResponseDTO reservationResponseDTO = mockManager.checkReservation(userId);
