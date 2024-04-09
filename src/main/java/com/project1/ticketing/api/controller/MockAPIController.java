@@ -1,8 +1,9 @@
 package com.project1.ticketing.api.controller;
+import com.project1.ticketing.api.dto.request.PaymentRequestDTO;
+import com.project1.ticketing.api.dto.request.PointRequestDTO;
 import com.project1.ticketing.api.dto.request.ReservationRequestDTO;
 import com.project1.ticketing.api.dto.request.TokenRequestDTO;
 import com.project1.ticketing.api.dto.response.*;
-import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,6 @@ public class MockAPIController {
     public MockAPIController(MockManager mockManager) {
         this.mockManager = mockManager;
     }
-
-    @PostConstruct
-    public void init(){
-        mockManager.initialize();
-    }
-
 
     /*********
      * TOKEN *
@@ -58,7 +53,7 @@ public class MockAPIController {
          return mockManager.getConcertList();
     }
 
-    @GetMapping("/concerts/{concert_id}/concert_times")
+    @GetMapping("/concerts/{concert_id}/concert-times")
     public ResponseEntity<ConcertResponseDTO> getAvailableConcertTime(@PathVariable(value="concert_id") long concertId){
 
         ConcertResponseDTO concertResponseDTO = mockManager.getAvailableConcertTime(concertId);
@@ -67,7 +62,7 @@ public class MockAPIController {
 
     }
 
-    @GetMapping("/concerts/{concert_id}/concert_times/{concert_time}/seats")
+    @GetMapping("/concerts/{concert_id}/concert-times/{concert_time}/seats")
     public ResponseEntity<ConcertResponseDTO> getAvailableSeat(
             @PathVariable(value="concert_id") long concertId,
             @PathVariable(value="concert_time") String concertTime){
@@ -127,7 +122,7 @@ public class MockAPIController {
 //        return ResponseEntity.ok().body(paymentResponseDTO);
 //
 //    }
-//
+
 //    @GetMapping("/payment/{user_id}") // Query: reservation_id
 //    public ResponseEntity<PaymentResponseDTO> checkPayment(@PathVariable(value="user_id") long userId){
 //        PaymentResponseDTO paymentResponseDTO = mockManager.checkPayment(userId);
