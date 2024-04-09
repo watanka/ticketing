@@ -1,5 +1,7 @@
 package com.project1.ticketing.api.controller;
+import com.project1.ticketing.api.dto.request.TokenRequestDTO;
 import com.project1.ticketing.api.dto.response.*;
+import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,36 +14,48 @@ public class MockAPIController {
         this.mockManager = mockManager;
     }
 
+    @PostConstruct
+    public void init(){
+        mockManager.initialize();
+    }
+
+
     /*********
      * TOKEN *
      *********/
 
-    @PostMapping("/queue/{concert_id}")
-    public ResponseEntity<TokenResponseDTO> getInLine(@PathVariable(value="concert_id") long concertId, @RequestParam(value="user_id") long userId){
+    @PostMapping("/tokens/concerts/{concert_id}")
+    public ResponseEntity<TokenResponseDTO> getInLine(@PathVariable(value="concert_id") long concertId,
+                                                      @RequestBody TokenRequestDTO tokenRequestDTO){
+        System.out.println("concertId: " + concertId);
+        String uuid = tokenRequestDTO.getUuid();
 
-        String token = "AAAA-BBBB-CCCC-DDDD"; // 유저 ID에 따라토큰 임시 부여. TODO: userId와 토큰 맵핑.
 
-        TokenResponseDTO tokenResponseDTO = mockManager.insertInQueue(concertId, userId, token);
+        TokenResponseDTO tokenResponseDTO = mockManager.insertInQueue(concertId, uuid);
 
         return ResponseEntity.ok().body(tokenResponseDTO);
     }
 
-//    @GetMapping("/queue/{concert_id}")
-//    public ResponseEntity<TokenResponseDTO> checkWaitNum(@PathVariable(value="concert_id") long concertId, @RequestParam(value="user_id") long userId){
-//
-//        //TODO: 유저ID로 토큰찾는 로직이 필요함
-//        String token = "AAAA-BBBB-CCCC-DDDD";
-//
-//        TokenResponseDTO tokenResponseDTO = mockManager.getWaitNumByToken(concertId, userId, token);
-//
-//        return ResponseEntity.ok().body(tokenResponseDTO);
-//    }
+    @GetMapping("/tokens/concerts/{concert_id}")
+    public ResponseEntity<TokenResponseDTO> checkWaitNum(@PathVariable(value="concert_id") long concertId,
+                                                         @RequestHeader("Authorization") String token) throws Exception {
+
+        //TODO: 유저ID로 토큰찾는 로직이 필요함
+
+        TokenResponseDTO tokenResponseDTO = mockManager.getWaitNumByToken(concertId, token);
+        return ResponseEntity.ok().body(tokenResponseDTO);
+    }
 
     /***********
      * CONCERT *
      ***********/
 
-    @GetMapping("/concerts/{concert_id}")
+    @GetMapping("/concerts")
+    public ConcertResponseDTO getConcertList(){
+         return mockManager.getConcertList();
+    }
+
+    @GetMapping("/concerts/{concert_id}/concert_times")
     public ResponseEntity<ConcertResponseDTO> getAvailableConcertTime(@PathVariable(value="concert_id") long concertId){
 
         ConcertResponseDTO concertResponseDTO = mockManager.getAvailableConcertTime(concertId);
@@ -50,16 +64,16 @@ public class MockAPIController {
 
     }
 
-//    @GetMapping("/concerts/{concert_id}")
-//    public ResponseEntity<ConcertResponseDTO> getAvailableSeat(
-//            @PathVariable(value="concert_id") long concertId,
-//            @RequestParam(value="concert_time") String concertTime){
-//
-//        ConcertResponseDTO concertResponseDTO = mockManager.getAvailableSeat(concertId, concertTime);
-//
-//        return ResponseEntity.ok().body(concertResponseDTO);
-//
-//    }
+    @GetMapping("/concerts/{concert_id}/concert_times/{concert_times}/seats")
+    public ResponseEntity<ConcertResponseDTO> getAvailableSeat(
+            @PathVariable(value="concert_id") long concertId,
+            @PathVariable(value="concert_time") String concertTime){
+
+        ConcertResponseDTO concertResponseDTO = mockManager.getAvailableSeat(concertId, concertTime);
+
+        return ResponseEntity.ok().body(concertResponseDTO);
+
+    }
 
 //
 //    /***************
