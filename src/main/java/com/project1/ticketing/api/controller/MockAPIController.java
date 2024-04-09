@@ -1,9 +1,12 @@
 package com.project1.ticketing.api.controller;
+import com.project1.ticketing.api.dto.request.ReservationRequestDTO;
 import com.project1.ticketing.api.dto.request.TokenRequestDTO;
 import com.project1.ticketing.api.dto.response.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+//TODO: 토큰인증, 예외처리
 
 @RestController
 public class MockAPIController {
@@ -64,7 +67,7 @@ public class MockAPIController {
 
     }
 
-    @GetMapping("/concerts/{concert_id}/concert_times/{concert_times}/seats")
+    @GetMapping("/concerts/{concert_id}/concert_times/{concert_time}/seats")
     public ResponseEntity<ConcertResponseDTO> getAvailableSeat(
             @PathVariable(value="concert_id") long concertId,
             @PathVariable(value="concert_time") String concertTime){
@@ -75,20 +78,20 @@ public class MockAPIController {
 
     }
 
-//
-//    /***************
-//     * RESERVATION *
-//     ***************/
-//
-//    @PostMapping("/reservation") // token_id, user_id, concert_time, seat_num
-//    public ResponseEntity<ReservationResponseDTO> makeReservation(@RequestBody ReservationRequestDTO reservationRequestDTO){
-//
-//        ReservationResponseDTO reservationResponseDTO = mockManager.makeReservation(reservationRequestDTO);
-//
-//        return ResponseEntity.ok().body(reservationResponseDTO);
-//
-//    }
-//
+
+    /***************
+     * RESERVATION *
+     ***************/
+
+    @PostMapping("/reservations") // token_id, user_id, concert_time, seat_num
+    public ResponseEntity<ReservationResponseDTO> makeReservation(@RequestBody ReservationRequestDTO reservationRequestDTO){
+
+        ReservationResponseDTO reservationResponseDTO = mockManager.makeReservation(reservationRequestDTO);
+
+        return ResponseEntity.ok().body(reservationResponseDTO);
+
+    }
+
 //    @GetMapping("/reservation/{user_id}") // user_id, concert_time, seat_num
 //    public ResponseEntity<ReservationResponseDTO> checkReservation(@PathVariable(value="user_id") long userId){
 //        ReservationResponseDTO reservationResponseDTO = mockManager.checkReservation(userId);

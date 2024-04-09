@@ -1,5 +1,6 @@
 package com.project1.ticketing.api.controller;
 
+import com.project1.ticketing.api.dto.request.ReservationRequestDTO;
 import com.project1.ticketing.api.dto.response.*;
 import com.project1.ticketing.domain.token.models.Token;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ public class MockManager {
 
     Map<String, List<Integer>> timeSeatMap = new HashMap<>();
 
+    Map<>
 
     // put dummy data
 //    ArrayList<Long> concertList = new ArrayList<>(Arrays.asList(123L, 234L, 345L, 456L, 567L));
@@ -114,10 +116,12 @@ public class MockManager {
 
 
 
-//    public ReservationResponseDTO makeReservation(ReservationRequestDTO reservationRequestDTO) {
-//
-//    }
-//
+    public ReservationResponseDTO makeReservation(ReservationRequestDTO reservationRequestDTO) {
+
+        return new ReservationResponseDTO();
+
+    }
+
 //    public ReservationResponseDTO checkReservation(long userId) {
 //    }
 //
