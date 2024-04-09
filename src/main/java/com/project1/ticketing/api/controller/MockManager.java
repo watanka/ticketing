@@ -1,10 +1,17 @@
 package com.project1.ticketing.api.controller;
 
+import com.project1.ticketing.api.dto.request.PaymentRequestDTO;
+import com.project1.ticketing.api.dto.request.PointRequestDTO;
 import com.project1.ticketing.api.dto.request.ReservationRequestDTO;
 import com.project1.ticketing.api.dto.response.*;
+import com.project1.ticketing.domain.point.models.PointType;
+import com.project1.ticketing.domain.reservation.models.Reservation;
+import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.token.models.Token;
 import org.springframework.stereotype.Component;
 
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 
@@ -21,37 +28,9 @@ public class MockManager {
 
     Map<String, List<Integer>> timeSeatMap = new HashMap<>();
 
-    Map<>
-
-    // put dummy data
-//    ArrayList<Long> concertList = new ArrayList<>(Arrays.asList(123L, 234L, 345L, 456L, 567L));
-//
-//    ArrayList<String> concertTimeList = new ArrayList<>(
-//            Arrays.asList(
-//                    "2024-01-11-21:00:00",
-//                    "2024-01-11-21:00:00",
-//                    "2024-01-12-21:00:00",
-//                    "2024-01-13-21:00:00",
-//                    "2024-01-14-21:00:00"
-//            ));
-//
-//    for (int i = 0; i < concertList.size(); i++) {
-//        long concertId = concertList.get(i);
-//        String concertTime = concertTimeList.get(i);
-//        concertTimeMap.put(concertId, concertTime);
-//    }
-//
-//    // timeSeatMap 초기화
-//    for (String time: concertTimeList) {
-//    timeSeatMap.put(time, new ArrayList<>());
-//    // 좌석 정보를 추가하는 코드
-//    // 예시로서 더미 좌석 정보를 추가합니다.
-//        for (int i=0;i<50;i++){
-//            timeSeatMap.get(time).add((long) i);
-//        }
-//
-//    }
-//
+    long reservationNum = 0L;
+    Map<Long, List<Reservation>> reservationMap = new HashMap<>();
+    Map<Long, Long> pointMap = new HashMap<>();
 
 
     public void initialize(){
@@ -118,7 +97,7 @@ public class MockManager {
 
     public ReservationResponseDTO makeReservation(ReservationRequestDTO reservationRequestDTO) {
 
-        return new ReservationResponseDTO();
+
 
     }
 
@@ -134,6 +113,12 @@ public class MockManager {
 //    public PaymentResponseDTO pay(PaymentRequestDTO paymentRequestDTO) {
 //    }
 //
+//        } else {
+//                System.out.println("Not Enough Money. redirect to /points 충전.");
+//            }
+//        return new PaymentResponseDTO()
+//    }
+
 //    public PaymentResponseDTO checkPayment(long userId) {
 //
 //
