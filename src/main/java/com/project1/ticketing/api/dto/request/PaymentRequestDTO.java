@@ -8,14 +8,10 @@ import lombok.Setter;
 @Setter
 public class PaymentRequestDTO {
     private long userId;
-    private String token;
-    private String concertTime;
-    private long seatId;
+    private long reservationId;
 
-    public PaymentRequestDTO(long userId, String token, String concertTime, long seatId) {
+    public PaymentRequestDTO(long userId, long reservationId) {
         this.userId = userId;
-        this.token = token;
-        this.concertTime = concertTime;
-        this.seatId = seatId;
+        this.reservationId = reservationId;
     }
 }
