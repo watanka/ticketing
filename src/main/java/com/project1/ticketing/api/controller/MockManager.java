@@ -96,22 +96,84 @@ public class MockManager {
 
 
     public ReservationResponseDTO makeReservation(ReservationRequestDTO reservationRequestDTO) {
+        long userId = reservationRequestDTO.getUserId();
+
+        Reservation reservation = new Reservation(
+                ++reservationNum,
+                userId,
+                reservationRequestDTO.getConcertTime(),
+                reservationRequestDTO.getSeatId(),
+                50000, // TODO: need price table for each concertTime
+                ReservationStatus.TEMPORARY_RESERVED,
+                ZonedDateTime.now().plus(5, ChronoUnit.MINUTES)
+
+                );
+
+        List<Reservation> reservationList = reservationMap.getOrDefault(userId, new ArrayList<>());
+        reservationList.add(reservation);
+        reservationMap.put(userId, reservationList);
+
+        return new ReservationResponseDTO(
+                userId,
+                List.of(reservation)
+        );
+
+    }
+
+    public ReservationResponseDTO checkReservation(long userId) {
+        List<Reservation> reservationList = reservationMap.get(userId);
+
+        return new ReservationResponseDTO(userId, reservationList);
+    }
+
+    public PointResponseDTO updatePoint(PointRequestDTO pointRequestDTO) {
+        long userId = pointRequestDTO.getUserId();
+        long amount = pointRequestDTO.getAmount();
+        PointType pointType = pointRequestDTO.getPointType();
+
+        long remainingPoint = pointMap.getOrDefault(userId, 0L);
+
+        if (pointType.equals(PointType.CHARGE)){
+            remainingPoint += amount;
+        }else {
+            //TODO: 사용금액보다 잔액이 부족할 때 에러 발생.
+            remainingPoint -= amount;
+        }
+
+        pointMap.put(userId, remainingPoint);
+
+        return new PointResponseDTO(userId, remainingPoint);
+
 
 
 
     }
 
-//    public ReservationResponseDTO checkReservation(long userId) {
-//    }
-//
-//    public PointResponseDTO chargePoint(PointRequestDTO pointRequestDTO) {
-//    }
-//
-//    public PointResponseDTO checkPoint(PointRequestDTO pointRequestDTO) {
-//    }
-//
+    public PointResponseDTO checkPoint(long userId) {
+        long point = pointMap.getOrDefault(userId, 0L);
+
+        return new PointResponseDTO(userId, point);
+    }
+
 //    public PaymentResponseDTO pay(PaymentRequestDTO paymentRequestDTO) {
-//    }
+//        long userId = paymentRequestDTO.getUserId();
+//        long amount = pointMap.get(userId);
+//
+//        long reservationId = paymentRequestDTO.getReservationId();
+//
+//        List<Reservation> reservationList = reservationMap.get(reservationId);
+//
+//        Optional<Reservation> reservation = reservationList.stream().filter(
+//                res -> res.getId() == reservationId
+//        ).findAny();
+//
+//        if (reservation.isEmpty()) {
+//            System.out.println("could not find reservation id " + reservationId);
+//        }
+//            if (amount > reservation.get().getPrice()){
+//                amount -= reservation.get().getPrice();
+//                reservation.get().setStatus(ReservationStatus.REGISTERED);
+//                reservationMap.put(reservationId, )
 //
 //        } else {
 //                System.out.println("Not Enough Money. redirect to /points 충전.");
