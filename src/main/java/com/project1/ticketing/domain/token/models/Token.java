@@ -10,7 +10,6 @@ import java.util.UUID;
 @Setter
 public class Token{
     private String uuid;
-    private String token;
     private String tokenId;
     private TokenStatus status;
     private long waitingNum;
