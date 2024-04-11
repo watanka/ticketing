@@ -1,4 +1,4 @@
-package com.project1.ticketing.concert;
+package com.project1.ticketing.domain.concert.infrastructure;
 
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.repository.IConcertTimeRepository;

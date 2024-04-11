@@ -1,11 +1,10 @@
-package com.project1.ticketing.concert;
+package com.project1.ticketing.domain.concert.components;
 
-import com.project1.ticketing.api.dto.response.ConcertResponseDTO;
-import com.project1.ticketing.domain.concert.components.IConcertService;
+import com.project1.ticketing.domain.concert.infrastructure.MemoryConcertRepository;
+import com.project1.ticketing.domain.concert.infrastructure.MemoryConcertTimeRepository;
+import com.project1.ticketing.domain.concert.infrastructure.MemorySeatRepository;
 import com.project1.ticketing.domain.concert.models.Concert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
