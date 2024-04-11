@@ -4,6 +4,8 @@ import com.project1.ticketing.api.dto.request.PaymentRequestDTO;
 import com.project1.ticketing.api.dto.request.PointRequestDTO;
 import com.project1.ticketing.api.dto.request.ReservationRequestDTO;
 import com.project1.ticketing.api.dto.response.*;
+import com.project1.ticketing.domain.payment.models.Payment;
+import com.project1.ticketing.domain.payment.models.PaymentStatus;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
@@ -29,8 +31,10 @@ public class MockManager {
     Map<String, List<Integer>> timeSeatMap = new HashMap<>();
 
     long reservationNum = 0L;
-    Map<Long, List<Reservation>> reservationMap = new HashMap<>();
+    Map<Long, Map<Long, Reservation>> reservationMap = new HashMap<>();
     Map<Long, Long> pointMap = new HashMap<>();
+
+    Map<Long, Map<Long, Payment>> paymentMap = new HashMap<>();
 
 
     public void initialize(){
@@ -109,9 +113,9 @@ public class MockManager {
 
                 );
 
-        List<Reservation> reservationList = reservationMap.getOrDefault(userId, new ArrayList<>());
-        reservationList.add(reservation);
-        reservationMap.put(userId, reservationList);
+        Map<Long, Reservation> reservationById = reservationMap.getOrDefault(userId, new HashMap<Long, Reservation>());
+        reservationById.put(reservationNum, reservation);
+        reservationMap.put(userId, reservationById);
 
         return new ReservationResponseDTO(
                 userId,
@@ -121,7 +125,7 @@ public class MockManager {
     }
 
     public ReservationResponseDTO checkReservation(long userId) {
-        List<Reservation> reservationList = reservationMap.get(userId);
+        List<Reservation> reservationList = new ArrayList<>(reservationMap.get(userId).values());
 
         return new ReservationResponseDTO(userId, reservationList);
     }
@@ -155,36 +159,43 @@ public class MockManager {
         return new PointResponseDTO(userId, point);
     }
 
-//    public PaymentResponseDTO pay(PaymentRequestDTO paymentRequestDTO) {
-//        long userId = paymentRequestDTO.getUserId();
-//        long amount = pointMap.get(userId);
-//
-//        long reservationId = paymentRequestDTO.getReservationId();
-//
-//        List<Reservation> reservationList = reservationMap.get(reservationId);
-//
-//        Optional<Reservation> reservation = reservationList.stream().filter(
-//                res -> res.getId() == reservationId
-//        ).findAny();
-//
-//        if (reservation.isEmpty()) {
-//            System.out.println("could not find reservation id " + reservationId);
-//        }
-//            if (amount > reservation.get().getPrice()){
-//                amount -= reservation.get().getPrice();
-//                reservation.get().setStatus(ReservationStatus.REGISTERED);
-//                reservationMap.put(reservationId, )
-//
-//        } else {
-//                System.out.println("Not Enough Money. redirect to /points 충전.");
-//            }
-//        return new PaymentResponseDTO()
-//    }
+    public PaymentResponseDTO pay(PaymentRequestDTO paymentRequestDTO) {
+        //userid로 포인트 조회
+        //reservation 유효성 검증. token expiredAt 확인
 
-//    public PaymentResponseDTO checkPayment(long userId) {
-//
-//
-//    }
+        long userId = paymentRequestDTO.getUserId();
+        long amount = pointMap.get(userId);
+
+
+        long reservationId = paymentRequestDTO.getReservationId();
+
+        Map <Long, Reservation> reservationByUser = reservationMap.get(userId);
+
+        Reservation reservation = reservationByUser.get(reservationId);
+
+        if (reservation == null) {
+            System.out.println("could not find reservation id " + reservationId);
+
+        }
+            if (amount > reservation.getPrice()){
+                amount -= reservation.getPrice();
+                reservation.setStatus(ReservationStatus.REGISTERED);
+                reservationByUser.put(reservationId, reservation);
+                reservationMap.put(userId, reservationByUser);
+        } else {
+                System.out.println("Not Enough Money. redirect to /points 충전.");
+            }
+        Payment payment = new Payment(userId, reservation);
+
+        return new PaymentResponseDTO(userId, payment);
+    }
+
+    public PaymentResponseDTO checkPayment(long userId, long reservationId) {
+        reservationMap.get(userId).get(reservationId);
+
+        return new PaymentResponseDTO(userId, paymentMap.get(userId).get(reservationId));
+
+    }
 
 
 

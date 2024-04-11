@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IConcertService {
 
-    List<ConcertResponseDTO> getConcert();
-    ConcertResponseDTO getConcertDate(long concertId);
-    List<ConcertResponseDTO> getAllSeat(long concertId, long concertTimeId);
+    ConcertResponseDTO getConcertList();
+    ConcertResponseDTO getAvailableConcertTime(long concertId);
+    ConcertResponseDTO getAvailableSeat(long concertId, String concertTime);
 }
