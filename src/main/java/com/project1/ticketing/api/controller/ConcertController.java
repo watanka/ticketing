@@ -2,6 +2,7 @@ package com.project1.ticketing.api.controller;
 
 import com.project1.ticketing.api.dto.response.ConcertResponseDTO;
 import com.project1.ticketing.api.usecase.ConcertUseCase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ public class ConcertController {
 
     ConcertUseCase concertUseCase;
 
+    @Autowired
     public ConcertController(ConcertUseCase concertUseCase) {
         this.concertUseCase = concertUseCase;
     }

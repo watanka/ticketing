@@ -1,13 +1,25 @@
 package com.project1.ticketing.api.usecase;
 
 import com.project1.ticketing.api.dto.response.ConcertResponseDTO;
-import com.project1.ticketing.domain.concert.components.IConcertService;
+
+import com.project1.ticketing.domain.concert.components.MemoryConcertService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 
+@Component
 public class ConcertUseCase {
-    IConcertService concertService;
+
+
+    MemoryConcertService concertService;
+
+    @Autowired
+    public ConcertUseCase(MemoryConcertService concertService) {
+        this.concertService = concertService;
+    }
+
     public ConcertResponseDTO getConcertList(){
 
         List<String> concertList = concertService.getConcertList();
