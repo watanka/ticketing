@@ -1,28 +1,28 @@
 package com.project1.ticketing.api.controller;
 
 import com.project1.ticketing.api.dto.response.ConcertResponseDTO;
-import com.project1.ticketing.domain.concert.components.IConcertService;
+import com.project1.ticketing.api.usecase.ConcertUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ConcertController {
 
-    IConcertService concertService;
+    ConcertUseCase concertUseCase;
 
-    public ConcertController(IConcertService concertService) {
-        this.concertService = concertService;
+    public ConcertController(ConcertUseCase concertUseCase) {
+        this.concertUseCase = concertUseCase;
     }
 
     @GetMapping("/concerts")
     public ConcertResponseDTO getConcertList(){
-        return concertService.getConcertList();
+        return concertUseCase.getConcertList();
     }
 
     @GetMapping("/concerts/{concert_id}/concert-times")
     public ResponseEntity<ConcertResponseDTO> getAvailableConcertTime(@PathVariable(value="concert_id") long concertId){
 
-        ConcertResponseDTO concertResponseDTO = concertService.getAvailableConcertTime(concertId);
+        ConcertResponseDTO concertResponseDTO = concertUseCase.getAvailableConcertTimeList(concertId);
 
         return ResponseEntity.ok().body(concertResponseDTO);
 
@@ -33,7 +33,7 @@ public class ConcertController {
             @PathVariable(value="concert_id") long concertId,
             @PathVariable(value="concert_time") String concertTime){
 
-        ConcertResponseDTO concertResponseDTO = concertService.getAvailableSeat(concertId, concertTime);
+        ConcertResponseDTO concertResponseDTO = concertUseCase.getAvailableSeatList(concertId, concertTime);
 
         return ResponseEntity.ok().body(concertResponseDTO);
 

@@ -1,5 +1,6 @@
 package com.project1.ticketing.api.dto.response;
 
+import com.project1.ticketing.domain.concert.models.Concert;
 import lombok.Getter;
 import lombok.Setter;
 
