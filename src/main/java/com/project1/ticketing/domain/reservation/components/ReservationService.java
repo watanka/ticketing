@@ -1,27 +1,28 @@
 package com.project1.ticketing.domain.reservation.components;
 
+import com.project1.ticketing.domain.reservation.infrastructure.MemoryReservationRepository;
 import com.project1.ticketing.domain.reservation.models.Reservation;
-import com.project1.ticketing.domain.reservation.repository.ReservationRepository;
+import com.project1.ticketing.domain.reservation.repository.IReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ReservationService {
 
-    ReservationRepository reservationRepository;
+    IReservationRepository IReservationRepository;
 
     @Autowired
-    public ReservationService(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
+    public ReservationService(MemoryReservationRepository IReservationRepository) {
+        this.IReservationRepository = IReservationRepository;
     }
 
     void register(Reservation reservation){
-        reservationRepository.save(reservation);
+        IReservationRepository.save(reservation);
         return;
     }
 
     void check(long reservationId){
-        reservationRepository.getById(reservationId);
+        IReservationRepository.getById(reservationId);
     }
 
 }
