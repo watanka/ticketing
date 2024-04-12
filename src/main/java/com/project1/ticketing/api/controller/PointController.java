@@ -3,15 +3,18 @@ package com.project1.ticketing.api.controller;
 import com.project1.ticketing.api.dto.request.PointRequestDTO;
 import com.project1.ticketing.api.dto.response.PointResponseDTO;
 import com.project1.ticketing.domain.point.components.IPointService;
+import com.project1.ticketing.domain.point.components.PointService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PointController {
 
-    IPointService pointService;
+    PointService pointService;
 
-    public PointController(IPointService pointService) {
+    @Autowired
+    public PointController(PointService pointService) {
         this.pointService = pointService;
     }
 
