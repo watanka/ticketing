@@ -33,9 +33,9 @@ public class ConcertController {
     @GetMapping("/concerts/{concert_id}/concert-times/{concert_time}/seats")
     public ResponseEntity<ConcertResponseDTO> getAvailableSeat(
             @PathVariable(value="concert_id") long concertId,
-            @PathVariable(value="concert_time") String concertTime){
+            @PathVariable(value="concert_time") long concertTimeId){
 
-        ConcertResponseDTO concertResponseDTO = concertUseCase.getAvailableSeatList(concertId, concertTime);
+        ConcertResponseDTO concertResponseDTO = concertUseCase.getAvailableSeatList(concertId, concertTimeId);
 
         return ResponseEntity.ok().body(concertResponseDTO);
 

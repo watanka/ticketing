@@ -8,5 +8,5 @@ public interface ISeatRepository { // seat는 concertTime에 대한 정보를 �
     boolean isAvailable(long seatId);
     Optional<Seat> findById(long seatId);
 
-    List<Seat> getAllByConcertAndConcertTime(long concertId, long  concertTimeId);
+    List<Seat> getAllByConcertAndConcertTime(long concertId, long concertTimeId);
 }

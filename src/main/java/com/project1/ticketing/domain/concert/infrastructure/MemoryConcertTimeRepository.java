@@ -5,18 +5,15 @@ import com.project1.ticketing.domain.concert.repository.IConcertTimeRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class MemoryConcertTimeRepository implements IConcertTimeRepository {
 
-    Map<Long, List<String>> concertTimeMap = new HashMap<>(); // TODO: ConcertTime: String => ZonedDateTime
+    Map<Long, List<ConcertTime>> concertTimeMap = new HashMap<>(); // TODO: ConcertTime: String => ZonedDateTime
 
 
-    public void save(long concertId, String concertTime){
+    public void save(long concertId, ConcertTime concertTime){
         concertTimeMap.get(concertId).add(concertTime);
     }
     @Override
@@ -25,13 +22,14 @@ public class MemoryConcertTimeRepository implements IConcertTimeRepository {
     }
 
     @Override
-    public Optional<ConcertTime> getAvailableTimeByConcertId(long concertId) {
-        return Optional.empty();
+    public List<ConcertTime> getAvailableTimeByConcertId(long concertId) {
+
+        return concertTimeMap.getOrDefault(concertId, new ArrayList<>());
     }
 
     @Override
-    public Optional<ConcertTime> getByTime(ZonedDateTime dateTime) {
-        return Optional.empty();
+    public List<ConcertTime> getByTime(ZonedDateTime dateTime) {
+         return null;
     }
 
     @Override

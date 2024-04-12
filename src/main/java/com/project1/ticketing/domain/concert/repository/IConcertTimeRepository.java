@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IConcertTimeRepository {
     List<ConcertTime> getAllByConcertId(long concertId);
-    Optional<ConcertTime> getAvailableTimeByConcertId(long concertId);
-    Optional<ConcertTime> getByTime(ZonedDateTime dateTime);
+    List<ConcertTime> getAvailableTimeByConcertId(long concertId);
+    List<ConcertTime> getByTime(ZonedDateTime dateTime);
     Boolean isFull(ZonedDateTime dateTime);
 }

@@ -4,6 +4,8 @@ import com.project1.ticketing.domain.concert.infrastructure.MemoryConcertReposit
 import com.project1.ticketing.domain.concert.infrastructure.MemoryConcertTimeRepository;
 import com.project1.ticketing.domain.concert.infrastructure.MemorySeatRepository;
 import com.project1.ticketing.domain.concert.models.Concert;
+import com.project1.ticketing.domain.concert.models.ConcertTime;
+import com.project1.ticketing.domain.concert.models.Seat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,22 +31,22 @@ public class MemoryConcertService implements IConcertService {
         memoryConcertRepository.save(concert);
     }
 
-    public void addConcertTime(long concertId, String concertTime){
+    public void addConcertTime(long concertId, ConcertTime concertTime){
         memoryConcertTimeRepository.save(concertId, concertTime);
     }
 
     @Override
-    public List<String> getConcertList() {
+    public List<Concert> getConcertList() {
         return null;
     }
 
     @Override
-    public List<String> getAvailableConcertTimeList(long concertId) {
+    public List<ConcertTime> getAllConcertTimeList(long concertId) {
         return null;
     }
 
     @Override
-    public List<Integer> getAvailableSeatList(long concertId, String concertTime) {
+    public List<Seat> getAvailableSeatList(long concertId, long concertTime) {
         return null;
     }
 }
