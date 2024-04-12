@@ -15,7 +15,7 @@ public class MemoryTokenService implements ITokenService{
     }
 
     @Override
-    public Token insertInQueue(long concertId, String uuid) {
+    public Token insertQueue(long concertId, String uuid) {
         return null;
     }
 

@@ -21,7 +21,7 @@ import java.util.*;
 public class MockManager {
 
     Map<Long, String> concertMap = new HashMap<>();
-    Map<Long, List<String>> concertTimeMap = new HashMap<>(); // TODO: ConcertTime: String => ZonedDateTime
+    Map<Long, List<Long>> concertTimeMap = new HashMap<>(); // TODO: ConcertTime: String => ZonedDateTime
 
 
 
@@ -41,8 +41,8 @@ public class MockManager {
         concertMap.put(0L, "나훈아50주년 콘서트");
         concertMap.put(1L, "아일릿 데뷔 콘서트");
 
-        concertTimeMap.put(0L, List.of("04-10","04-13"));
-        concertTimeMap.put(1L, List.of("05-05","05-10"));
+//        concertTimeMap.put(0L, List.of("04-10","04-13"));
+//        concertTimeMap.put(1L, List.of("05-05","05-10"));
 
         timeSeatMap.put("NHS0410", List.of(1, 3, 10, 24, 25));
         timeSeatMap.put("NHS0413", List.of(10, 20, 23,24,25,26));
@@ -50,52 +50,52 @@ public class MockManager {
         timeSeatMap.put("AIL0510", List.of(1, 2));
 
     }
+//
+//    public TokenResponseDTO insertInQueue(long concertId, String uuid) {
+//
+//        Map<String, Token> TokenWaitNumMap = waitQueue.get(concertId);
+//
+//        if (TokenWaitNumMap==null){
+//            TokenWaitNumMap = new HashMap<>();
+//            waitQueue.put(concertId, TokenWaitNumMap);
+//        }
+//        long waitingNum = TokenWaitNumMap.size();
+//        String tokenId = "fakeToken"+waitingNum;
+//
+//        Token newToken = new Token(uuid, tokenId, ++waitingNum);
+//        TokenWaitNumMap.put(tokenId, newToken);
+//
+//        return new TokenResponseDTO(uuid, tokenId, waitingNum);
+//
+//    }
+//
+//    public TokenResponseDTO getWaitNumByToken(long concertId, String token) throws Exception {
+//
+//        if (waitQueue.containsKey(concertId)) {
+//            Token existToken = waitQueue.get(concertId).get(token);
+//            return new TokenResponseDTO(existToken.getUuid(), token, existToken.getWaitingNum());
+//        }else{
+//            throw new Exception("cannot find tokenID");
+//        }
+//    }
 
-    public TokenResponseDTO insertInQueue(long concertId, String uuid) {
-
-        Map<String, Token> TokenWaitNumMap = waitQueue.get(concertId);
-
-        if (TokenWaitNumMap==null){
-            TokenWaitNumMap = new HashMap<>();
-            waitQueue.put(concertId, TokenWaitNumMap);
-        }
-        long waitingNum = TokenWaitNumMap.size();
-        String tokenId = "fakeToken"+waitingNum;
-
-        Token newToken = new Token(uuid, tokenId, ++waitingNum);
-        TokenWaitNumMap.put(tokenId, newToken);
-
-        return new TokenResponseDTO(uuid, tokenId, waitingNum);
-
-    }
-
-    public TokenResponseDTO getWaitNumByToken(long concertId, String token) throws Exception {
-
-        if (waitQueue.containsKey(concertId)) {
-            Token existToken = waitQueue.get(concertId).get(token);
-            return new TokenResponseDTO(existToken.getUuid(), token, existToken.getWaitingNum());
-        }else{
-            throw new Exception("cannot find tokenID");
-        }
-    }
-
-    public ConcertResponseDTO getConcertList() {
-
-        return new ConcertResponseDTO(new ArrayList<String>(concertMap.values()));
-    }
-
-    public ConcertResponseDTO getAvailableConcertTime(long concertId) {
-        List<String> concertTimeList = concertTimeMap.getOrDefault(concertId, new ArrayList<>());
-
-        return new ConcertResponseDTO(concertId, concertTimeList);
-    }
-
-    public ConcertResponseDTO getAvailableSeat(long concertId, String concertTime) {
-
-        List<Integer> seatList = timeSeatMap.getOrDefault(concertTime, new ArrayList<>());
-
-        return new ConcertResponseDTO(concertId, concertTime, seatList);
-    }
+//    public ConcertResponseDTO getConcertList() {
+//
+//        return new ConcertResponseDTO(new ArrayList<String>(concertMap.values()));
+//    }
+//
+//    public ConcertResponseDTO getAvailableConcertTime(long concertId) {
+//        List<Long> concertTimeList = concertTimeMap.getOrDefault(concertId, new ArrayList<>());
+//
+//        return new ConcertResponseDTO(concertId, concertTimeList);
+//    }
+//
+//    public ConcertResponseDTO getAvailableSeat(long concertId, String concertTime) {
+//
+//        List<Integer> seatList = timeSeatMap.getOrDefault(concertTime, new ArrayList<>());
+//
+//        return new ConcertResponseDTO(concertId, concertTime, seatList);
+//    }
 
 
 

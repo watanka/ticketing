@@ -4,5 +4,6 @@ import com.project1.ticketing.api.dto.response.TokenResponseDTO;
 import com.project1.ticketing.domain.token.models.Token;
 
 public interface ITokenService {
-
+    Token insertQueue(long concertId, String uuid);
+    Token getWaitNumByToken(long concertId, String token);
 }
