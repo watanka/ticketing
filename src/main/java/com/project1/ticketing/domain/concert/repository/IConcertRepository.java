@@ -4,7 +4,7 @@ import com.project1.ticketing.domain.concert.models.Concert;
 
 import java.util.List;
 
-public interface ConcertRepository { // 쓸일은 없을듯?
+public interface IConcertRepository { // 쓸일은 없을듯?
     List<Concert> getAll();
     Concert getById(long concertId);
 }

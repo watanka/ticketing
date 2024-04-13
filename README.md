@@ -6,11 +6,16 @@
 [링크↗](https://github.com/watanka/ticketing/wiki/%EC%BD%98%EC%84%9C%ED%8A%B8-%ED%8B%B0%EC%BC%93%ED%8C%85-%EC%8B%9C%EC%8A%A4%ED%85%9C)
 
 ## 시퀀스 다이어그램
+[API별 시퀀스 다이어그램↗](https://github.com/watanka/ticketing/wiki/%EC%84%B8%EB%B6%80-%EC%8B%9C%ED%80%80%EC%8A%A4-%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8)
 ![](./sequence%20diagram.png "sequence diagram")
 
 
 ## ERD
 ![](./ERD.png "ERD")
+
+
+## Swagger-UI
+![](./swagger-ui.png "swagger")
 
 
 ## API 명세
@@ -28,3 +33,6 @@
 
 - concert_id는 path로, 그리고 concert_time과 seat을 query로 두었다. concert_id는 티켓팅 프로세스동안 날짜와 좌석을 조회하고, 선택하는 프로세스동안 변하지 않고 고정된 값이라 query보다 가독성이 좋을 것이라고 판단했다.
 - Response 형식을 특정하지 않고, 객체로 둔 이유는 결과값이 어떻게 나올지 아직 판단이 안 서기 때문에 대략 어떤 값을 리턴해야할지만 적어놓은 것이다. (24/04/04)
+
+
+리퀘스트 정보를 DTO와 path, query 중 어디에 넘겨야할까? DTO정보는 body에만 담기는건가?
