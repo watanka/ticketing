@@ -44,6 +44,7 @@ public class TokenManager {
 
 
     public long countActiveToken(){
+        System.out.println("counting");
         return waitingLine.stream()
                 .filter(token ->token.getStatus() == TokenStatus.ACTIVE)
                 .count();
