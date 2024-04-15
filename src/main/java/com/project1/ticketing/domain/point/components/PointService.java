@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PointService implements IPointService{
     @Override
-    public PointResponse updatePoint(PointRequest pointRequest) {
+    public PointResponse updatePoint(Point point) {
         return null;
     }
 
