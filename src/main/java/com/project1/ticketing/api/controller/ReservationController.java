@@ -1,8 +1,7 @@
 package com.project1.ticketing.api.controller;
 
-import com.project1.ticketing.api.dto.request.ReservationRequestDTO;
-import com.project1.ticketing.api.dto.response.ReservationResponseDTO;
-import com.project1.ticketing.domain.reservation.components.IReservationService;
+import com.project1.ticketing.api.dto.request.ReservationRequest;
+import com.project1.ticketing.api.dto.response.ReservationResponse;
 import com.project1.ticketing.domain.reservation.components.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,9 @@ public class ReservationController {
     }
 
     @PostMapping("/reservations") // token_id, user_id, concert_time, seat_num
-    public ResponseEntity<ReservationResponseDTO> makeReservation(@RequestBody ReservationRequestDTO reservationRequestDTO){
+    public ResponseEntity<ReservationResponse> makeReservation(@RequestBody ReservationRequest reservationRequest){
 
-//        ReservationResponseDTO reservationResponseDTO = reservationService.register(reservationRequestDTO);
+//        ReservationResponse reservationResponse = reservationService.register(reservationRequest);
 //
 //        return ResponseEntity.ok().body(reservationResponseDTO);
         return null;
@@ -29,8 +28,8 @@ public class ReservationController {
     }
 
     @GetMapping("/reservations/users/{user_id}") // user_id, concert_time, seat_num
-    public ResponseEntity<ReservationResponseDTO> checkReservation(@PathVariable(value="user_id") long userId){
-//        ReservationResponseDTO reservationResponseDTO = reservationService.check(userId);
+    public ResponseEntity<ReservationResponse> checkReservation(@PathVariable(value="user_id") long userId){
+//        ReservationResponse reservationResponse = reservationService.check(userId);
 //
 //        return ResponseEntity.ok().body(reservationResponseDTO);
         return null;

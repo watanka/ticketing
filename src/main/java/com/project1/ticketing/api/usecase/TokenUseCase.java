@@ -1,9 +1,5 @@
 package com.project1.ticketing.api.usecase;
 
-import com.project1.ticketing.api.dto.request.TokenRequestDTO;
-import com.project1.ticketing.api.dto.response.TokenResponseDTO;
-import com.project1.ticketing.domain.token.components.MemoryTokenService;
-import com.project1.ticketing.domain.token.models.Token;
 import org.springframework.stereotype.Component;
 
 @Component

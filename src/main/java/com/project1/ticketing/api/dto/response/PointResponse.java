@@ -5,12 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PointResponseDTO {
+public class PointResponse {
 
     private long userId;
     private long amount;
 
-    public PointResponseDTO(long userId, long amount) {
+    public PointResponse(long userId, long amount) {
         this.userId = userId;
         this.amount = amount;
     }

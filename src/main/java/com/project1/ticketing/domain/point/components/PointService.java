@@ -1,18 +1,18 @@
 package com.project1.ticketing.domain.point.components;
 
-import com.project1.ticketing.api.dto.request.PointRequestDTO;
-import com.project1.ticketing.api.dto.response.PointResponseDTO;
+import com.project1.ticketing.api.dto.request.PointRequest;
+import com.project1.ticketing.api.dto.response.PointResponse;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PointService implements IPointService{
     @Override
-    public PointResponseDTO updatePoint(PointRequestDTO pointRequestDTO) {
+    public PointResponse updatePoint(PointRequest pointRequest) {
         return null;
     }
 
     @Override
-    public PointResponseDTO checkPoint(long userId) {
+    public PointResponse checkPoint(long userId) {
         return null;
     }
 }

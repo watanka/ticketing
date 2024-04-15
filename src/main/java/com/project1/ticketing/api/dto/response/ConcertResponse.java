@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ConcertResponseDTO{
+public class ConcertResponse {
     private List<Concert> concertList;
     private long concertId;
     private long concertTimeId;
@@ -19,21 +19,21 @@ public class ConcertResponseDTO{
     private List<Seat> seatList;  // 한 번에 한 좌석만
 
 
-    public ConcertResponseDTO(List<Concert> concertList){
+    public ConcertResponse(List<Concert> concertList){
 
         this.concertList = concertList;
     }
-    public ConcertResponseDTO(long concertId) {
+    public ConcertResponse(long concertId) {
         this.concertId = concertId;
     }
 
-    public ConcertResponseDTO(long concertId, List<ConcertTime> concertTimeList) {
+    public ConcertResponse(long concertId, List<ConcertTime> concertTimeList) {
         this.concertId = concertId;
         this.concertList = concertList;
     }
 
 
-    public ConcertResponseDTO(long concertId, long concertTimeId, List<Seat> seatList) {
+    public ConcertResponse(long concertId, long concertTimeId, List<Seat> seatList) {
         this.concertId = concertId;
         this.concertTimeId = concertTimeId;
         this.seatList = seatList;

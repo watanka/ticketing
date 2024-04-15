@@ -1,6 +1,6 @@
 package com.project1.ticketing.api.usecase;
 
-import com.project1.ticketing.api.dto.response.ConcertResponseDTO;
+import com.project1.ticketing.api.dto.response.ConcertResponse;
 
 import com.project1.ticketing.domain.concert.components.MemoryConcertService;
 import com.project1.ticketing.domain.concert.models.Concert;
@@ -21,24 +21,24 @@ public class ConcertUseCase {
         this.concertService = concertService;
     }
 
-    public ConcertResponseDTO getConcertList(){
+    public ConcertResponse getConcertList(){
 
         List<Concert> concertList = concertService.getConcertList();
 
-        return new ConcertResponseDTO(concertList);
+        return new ConcertResponse(concertList);
 
     }
 
-    public ConcertResponseDTO getAvailableConcertTimeList(long concertId) {
+    public ConcertResponse getAvailableConcertTimeList(long concertId) {
         List<ConcertTime> availableConcertTimeList = concertService.getAllConcertTimeList(concertId);
 
-        return new ConcertResponseDTO(concertId, availableConcertTimeList);
+        return new ConcertResponse(concertId, availableConcertTimeList);
     }
 
-    public ConcertResponseDTO getAvailableSeatList(long concertId, long concertTimeId) {
+    public ConcertResponse getAvailableSeatList(long concertId, long concertTimeId) {
         List<Seat> availableSeatList = concertService.getAvailableSeatList(concertId, concertTimeId);
 
-        return new ConcertResponseDTO(concertId, concertTimeId, availableSeatList);
+        return new ConcertResponse(concertId, concertTimeId, availableSeatList);
 
     }
 }

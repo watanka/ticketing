@@ -1,8 +1,7 @@
 package com.project1.ticketing.api.controller;
 
-import com.project1.ticketing.api.dto.request.PaymentRequestDTO;
-import com.project1.ticketing.api.dto.response.PaymentResponseDTO;
-import com.project1.ticketing.domain.payment.components.IPaymentService;
+import com.project1.ticketing.api.dto.request.PaymentRequest;
+import com.project1.ticketing.api.dto.response.PaymentResponse;
 import com.project1.ticketing.domain.payment.components.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class PaymentController {
     }
 
     @PostMapping("/payment") // Query: reservation_id
-    public ResponseEntity<PaymentResponseDTO> pay(@RequestBody PaymentRequestDTO paymentRequestDTO){
+    public ResponseEntity<PaymentResponse> pay(@RequestBody PaymentRequest paymentRequest){
 //        PaymentResponseDTO paymentResponseDTO = paymentService.pay(paymentRequestDTO);
 //
 //        return ResponseEntity.ok().body(paymentResponseDTO);
@@ -28,8 +27,8 @@ public class PaymentController {
     }
 
     @GetMapping("/payment/{user_id}/reservations/{reservation_id}") // Query: reservation_id
-    public ResponseEntity<PaymentResponseDTO> checkPayment(@PathVariable(value="user_id") long userId,
-                                                           @PathVariable(value="reservation_id") long reservationId
+    public ResponseEntity<PaymentResponse> checkPayment(@PathVariable(value="user_id") long userId,
+                                                        @PathVariable(value="reservation_id") long reservationId
     ){
 //        PaymentResponseDTO paymentResponseDTO = paymentService.checkPayment(userId, reservationId);
 //

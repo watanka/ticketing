@@ -1,9 +1,9 @@
 package com.project1.ticketing.domain.payment.components;
 
-import com.project1.ticketing.api.dto.request.PaymentRequestDTO;
-import com.project1.ticketing.api.dto.response.PaymentResponseDTO;
+import com.project1.ticketing.api.dto.request.PaymentRequest;
+import com.project1.ticketing.api.dto.response.PaymentResponse;
 
 public interface IPaymentService {
-    PaymentResponseDTO pay(PaymentRequestDTO paymentRequestDTO);
-    PaymentResponseDTO checkPayment(long userId, long reservationId);
+    PaymentResponse pay(PaymentRequest paymentRequest);
+    PaymentResponse checkPayment(long userId, long reservationId);
 }

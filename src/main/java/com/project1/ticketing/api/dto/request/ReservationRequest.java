@@ -4,13 +4,9 @@ package com.project1.ticketing.api.dto.request;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-
 @Getter
 @Setter
-public class ReservationRequestDTO {
+public class ReservationRequest {
 
     // token, user_id, concert_time, seat_num
     private String token;
@@ -19,7 +15,7 @@ public class ReservationRequestDTO {
     private long seatId;
 
 
-    public ReservationRequestDTO(String token, long userId, String concertTime, long seatId) {
+    public ReservationRequest(String token, long userId, String concertTime, long seatId) {
         this.token = token;
         this.userId = userId;
         this.concertTime = concertTime;

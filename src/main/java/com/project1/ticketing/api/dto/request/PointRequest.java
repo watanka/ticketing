@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PointRequestDTO {
+public class PointRequest {
     // user_id
     // amount
 
@@ -15,7 +15,7 @@ public class PointRequestDTO {
     private PointType pointType;
     private long amount;
 
-    public PointRequestDTO(long userId, long amount, PointType pointType) {
+    public PointRequest(long userId, long amount, PointType pointType) {
         this.userId = userId;
         this.amount = amount;
         this.pointType = pointType;
