@@ -26,4 +26,9 @@ public class MemoryConcertRepository implements IConcertRepository{
     public Concert getById(long concertId) {
         return concertMap.get(concertId);
     }
+
+    @Override
+    public boolean isFull(long concertId) {
+        return false;
+    }
 }
