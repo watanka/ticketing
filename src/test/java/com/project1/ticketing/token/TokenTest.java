@@ -28,7 +28,6 @@ public class TokenTest {
 
         long numCurrentActivatedToken = 10L;
 
-        when().thenReturn(numCurrentActivatedToken);
 
 
 
