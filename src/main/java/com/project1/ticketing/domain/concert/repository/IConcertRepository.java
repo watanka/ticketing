@@ -4,7 +4,10 @@ import com.project1.ticketing.domain.concert.models.Concert;
 
 import java.util.List;
 
-public interface IConcertRepository { // 쓸일은 없을듯?
+public interface IConcertRepository {
     List<Concert> getAll();
     Concert getById(long concertId);
+
+    boolean isFull(long concertId);
+
 }

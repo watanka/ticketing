@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ReservationResponseDTO {
+public class ReservationResponse {
 
     private List<Reservation> reservationList;
     private long userId;
@@ -20,7 +20,7 @@ public class ReservationResponseDTO {
     private long seatId;
     private ZonedDateTime expiredAt;
 
-    public ReservationResponseDTO(long userId, ZonedDateTime concertTime, String tokenId, long seatId, ZonedDateTime expiredAt) {
+    public ReservationResponse(long userId, ZonedDateTime concertTime, String tokenId, long seatId, ZonedDateTime expiredAt) {
         this.userId = userId;
         this.status = ReservationStatus.TEMPORARY_RESERVED;
         this.tokenId = tokenId;
@@ -29,7 +29,7 @@ public class ReservationResponseDTO {
         this.expiredAt = expiredAt;
     }
 
-    public ReservationResponseDTO(long userId, List<Reservation> reservationList) {
+    public ReservationResponse(long userId, List<Reservation> reservationList) {
         this.userId = userId;
         this.reservationList = reservationList;
     }

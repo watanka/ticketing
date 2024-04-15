@@ -1,6 +1,5 @@
 package com.project1.ticketing.domain.token.components;
 
-import com.project1.ticketing.api.dto.response.TokenResponseDTO;
 import com.project1.ticketing.domain.token.infrastructure.MemoryTokenRepository;
 import com.project1.ticketing.domain.token.models.Token;
 import org.springframework.beans.factory.annotation.Autowired;

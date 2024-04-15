@@ -1,15 +1,15 @@
 package com.project1.ticketing.domain.concert.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+public class Seat{
+        long id;
+        long concertHallId;
+        long price;
 
-@Entity
-public record Seat(
-       @Id
-       @GeneratedValue(strategy = GenerationType.IDENTITY)
-       long id,
-       long price
-) {
+
+
+    public Seat(long id, long concertHallId, long price) {
+        this.id = id;
+        this.concertHallId = concertHallId;
+        this.price = price;
+    }
 }

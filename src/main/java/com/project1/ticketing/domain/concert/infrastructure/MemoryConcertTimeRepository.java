@@ -22,18 +22,18 @@ public class MemoryConcertTimeRepository implements IConcertTimeRepository {
     }
 
     @Override
-    public List<ConcertTime> getAvailableTimeByConcertId(long concertId) {
+    public List<ConcertTime> getAvailableTime(long concertId) {
 
         return concertTimeMap.getOrDefault(concertId, new ArrayList<>());
     }
 
     @Override
-    public List<ConcertTime> getByTime(ZonedDateTime dateTime) {
+    public ConcertTime getByTime(long concertId, long concertTimeId) {
          return null;
     }
 
     @Override
-    public Boolean isFull(ZonedDateTime dateTime) {
+    public Boolean isFull(long concertId, long concertTimeId) {
         return null;
     }
 }

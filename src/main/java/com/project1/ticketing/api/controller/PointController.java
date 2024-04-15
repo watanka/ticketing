@@ -1,8 +1,7 @@
 package com.project1.ticketing.api.controller;
 
-import com.project1.ticketing.api.dto.request.PointRequestDTO;
-import com.project1.ticketing.api.dto.response.PointResponseDTO;
-import com.project1.ticketing.domain.point.components.IPointService;
+import com.project1.ticketing.api.dto.request.PointRequest;
+import com.project1.ticketing.api.dto.response.PointResponse;
 import com.project1.ticketing.domain.point.components.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +18,17 @@ public class PointController {
     }
 
     @PostMapping("/points")
-    public ResponseEntity<PointResponseDTO> updatePoint(@RequestBody PointRequestDTO pointRequestDTO){
-        PointResponseDTO pointResponseDTO = pointService.updatePoint(pointRequestDTO);
+    public ResponseEntity<PointResponse> updatePoint(@RequestBody PointRequest pointRequest){
+        PointResponse pointResponse = pointService.updatePoint(pointRequest);
 
-        return ResponseEntity.ok().body(pointResponseDTO);
+        return ResponseEntity.ok().body(pointResponse);
     }
 
     @GetMapping("/points/{user_id}")
-    public ResponseEntity<PointResponseDTO> checkPoint(@PathVariable(value="user_id") long userId){
-        PointResponseDTO pointResponseDTO = pointService.checkPoint(userId);
+    public ResponseEntity<PointResponse> checkPoint(@PathVariable(value="user_id") long userId){
+        PointResponse pointResponse = pointService.checkPoint(userId);
 
-        return ResponseEntity.ok().body(pointResponseDTO);
+        return ResponseEntity.ok().body(pointResponse);
     }
 
 }

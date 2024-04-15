@@ -1,24 +1,21 @@
 package com.project1.ticketing.domain.concert.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 
-@Entity
+import java.util.List;
+
+@Builder
 @Getter
 public class Concert{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private String name;
+    private List<ConcertTime> concertTimeList;
 
-    public Concert(long id, String name) {
+
+    public Concert(long id, String name, List<ConcertTime> concertTimeList) {
         this.id = id;
         this.name = name;
+        this.concertTimeList = concertTimeList;
     }
-
-
 }

@@ -1,11 +1,10 @@
 package com.project1.ticketing.api.controller;
 
-import com.project1.ticketing.api.dto.request.PaymentRequestDTO;
-import com.project1.ticketing.api.dto.request.PointRequestDTO;
-import com.project1.ticketing.api.dto.request.ReservationRequestDTO;
+import com.project1.ticketing.api.dto.request.PaymentRequest;
+import com.project1.ticketing.api.dto.request.PointRequest;
+import com.project1.ticketing.api.dto.request.ReservationRequest;
 import com.project1.ticketing.api.dto.response.*;
 import com.project1.ticketing.domain.payment.models.Payment;
-import com.project1.ticketing.domain.payment.models.PaymentStatus;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
@@ -99,14 +98,14 @@ public class MockManager {
 
 
 
-    public ReservationResponseDTO makeReservation(ReservationRequestDTO reservationRequestDTO) {
-        long userId = reservationRequestDTO.getUserId();
+    public ReservationResponse makeReservation(ReservationRequest reservationRequest) {
+        long userId = reservationRequest.getUserId();
 
         Reservation reservation = new Reservation(
                 ++reservationNum,
                 userId,
-                reservationRequestDTO.getConcertTime(),
-                reservationRequestDTO.getSeatId(),
+                reservationRequest.getConcertTime(),
+                reservationRequest.getSeatId(),
                 50000, // TODO: need price table for each concertTime
                 ReservationStatus.TEMPORARY_RESERVED,
                 ZonedDateTime.now().plus(5, ChronoUnit.MINUTES)
@@ -117,23 +116,23 @@ public class MockManager {
         reservationById.put(reservationNum, reservation);
         reservationMap.put(userId, reservationById);
 
-        return new ReservationResponseDTO(
+        return new ReservationResponse(
                 userId,
                 List.of(reservation)
         );
 
     }
 
-    public ReservationResponseDTO checkReservation(long userId) {
+    public ReservationResponse checkReservation(long userId) {
         List<Reservation> reservationList = new ArrayList<>(reservationMap.get(userId).values());
 
-        return new ReservationResponseDTO(userId, reservationList);
+        return new ReservationResponse(userId, reservationList);
     }
 
-    public PointResponseDTO updatePoint(PointRequestDTO pointRequestDTO) {
-        long userId = pointRequestDTO.getUserId();
-        long amount = pointRequestDTO.getAmount();
-        PointType pointType = pointRequestDTO.getPointType();
+    public PointResponse updatePoint(PointRequest pointRequest) {
+        long userId = pointRequest.getUserId();
+        long amount = pointRequest.getAmount();
+        PointType pointType = pointRequest.getPointType();
 
         long remainingPoint = pointMap.getOrDefault(userId, 0L);
 
@@ -146,28 +145,28 @@ public class MockManager {
 
         pointMap.put(userId, remainingPoint);
 
-        return new PointResponseDTO(userId, remainingPoint);
+        return new PointResponse(userId, remainingPoint);
 
 
 
 
     }
 
-    public PointResponseDTO checkPoint(long userId) {
+    public PointResponse checkPoint(long userId) {
         long point = pointMap.getOrDefault(userId, 0L);
 
-        return new PointResponseDTO(userId, point);
+        return new PointResponse(userId, point);
     }
 
-    public PaymentResponseDTO pay(PaymentRequestDTO paymentRequestDTO) {
+    public PaymentResponse pay(PaymentRequest paymentRequest) {
         //userid로 포인트 조회
         //reservation 유효성 검증. token expiredAt 확인
 
-        long userId = paymentRequestDTO.getUserId();
+        long userId = paymentRequest.getUserId();
         long amount = pointMap.get(userId);
 
 
-        long reservationId = paymentRequestDTO.getReservationId();
+        long reservationId = paymentRequest.getReservationId();
 
         Map <Long, Reservation> reservationByUser = reservationMap.get(userId);
 
@@ -187,13 +186,13 @@ public class MockManager {
             }
         Payment payment = new Payment(userId, reservation);
 
-        return new PaymentResponseDTO(userId, payment);
+        return new PaymentResponse(userId, payment);
     }
 
-    public PaymentResponseDTO checkPayment(long userId, long reservationId) {
+    public PaymentResponse checkPayment(long userId, long reservationId) {
         reservationMap.get(userId).get(reservationId);
 
-        return new PaymentResponseDTO(userId, paymentMap.get(userId).get(reservationId));
+        return new PaymentResponse(userId, paymentMap.get(userId).get(reservationId));
 
     }
 

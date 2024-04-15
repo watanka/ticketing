@@ -6,11 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PaymentRequestDTO {
+public class PaymentRequest {
     private long userId;
     private long reservationId;
 
-    public PaymentRequestDTO(long userId, long reservationId) {
+    public PaymentRequest(long userId, long reservationId) {
         this.userId = userId;
         this.reservationId = reservationId;
     }

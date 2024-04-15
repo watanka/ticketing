@@ -1,20 +1,27 @@
 package com.project1.ticketing.domain.concert.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
-@Entity
-public record ConcertTime(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        long id,
-        ZonedDateTime time,
-        long concertId,
-        int maxSeatNum,
-        int currAvailableSeatNum
-) {
+@Builder
+@Getter
+public class ConcertTime{
+
+    long id;
+    ZonedDateTime time;
+    long concertId;
+    long concertHallId;
+    int maxSeatNum;
+    int currAvailableSeatNum;
+
+    public static ZonedDateTime fromStr(String timeStr){
+        /// str format: "yyyy/MM/dd/ HH:mm:ss z" e.g) "2024/04/13/ 20:30:00 KST"
+        return ZonedDateTime.parse(timeStr, DateTimeFormatter.ofPattern("yyyy/MM/dd/ HH:mm:ss z"));
+    }
+
 }
+
+
