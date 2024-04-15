@@ -4,14 +4,12 @@ public class Seat{
         long id;
         long concertHallId;
         long price;
-        SeatStatus status;
 
 
 
-    public Seat(long id, long concertHallId, long price, SeatStatus status) {
+    public Seat(long id, long concertHallId, long price) {
         this.id = id;
         this.concertHallId = concertHallId;
         this.price = price;
-        this.status = status;
     }
 }
