@@ -1,17 +1,29 @@
 package com.project1.ticketing.domain.concert.models;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Builder
 @Getter
 public class ConcertHall {
 
-    Long concertHallId;
-    String name;
-    List<Seat> seatList;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    @OneToMany(mappedBy = "concert_hall")
+    private List<Seat> seatList = new ArrayList<>();
 
 
+    @Builder
+    public ConcertHall(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

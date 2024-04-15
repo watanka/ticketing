@@ -1,5 +1,6 @@
 package com.project1.ticketing.domain.concert.components;
 
+import com.project1.ticketing.api.utils.exceptions.BaseException;
 import com.project1.ticketing.domain.concert.models.Concert;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
@@ -9,6 +10,7 @@ import com.project1.ticketing.domain.concert.repository.IConcertTimeRepository;
 import com.project1.ticketing.domain.concert.repository.ISeatRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ConcertService{
 
@@ -37,8 +39,13 @@ public class ConcertService{
     }
 
     public List<Seat> getAllSeats(long concertId, long concertTimeId) {
-        ConcertTime concertTime = concertTimeRepository.getByTime(concertId, concertTimeId);
-        long concertHallId = concertTime.getConcertHallId();
+        Optional<ConcertTime> concertTime = concertTimeRepository.getByTime(concertId, concertTimeId);
+
+        if (concertTime.isEmpty()){
+            throw new RuntimeException("해당 콘서트 시간을 찾지 못 했습니다.");
+        }
+
+        long concertHallId = concertTime.get().getConcertHallId();
 
         return seatRepository.getAllSeats(concertHallId);
     }

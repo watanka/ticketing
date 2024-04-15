@@ -1,8 +1,23 @@
 package com.project1.ticketing.domain.concert.models;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+
+@Entity
+@Getter
 public class Seat{
+
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         long id;
+
+        @ManyToOne()
+        @JoinColumn(name = "concertime_id")
+        private ConcertTime concertTime;
+
+
         long concertHallId;
+
         long price;
 
 
