@@ -45,7 +45,7 @@ public class ConcertService{
             throw new RuntimeException("해당 콘서트 시간을 찾지 못 했습니다.");
         }
 
-        long concertHallId = concertTime.get().getConcertHallId();
+        long concertHallId = concertTime.get().getConcertHall().getId();
 
         return seatRepository.getAllSeats(concertHallId);
     }

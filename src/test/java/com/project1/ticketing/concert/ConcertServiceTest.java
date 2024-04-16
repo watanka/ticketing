@@ -48,7 +48,7 @@ public class ConcertServiceTest {
 
     @BeforeEach
     void setup(){
-
+//
         concertRepository = Mockito.mock(IConcertRepository.class);
         concertTimeRepository = Mockito.mock(IConcertTimeRepository.class);
         seatRepository = Mockito.mock(ISeatRepository.class);
@@ -70,14 +70,12 @@ public class ConcertServiceTest {
         나훈아_콘서트시간_리스트 = List.of(
                 ConcertTime.builder()
                         .time(ConcertTime.fromStr("2024/04/15/ 17:00:00 KST"))
-                        .concertId(0L)
-                        .concertHallId(0L)
+                        .id(0L)
                         .maxSeatNum(50)
                         .currAvailableSeatNum(36).build(),
                 ConcertTime.builder()
                         .time(ConcertTime.fromStr("2024/04/16/ 17:00:00 KST"))
-                        .concertId(1L)
-                        .concertHallId(0L)
+                        .id(1L)
                         .maxSeatNum(50)
                         .currAvailableSeatNum(36).build()
         );
@@ -90,14 +88,12 @@ public class ConcertServiceTest {
         아일릿_콘서트시간_리스트 = List.of(
                 ConcertTime.builder()
                         .time(ConcertTime.fromStr("2024/04/20/ 17:00:00 KST"))
-                        .concertId(2L)
-                        .concertHallId(0L)
+                        .id(2L)
                         .maxSeatNum(50)
                         .currAvailableSeatNum(24).build(),
                 ConcertTime.builder()
                         .time(ConcertTime.fromStr("2024/04/21/ 17:00:00 KST"))
-                        .concertId(3L)
-                        .concertHallId(0L)
+                        .id(3L)
                         .maxSeatNum(50)
                         .currAvailableSeatNum(22).build()
         );
@@ -147,7 +143,7 @@ public class ConcertServiceTest {
         long concertTimeId = 0L;
         long concertHallId = 0L;
 
-        when(concertTimeRepository.getByTime(concertId, concertTimeId)).thenReturn(Optional.ofNullable(ConcertTime.builder().concertHallId(concertHallId).build()));
+        when(concertTimeRepository.getByTime(concertId, concertTimeId)).thenReturn(Optional.ofNullable(ConcertTime.builder().concertHall(잠실_종합운동장).build()));
         when(seatRepository.getAllSeats(concertHallId)).thenReturn(seatList);
         //then
         assertThat(concertService.getAllSeats(concertId, concertTimeId)).isEqualTo(seatList);
