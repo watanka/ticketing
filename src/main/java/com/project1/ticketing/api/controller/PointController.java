@@ -19,16 +19,18 @@ public class PointController {
 
     @PostMapping("/points")
     public ResponseEntity<PointResponse> updatePoint(@RequestBody PointRequest pointRequest){
-        PointResponse pointResponse = pointService.updatePoint(pointRequest);
-
-        return ResponseEntity.ok().body(pointResponse);
+//        PointResponse pointResponse = pointService.updatePoint(pointRequest);
+//
+//        return ResponseEntity.ok().body(pointResponse);
+        return null;
     }
 
     @GetMapping("/points/{user_id}")
     public ResponseEntity<PointResponse> checkPoint(@PathVariable(value="user_id") long userId){
-        PointResponse pointResponse = pointService.checkPoint(userId);
-
-        return ResponseEntity.ok().body(pointResponse);
+//        PointResponse pointResponse = pointService.checkPoint(userId);
+//
+//        return ResponseEntity.ok().body(pointResponse);
+        return null;
     }
 
 }

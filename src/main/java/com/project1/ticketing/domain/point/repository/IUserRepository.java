@@ -3,6 +3,9 @@ package com.project1.ticketing.domain.point.repository;
 
 import com.project1.ticketing.domain.point.models.User;
 
+import java.util.Optional;
+
 public interface IUserRepository {
-    User getById(long userId);
+    Optional<User> findById(long userId);
+    User save(User user);
 }

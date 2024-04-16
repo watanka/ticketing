@@ -2,7 +2,9 @@ package com.project1.ticketing.domain.point.models;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class Point {
 
     @Id
@@ -16,10 +18,11 @@ public class Point {
     private long amount;
 
     @Builder
-    public Point(Long id, PointType pointType, User user, long amount) {
-        this.id = id;
+    public Point(User user, long amount, PointType pointType) {
         this.pointType = pointType;
         this.user = user;
         this.amount = amount;
     }
+
+
 }
