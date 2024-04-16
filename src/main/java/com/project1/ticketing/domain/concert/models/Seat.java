@@ -11,7 +11,7 @@ public class Seat{
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         long id;
 
-        @ManyToOne()
+        @ManyToOne
         @JoinColumn(name = "concertime_id")
         private ConcertTime concertTime;
 

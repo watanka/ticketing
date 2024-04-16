@@ -103,15 +103,16 @@ public class ConcertServiceTest {
         );
 
         잠실_종합운동장 = ConcertHall.builder()
-                .concertHallId(0L)
+                .id(0L)
                 .name("잠실 종합운동장")
-                .seatList(List.of(
-                        new Seat(1L, 0L, 200000),
-                        new Seat(2L, 0L, 150000),
-                        new Seat(3L, 0L, 150000),
-                        new Seat(4L, 0L, 120000)
-                )).build();
+                .build();
 
+        seatList = List.of(
+                new Seat(1L, 0L, 200000),
+                new Seat(2L, 0L, 150000),
+                new Seat(3L, 0L, 150000),
+                new Seat(4L, 0L, 120000)
+        );
 
     }
 

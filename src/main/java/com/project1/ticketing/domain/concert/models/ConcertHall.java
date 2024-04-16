@@ -17,9 +17,11 @@ public class ConcertHall {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "concert_hall")
+    @OneToMany(mappedBy = "concerthall")
     private List<Seat> seatList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "concerthall")
+    private List<ConcertTime> concertTimeList = new ArrayList<>();
 
     @Builder
     public ConcertHall(Long id, String name) {

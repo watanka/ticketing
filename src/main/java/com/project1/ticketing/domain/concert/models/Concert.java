@@ -17,6 +17,7 @@ public class Concert{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+
     @OneToMany(mappedBy = "concert")
     private List<ConcertTime> concertTimeList = new ArrayList<>();
 
