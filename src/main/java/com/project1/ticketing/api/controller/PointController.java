@@ -27,9 +27,10 @@ public class PointController {
 
     @GetMapping("/points/{user_id}")
     public ResponseEntity<PointResponse> checkPoint(@PathVariable(value="user_id") long userId){
-        PointResponse pointResponse = pointService.checkPoint(userId);
+        long point = pointService.checkPoint(userId);
 
-        return ResponseEntity.ok().body(pointResponse);
+//        return ResponseEntity.ok().body(pointResponse);
+        return null;
     }
 
 }

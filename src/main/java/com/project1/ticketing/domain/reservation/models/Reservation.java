@@ -22,9 +22,9 @@ public class Reservation{
     @ManyToOne
     private User user;
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne
     private ConcertTime concertTime;
-    @OneToOne(mappedBy = "seat")
+    @OneToOne
     private Seat seat;
 
     private ReservationStatus status;

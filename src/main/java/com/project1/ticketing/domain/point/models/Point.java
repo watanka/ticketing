@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 
+@Entity
 @Getter
 public class Point {
 
@@ -11,6 +12,7 @@ public class Point {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private PointType pointType;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

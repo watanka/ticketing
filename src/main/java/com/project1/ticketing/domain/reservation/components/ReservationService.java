@@ -53,7 +53,7 @@ public class ReservationService {
 
 
         if (ZonedDateTime.now().isAfter(reservationExpiredTime)){
-            selectedReservation.setStatus(ReservationStatus.AVAILABLE);
+            selectedReservation.setStatus(ReservationStatus.CANCELLED);
             reservationRepository.save(selectedReservation);
         }
         return selectedReservation;
@@ -62,4 +62,9 @@ public class ReservationService {
     public List<Reservation> findAllByUserId(long userId){
         return reservationRepository.findAllByUserId(userId);
     }
+
+    public Optional<Reservation> findByReservationId(long reservationId){
+        return reservationRepository.findById(reservationId);
+    }
+
 }

@@ -1,7 +1,5 @@
 package com.project1.ticketing.domain.point.components;
 
-import com.project1.ticketing.api.dto.request.PointRequest;
-import com.project1.ticketing.api.dto.response.PointResponse;
 import com.project1.ticketing.domain.point.models.Point;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
@@ -28,7 +26,7 @@ public class PointService{
     public Point updatePoint(long userId, long amount, PointType pointType) {
 
         // user 포인트 조회
-        User user = userRepository.getById(userId);
+        User user = userRepository.findById(userId).get();
         long balance = user.getBalance();
 
         pointValidator.validate(balance, amount, pointType);
@@ -41,13 +39,13 @@ public class PointService{
         }else{
             user.chargePoint(amount);
         }
-        userRepository.update(user);
+        userRepository.save(user);
 
         return point;
     }
 
     public long checkPoint(long userId) {
-        User user = userRepository.getById(userId);
+        User user = userRepository.findById(userId).get();
         return user.getBalance();
     }
 }
