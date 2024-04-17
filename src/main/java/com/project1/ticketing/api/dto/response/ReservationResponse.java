@@ -22,7 +22,7 @@ public class ReservationResponse {
 
     public ReservationResponse(long userId, ZonedDateTime concertTime, String tokenId, long seatId, ZonedDateTime expiredAt) {
         this.userId = userId;
-        this.status = ReservationStatus.AVAILABLE;
+        this.status = ReservationStatus.TEMPORARY;
         this.tokenId = tokenId;
         this.concertTime = concertTime;
         this.seatId = seatId;

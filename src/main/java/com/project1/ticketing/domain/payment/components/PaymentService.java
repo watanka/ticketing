@@ -17,12 +17,16 @@ public class PaymentService{
     IPaymentRepository paymentRepository;
     PaymentValidator paymentValidator;
 
+    public PaymentService(IPaymentRepository paymentRepository, PaymentValidator paymentValidator) {
+        this.paymentRepository = paymentRepository;
+        this.paymentValidator = paymentValidator;
+    }
 
-
-    public Payment pay(long price, long balance) {
+    public Payment pay(Reservation reservation, long balance) {
 
         Payment payment = new Payment(reservation);
 
+        long price = reservation.getSeat().getPrice();
 
         paymentValidator.validate(price, balance);
 
