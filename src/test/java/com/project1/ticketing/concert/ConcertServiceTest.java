@@ -110,6 +110,13 @@ public class ConcertServiceTest {
                 new Seat(4L, 0L, 120000)
         );
 
+        List<Seat> seatList = List.of(
+                new Seat(1L, 0L, 200000),
+                new Seat(2L, 0L, 150000),
+                new Seat(3L, 0L, 150000),
+                new Seat(4L, 0L, 120000)
+        );
+
     }
 
     @Test

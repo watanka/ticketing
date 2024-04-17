@@ -29,7 +29,7 @@ public class PointService{
 
         // user 포인트 조회
         User user = userRepository.getById(userId);
-        long balance = user.getPoint();
+        long balance = user.getBalance();
 
         pointValidator.validate(balance, amount, pointType);
 
@@ -48,6 +48,6 @@ public class PointService{
 
     public long checkPoint(long userId) {
         User user = userRepository.getById(userId);
-        return user.getPoint();
+        return user.getBalance();
     }
 }

@@ -1,30 +1,33 @@
 package com.project1.ticketing.domain.point.models;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
-@Getter @Setter
+@Getter
 public class User{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;
 
-    private String name;
-
-    private long point;
-
+    long balance;
 
     public void usePoint(long amount){
-        this.point -= amount;
-    }
-    public void chargePoint(long amount){
-        this.point += amount;
+        this.balance -= amount;
     }
 
+    public void chargePoint(long amount){
+        this.balance += amount;
+    }
+
+    @Builder
+    public User(long id, long balance) {
+        this.id = id;
+        this.balance = balance;
+    }
 }

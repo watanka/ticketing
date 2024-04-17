@@ -2,7 +2,9 @@ package com.project1.ticketing.domain.point.models;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class Point {
 
     @Id
@@ -21,4 +23,6 @@ public class Point {
         this.user = user;
         this.amount = amount;
     }
+
+
 }

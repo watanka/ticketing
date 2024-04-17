@@ -8,13 +8,11 @@ import java.util.Optional;
 
 
 @Repository
-public class MemoryReservationRepository implements IReservationRepository {
-    @Override
-    public Optional<Reservation> getById(long reservationId) {
+public class MemoryReservationRepository {
+    public Optional<Reservation> findById(long reservationId) {
         return Optional.empty();
     }
 
-    @Override
     public void save(Reservation reservation) {
 
     }
