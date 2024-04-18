@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -29,5 +30,16 @@ public class ConcertResponse {
                 .build();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConcertResponse that = (ConcertResponse) o;
+        return id == that.id && Objects.equals(name, that.name);
+    }
 }

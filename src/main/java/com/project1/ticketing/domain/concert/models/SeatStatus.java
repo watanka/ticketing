@@ -13,4 +13,12 @@ public enum SeatStatus {
                 throw new IllegalArgumentException("Unsupported Enum value");
         }
     }
+
+    public static SeatStatus fromBool(boolean isAvailable){
+        if (isAvailable){
+            return AVAILABLE;
+        }else{
+            return RESERVED;
+        }
+    }
 }

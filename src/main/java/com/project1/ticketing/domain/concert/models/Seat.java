@@ -1,5 +1,6 @@
 package com.project1.ticketing.domain.concert.models;
 
+import com.project1.ticketing.api.dto.response.SeatResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,5 +32,14 @@ public class Seat{
         this.concertHallId = concertHallId;
         this.price = price;
         this.status = status;
+    }
+
+    public static Seat from(SeatResponse seatResponse){
+        return Seat.builder()
+                .id(seatResponse.getId())
+                .concertHallId(seatResponse.getConcertHallId())
+                .price(seatResponse.getPrice())
+                .status(SeatStatus.fromBool(seatResponse.isAvailable()))
+                .build();
     }
 }
