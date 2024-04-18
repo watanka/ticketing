@@ -4,16 +4,17 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 
-@Entity
+//@Entity
 @Getter
 public class Seat{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
+    long seatNum;
 
-    @ManyToOne
-    @JoinColumn(name = "concertime_id")
+//    @ManyToOne
+//    @JoinColumn(name = "concertTime_id")
     private ConcertTime concertTime;
 
 
@@ -21,11 +22,14 @@ public class Seat{
 
     long price;
 
+    SeatStatus status;
+
 
     @Builder
-    public Seat(long id, long concertHallId, long price) {
+    public Seat(long id, long concertHallId, long price, SeatStatus status) {
         this.id = id;
         this.concertHallId = concertHallId;
         this.price = price;
+        this.status = status;
     }
 }

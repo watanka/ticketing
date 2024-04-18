@@ -1,31 +1,35 @@
 package com.project1.ticketing.domain.concert.models;
 
+import com.project1.ticketing.api.dto.response.ConcertTimeResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
+//@Entity
 @Builder
 @Getter
 public class ConcertTime{
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name="concertTime_id")
     long id;
 
     private ZonedDateTime time;
 
-    @ManyToOne
-    @JoinColumn(name="concert_id")
+//    @ManyToOne
+//    @JoinColumn(name="concert_id")
     private Concert concert;
 
-    @ManyToOne
-    @JoinColumn(name="concerthall_id")
-    ConcertHall concertHall;
+    private List<Seat> seats = new ArrayList<>();
+
+    long concertHallId;
     int maxSeatNum;
-    int currAvailableSeatNum;
+    int currAvailableSeatNum; // seat정보에 따라 업데이트
 
     public static ZonedDateTime fromStr(String timeStr){
         /// str format: "yyyy/MM/dd/ HH:mm:ss z" e.g) "2024/04/13/ 20:30:00 KST"

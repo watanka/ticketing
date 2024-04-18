@@ -1,6 +1,21 @@
 package com.project1.ticketing.api.dto.response;
 
+import com.project1.ticketing.domain.concert.models.ConcertTime;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
+@Getter
+@Builder
 public class ConcertTimeResponse {
+    long id;
+    ZonedDateTime time;
+    long concertHallId;
+    int maxSeatNum;
+    int currAvailableSeatNum;
+
     public static ConcertTimeResponse from(ConcertTime concertTime){
         return ConcertTimeResponse.builder()
                 .id(concertTime.getId())

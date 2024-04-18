@@ -13,14 +13,13 @@ import java.util.List;
 @Setter
 @Builder
 public class ConcertResponse {
-    private List<Concert> concertList;
-    private long concertId;
-    private String concertName;
-    private List<Seat> seatList;  // 한 번에 한 좌석만
 
+    private long id;
+    private String name;
 
-    public ConcertResponse(List<Concert> concertList){
-        this.concertList = concertList;
+    public ConcertResponse(long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public static ConcertResponse from(Concert concert){

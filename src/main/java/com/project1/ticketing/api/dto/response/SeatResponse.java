@@ -1,5 +1,12 @@
 package com.project1.ticketing.api.dto.response;
 
+import com.project1.ticketing.domain.concert.models.Seat;
+import com.project1.ticketing.domain.concert.models.SeatStatus;
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
 public class SeatResponse {
     long id;
     long seatNum;

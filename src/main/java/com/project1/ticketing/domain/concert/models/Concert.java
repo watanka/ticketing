@@ -9,21 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
+//@Entity
 @Getter
 public class Concert{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "concert_id")
     private long id;
     private String name;
 
-    @OneToMany(mappedBy = "concert")
+//    @OneToMany(mappedBy = "concert")
     private List<ConcertTime> concertTimeList = new ArrayList<>();
 
     @Builder
-    public Concert(long id, String name) {
+    public Concert(long id, String name, List<ConcertTime> concertTimeList) {
         this.id = id;
         this.name = name;
+        this.concertTimeList = concertTimeList;
     }
 
     public static Concert from(ConcertResponse concertResponse){

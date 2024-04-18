@@ -16,9 +16,9 @@ import java.util.List;
 public class ConcertUseCase {
     ConcertService concertService;
 
-    @Autowired
-    public ConcertUseCase(ConcertService concertService) {
-        this.concertService = concertService;
-    }
+//    @Autowired
+//    public ConcertUseCase(ConcertService concertService) {
+//        this.concertService = concertService;
+//    }
 
 }
