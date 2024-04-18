@@ -14,7 +14,11 @@ public class ConcertFilter {
 
     ISeatRepository seatRepository;
 
-    public List<ConcertTimeResponse> filterTime(List<ConcertTime> concertTimeList){
+    public ConcertFilter(ISeatRepository seatRepository) {
+        this.seatRepository = seatRepository;
+    }
+
+    public List<ConcertTimeResponse> filterAvailableTime(List<ConcertTime> concertTimeList){
         List<ConcertTimeResponse> availableTimeList = new ArrayList<>();
         for (ConcertTime concertTime : concertTimeList) {
             if (isTimeAvailable(concertTime.getId())){
@@ -25,7 +29,7 @@ public class ConcertFilter {
         return availableTimeList;
     }
 
-    public List<SeatResponse> filterSeat(List<Seat> seatList){
+    public List<SeatResponse> filterAvailableSeat(List<Seat> seatList){
         List<SeatResponse> availableSeatList = new ArrayList<>();
         for (Seat seat : seatList) {
             if (seat.getStatus() == SeatStatus.AVAILABLE){
