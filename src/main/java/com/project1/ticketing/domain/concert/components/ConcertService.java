@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ConcertService{
+public class ConcertService implements IConcertService{
 
     IConcertRepository concertRepository;
     IConcertTimeRepository concertTimeRepository;
