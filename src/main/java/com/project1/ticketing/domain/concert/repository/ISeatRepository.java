@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ISeatRepository { // seat는 concertTime에 대한 정보를 모른다.
-    public boolean isAvailable(long concertId, long concertTimeId, long seatId);
-    public Optional<Seat> findById(long concertId, long concertTimeId, long seatId);
+    public boolean isAvailable(long seatId);
+    public Optional<Seat> findById(long seatId);
 
     public List<Seat> getByConcertTimeId(long concertTimeId);
 

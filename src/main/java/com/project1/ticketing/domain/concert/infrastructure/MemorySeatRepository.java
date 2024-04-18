@@ -11,12 +11,12 @@ import java.util.Optional;
 public class MemorySeatRepository implements ISeatRepository {
 
     @Override
-    public boolean isAvailable(long concertId, long concertTimeId, long seatId) {
+    public boolean isAvailable(long seatId) {
         return false;
     }
 
     @Override
-    public Optional<Seat> findById(long concertId, long concertTimeId, long seatId) {
+    public Optional<Seat> findById(long seatId) {
         return Optional.empty();
     }
 

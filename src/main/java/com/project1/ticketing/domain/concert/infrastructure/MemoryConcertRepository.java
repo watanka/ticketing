@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Repository
@@ -22,9 +23,11 @@ public class MemoryConcertRepository implements IConcertRepository{
         return concertMap.values().stream().toList();
     }
 
+
+
     @Override
-    public Concert getById(long concertId) {
-        return concertMap.get(concertId);
+    public Optional<Concert> findById(long concertId) {
+        return Optional.of(concertMap.get(concertId));
     }
 
     @Override

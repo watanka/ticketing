@@ -22,7 +22,7 @@ public class MemoryConcertTimeRepository implements IConcertTimeRepository {
     }
 
     @Override
-    public Optional<ConcertTime> getById(long concertTimeId) {
+    public Optional<ConcertTime> findById(long concertTimeId) {
         return Optional.empty();
     }
 
