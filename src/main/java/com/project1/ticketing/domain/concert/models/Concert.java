@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//@Entity
+@Entity
 @Getter
 public class Concert{
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "concert_id")
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
 

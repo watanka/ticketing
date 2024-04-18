@@ -9,6 +9,4 @@ public interface IConcertRepository {
     List<Concert> getAll();
     Optional<Concert> findById(long concertId);
 
-    boolean isFull(long concertId);
-
 }
