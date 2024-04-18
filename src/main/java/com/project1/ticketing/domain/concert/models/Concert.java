@@ -1,5 +1,6 @@
 package com.project1.ticketing.domain.concert.models;
 
+import com.project1.ticketing.api.dto.response.ConcertResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,4 +25,16 @@ public class Concert{
         this.id = id;
         this.name = name;
     }
+
+    public static Concert from(ConcertResponse concertResponse){
+        return Concert.builder()
+                .id(concertResponse.getId())
+                .name(concertResponse.getName())
+                .build();
+    }
+
+
+
+
+
 }

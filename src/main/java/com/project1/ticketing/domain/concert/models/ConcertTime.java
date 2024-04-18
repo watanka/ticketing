@@ -32,6 +32,16 @@ public class ConcertTime{
         return ZonedDateTime.parse(timeStr, DateTimeFormatter.ofPattern("yyyy/MM/dd/ HH:mm:ss z"));
     }
 
+    public static ConcertTime from(ConcertTimeResponse concertTimeResponse){
+        return ConcertTime.builder()
+                .id(concertTimeResponse.getId())
+                .time(concertTimeResponse.getTime())
+                .concertHallId(concertTimeResponse.getConcertHallId())
+                .maxSeatNum(concertTimeResponse.getMaxSeatNum())
+                .currAvailableSeatNum(concertTimeResponse.getCurrAvailableSeatNum())
+                .build();
+    }
+
 }
 
 

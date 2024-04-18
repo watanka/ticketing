@@ -11,6 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 public class ConcertResponse {
     private List<Concert> concertList;
     private long concertId;
@@ -21,8 +22,12 @@ public class ConcertResponse {
     public ConcertResponse(List<Concert> concertList){
         this.concertList = concertList;
     }
-    public ConcertResponse(long concertId) {
-        this.concertId = concertId;
+
+    public static ConcertResponse from(Concert concert){
+        return ConcertResponse.builder()
+                .id(concert.getId())
+                .name(concert.getName())
+                .build();
     }
 
 

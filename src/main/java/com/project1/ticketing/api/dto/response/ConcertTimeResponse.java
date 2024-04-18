@@ -1,4 +1,19 @@
 package com.project1.ticketing.api.dto.response;
 
 public class ConcertTimeResponse {
+    public static ConcertTimeResponse from(ConcertTime concertTime){
+        return ConcertTimeResponse.builder()
+                .id(concertTime.getId())
+                .time(concertTime.getTime())
+                .concertHallId(concertTime.getConcertHallId())
+                .maxSeatNum(concertTime.getMaxSeatNum())
+                .currAvailableSeatNum(concertTime.getCurrAvailableSeatNum())
+                .build();
+    }
+
+    public static ZonedDateTime fromStr(String timeStr){
+        /// str format: "yyyy/MM/dd/ HH:mm:ss z" e.g) "2024/04/13/ 20:30:00 KST"
+        return ZonedDateTime.parse(timeStr, DateTimeFormatter.ofPattern("yyyy/MM/dd/ HH:mm:ss z"));
+    }
+
 }
