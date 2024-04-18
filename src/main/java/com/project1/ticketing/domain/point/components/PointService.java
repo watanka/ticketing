@@ -7,7 +7,6 @@ import com.project1.ticketing.domain.point.repository.IPointRepository;
 import com.project1.ticketing.domain.point.repository.IUserRepository;
 import org.springframework.stereotype.Service;
 
-@Service
 public class PointService{
 
     IUserRepository userRepository;

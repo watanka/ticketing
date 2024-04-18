@@ -2,6 +2,7 @@ package com.project1.ticketing.domain.payment.components;
 
 import com.project1.ticketing.api.dto.request.PaymentRequest;
 import com.project1.ticketing.api.dto.response.PaymentResponse;
+import com.project1.ticketing.domain.concert.repository.ISeatRepository;
 import com.project1.ticketing.domain.payment.models.Payment;
 import com.project1.ticketing.domain.payment.models.PaymentStatus;
 import com.project1.ticketing.domain.payment.repository.IPaymentRepository;
@@ -12,9 +13,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+
 public class PaymentService{
     IPaymentRepository paymentRepository;
+    ISeatRepository seatRepository;
     PaymentValidator paymentValidator;
 
     public PaymentService(IPaymentRepository paymentRepository, PaymentValidator paymentValidator) {
@@ -26,7 +28,7 @@ public class PaymentService{
 
         Payment payment = new Payment(reservation);
 
-        long price = reservation.getSeat().getPrice();
+        long price = 3000;//reservation.getSeatId().getPrice();
 
         paymentValidator.validate(price, balance);
 

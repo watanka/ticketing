@@ -21,18 +21,15 @@ public class MemoryConcertTimeRepository implements IConcertTimeRepository {
         return null;
     }
 
+    @Override
+    public Optional<ConcertTime> getById(long concertTimeId) {
+        return Optional.empty();
+    }
+
     public List<ConcertTime> getAvailableTime(long concertId) {
 
         return concertTimeMap.getOrDefault(concertId, new ArrayList<>());
     }
 
-    @Override
-    public Optional<ConcertTime> getByTime(long concertId, long concertTimeId) {
-         return null;
-    }
 
-    @Override
-    public Boolean isFull(long concertId, long concertTimeId) {
-        return null;
-    }
 }

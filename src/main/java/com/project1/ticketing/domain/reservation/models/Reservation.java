@@ -11,34 +11,34 @@ import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
-@Entity
+//@Entity
 @Getter @Setter
 @Builder
 public class Reservation{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name="reservation_id")
     private long id;
 
-    @ManyToOne
+//    @ManyToOne
     private User user;
 
-    @OneToOne
-    private ConcertTime concertTime;
-    @OneToOne
-    private Seat seat;
+    private long concertTimeId;
+
+    private long seatId;
 
     private ReservationStatus status;
     private ZonedDateTime createAt;
 
     public static Reservation makeReservation(User user,
-                                              ConcertTime concertTime,
-                                              Seat seat,
+                                              long concertTimeId,
+                                              long seatId,
                                               ReservationStatus reservationStatus
                                               ){
         return Reservation.builder()
                 .user(user)
-                .concertTime(concertTime)
-                .seat(seat)
+                .concertTimeId(concertTimeId)
+                .seatId(seatId)
                 .status(reservationStatus)
                 .createAt(ZonedDateTime.now())
                 .build();

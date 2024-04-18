@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class MemoryTokenService implements ITokenService{
 
-    @Autowired
+//    @Autowired
     MemoryTokenRepository tokenRepository;
 
     public MemoryTokenService(MemoryTokenRepository tokenRepository) {

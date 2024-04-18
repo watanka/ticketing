@@ -11,10 +11,10 @@ public class TokenController {
 
     TokenUseCase tokenUseCase;
 
-    @Autowired
-    public TokenController(TokenUseCase tokenUseCase) {
-        this.tokenUseCase = tokenUseCase;
-    }
+//    @Autowired
+//    public TokenController(TokenUseCase tokenUseCase) {
+//        this.tokenUseCase = tokenUseCase;
+//    }
 
 
     @PostMapping("/tokens/concerts/{concert_id}")

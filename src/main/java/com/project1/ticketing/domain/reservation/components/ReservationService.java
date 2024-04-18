@@ -14,7 +14,6 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class ReservationService {
 
     IReservationRepository reservationRepository;
@@ -25,13 +24,13 @@ public class ReservationService {
         this.reservationValidator = reservationValidator;
     }
 
-    public void register(User user, ConcertTime concertTime, Seat seat){
-        reservationValidator.validate(user.getId(), concertTime.getId(), seat.getId());
+    public void register(User user, long concertTimeId, long seatId){
+        reservationValidator.validate(user.getId(), concertTimeId, seatId);
 
         Reservation reservation = Reservation.builder()
                 .user(user)
-                .concertTime(concertTime)
-                .seat(seat)
+                .concertTimeId(concertTimeId)
+                .seatId(seatId)
                 .build();
 
         reservationRepository.save(reservation);

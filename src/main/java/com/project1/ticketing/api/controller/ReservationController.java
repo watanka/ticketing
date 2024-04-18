@@ -12,10 +12,10 @@ public class ReservationController {
 
     ReservationService reservationService;
 
-    @Autowired
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
-    }
+//    @Autowired
+//    public ReservationController(ReservationService reservationService) {
+//        this.reservationService = reservationService;
+//    }
 
     @PostMapping("/reservations") // token_id, user_id, concert_time, seat_num
     public ResponseEntity<ReservationResponse> makeReservation(@RequestBody ReservationRequest reservationRequest){

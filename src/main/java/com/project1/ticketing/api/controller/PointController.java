@@ -12,10 +12,10 @@ public class PointController {
 
     PointService pointService;
 
-    @Autowired
-    public PointController(PointService pointService) {
-        this.pointService = pointService;
-    }
+//    @Autowired
+//    public PointController(PointService pointService) {
+//        this.pointService = pointService;
+//    }
 
     @PostMapping("/points")
     public ResponseEntity<PointResponse> updatePoint(@RequestBody PointRequest pointRequest){

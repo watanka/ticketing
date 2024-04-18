@@ -7,12 +7,12 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 
-@Entity
+//@Entity
 @Getter
 public class User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     long balance;

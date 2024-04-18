@@ -9,16 +9,16 @@ import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
-@Entity
+//@Entity
 @Getter @Setter
 public class Payment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @OneToOne
-    @JoinColumn(name = "reservation_id")
+//    @OneToOne
+//    @JoinColumn(name = "reservation_id")
     Reservation reservation;
 
     ZonedDateTime createAt;

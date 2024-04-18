@@ -13,10 +13,10 @@ public class PaymentController {
     PaymentService paymentService;
 
 
-    @Autowired
-    public PaymentController(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
+//    @Autowired
+//    public PaymentController(PaymentService paymentService) {
+//        this.paymentService = paymentService;
+//    }
 
     @PostMapping("/payment") // Query: reservation_id
     public ResponseEntity<PaymentResponse> pay(@RequestBody PaymentRequest paymentRequest){
