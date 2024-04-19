@@ -29,7 +29,7 @@ public class PointHistoryService implements IPointHistoryService {
         long amount = request.getAmount();
         PointType pointType = request.getPointType();
 
-        // TODO: validator가 조회한 유저를 리턴하는 건 두 개의 책임을 갖게되는 것 같아서 문제이지만, 코드가 좀더 깔끔해보이는 것가탇.
+        // TODO: validator가 조회한 유저를 리턴하는 건 검증외에 또 다른 책임을 갖게되는 것 같아서 문제이지만, 코드가 좀더 깔끔해보이는 것 같다.
         User foundUser = pointValidator.validateUser(userId);
         long balance = foundUser.getBalance();
 
