@@ -2,23 +2,24 @@ package com.project1.ticketing.domain.concert.models;
 
 import com.project1.ticketing.api.dto.response.SeatResponse;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
-//@Entity
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Getter
 public class Seat{
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue
     long id;
     long seatNum;
 
-//    @ManyToOne
-//    @JoinColumn(name = "concertTime_id")
-    private ConcertTime concertTime;
+    @Column(name="concerttime_id")
+    private long concertTimeId;
 
-
+    @Column(name="concerthall_id")
     long concertHallId;
 
     long price;
@@ -26,13 +27,7 @@ public class Seat{
     SeatStatus status;
 
 
-    @Builder
-    public Seat(long id, long concertHallId, long price, SeatStatus status) {
-        this.id = id;
-        this.concertHallId = concertHallId;
-        this.price = price;
-        this.status = status;
-    }
+
 
     public static Seat from(SeatResponse seatResponse){
         return Seat.builder()

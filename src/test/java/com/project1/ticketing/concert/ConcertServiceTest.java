@@ -15,7 +15,6 @@ import com.project1.ticketing.domain.concert.repository.ISeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 
 import java.util.List;
@@ -42,9 +41,6 @@ public class ConcertServiceTest {
     ConcertValidator concertValidator;
     ConcertService concertService;
 
-
-    List<Concert> concertList;
-    List<ConcertTime> concertTimeList;
     List<SeatResponse> fullReservedSeatList;
     List<SeatResponse> fullAvailableSeatList;
 
@@ -152,8 +148,8 @@ public class ConcertServiceTest {
 
 
         //given & when
-        when(concertRepository.findById(concertId)).thenReturn(Optional.of(mock(Concert.class)));
-        when(concertTimeRepository.getAllByConcertId(concertId)).thenReturn(fromConcertTimeDTOtoEntity(나훈아_콘서트시간_리스트));
+        when(concertRepository.findConcertById(concertId)).thenReturn(Optional.of(mock(Concert.class)));
+        when(concertTimeRepository.findAllByConcertId(concertId)).thenReturn(fromConcertTimeDTOtoEntity(나훈아_콘서트시간_리스트));
 
         when(seatRepository.getAvailableSeatsbyConcertTimeId(anyLong())).thenReturn(Optional.of(Seat.builder().build()));
         //then
