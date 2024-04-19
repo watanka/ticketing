@@ -5,17 +5,21 @@ import com.project1.ticketing.api.dto.response.SeatResponse;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
-import com.project1.ticketing.domain.concert.repository.ISeatRepository;
+import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ConcertFilter {
 
-    ISeatRepository seatRepository;
+    ConcertCoreRepository concertCoreRepository;
 
-    public ConcertFilter(ISeatRepository seatRepository) {
-        this.seatRepository = seatRepository;
+    @Autowired
+    public ConcertFilter(ConcertCoreRepository concertCoreRepository) {
+        this.concertCoreRepository = concertCoreRepository;
     }
 
     public List<ConcertTimeResponse> filterAvailableTime(List<ConcertTime> concertTimeList){
@@ -41,7 +45,7 @@ public class ConcertFilter {
 
 
     public boolean isTimeAvailable(long concertTimeId){
-        return seatRepository.getAvailableSeatsbyConcertTimeId(concertTimeId).isPresent();
+        return concertCoreRepository.isconcertTimeAvailable(concertTimeId);
     }
 
 }

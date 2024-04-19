@@ -1,18 +1,18 @@
 package com.project1.ticketing.domain.concert.components;
 
-import com.project1.ticketing.domain.concert.repository.IConcertRepository;
-import com.project1.ticketing.domain.concert.repository.IConcertTimeRepository;
-import com.project1.ticketing.domain.concert.repository.ISeatRepository;
+import com.project1.ticketing.domain.concert.infrastructure.ConcertCoreRepositoryImpl;
+import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class ConcertValidator {
-    IConcertRepository concertRepository;
-    IConcertTimeRepository concertTimeRepository;
-    ISeatRepository seatRepository;
+    ConcertCoreRepository concertRepository;
 
-    public ConcertValidator(IConcertRepository concertRepository, IConcertTimeRepository concertTimeRepository, ISeatRepository seatRepository) {
+    @Autowired
+    public ConcertValidator(ConcertCoreRepository concertRepository) {
         this.concertRepository = concertRepository;
-        this.concertTimeRepository = concertTimeRepository;
-        this.seatRepository = seatRepository;
     }
 
     public void validateConcert(long concertId){
@@ -22,13 +22,13 @@ public class ConcertValidator {
     }
 
     public void validateConcertTime(long concertTimeId){
-        if (concertTimeRepository.findById(concertTimeId).isEmpty()){
+        if (concertRepository.findConcertTimeById(concertTimeId).isEmpty()){
             throw new RuntimeException("콘서트 시간 정보를 찾을 수 없습니다.");
         }
     }
 
     public void validateSeat(long seatId){
-        if (seatRepository.findById(seatId).isEmpty()){
+        if (concertRepository.findSeatById(seatId).isEmpty()){
             throw new RuntimeException("좌석 정보를 찾을 수 없습니다.");
         }
     }

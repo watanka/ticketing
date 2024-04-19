@@ -8,10 +8,8 @@ import com.project1.ticketing.domain.concert.components.ConcertService;
 import com.project1.ticketing.domain.concert.components.ConcertValidator;
 import com.project1.ticketing.domain.concert.models.*;
 
-import com.project1.ticketing.domain.concert.repository.IConcertHallRepository;
-import com.project1.ticketing.domain.concert.repository.IConcertRepository;
-import com.project1.ticketing.domain.concert.repository.IConcertTimeRepository;
-import com.project1.ticketing.domain.concert.repository.ISeatRepository;
+import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
+import com.project1.ticketing.domain.concert.repository.ConcertTimeJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,11 +30,7 @@ import static org.mockito.Mockito.when;
 public class ConcertServiceTest {
 
 
-    IConcertRepository concertRepository;
-    IConcertTimeRepository concertTimeRepository;
-    ISeatRepository seatRepository;
-    IConcertHallRepository concertHallRepository;
-
+    ConcertCoreRepository concertRepository;
     ConcertFilter concertFilter;
     ConcertValidator concertValidator;
     ConcertService concertService;
@@ -66,18 +60,14 @@ public class ConcertServiceTest {
     @BeforeEach
     void setup(){
 //
-        concertRepository = mock(IConcertRepository.class);
-        concertTimeRepository = mock(IConcertTimeRepository.class);
-        seatRepository = mock(ISeatRepository.class);
+        concertRepository = mock(ConcertCoreRepository.class);
 
-        concertValidator = new ConcertValidator(concertRepository, concertTimeRepository, seatRepository);
-        concertFilter = new ConcertFilter(seatRepository);
+        concertValidator = new ConcertValidator(concertRepository);
+        concertFilter = new ConcertFilter(concertRepository);
 
 
         concertService = new ConcertService(
                 concertRepository,
-                concertTimeRepository,
-                seatRepository,
                 concertValidator,
                 concertFilter
                 );
@@ -149,11 +139,11 @@ public class ConcertServiceTest {
 
         //given & when
         when(concertRepository.findConcertById(concertId)).thenReturn(Optional.of(mock(Concert.class)));
-        when(concertTimeRepository.findAllByConcertId(concertId)).thenReturn(fromConcertTimeDTOtoEntity(나훈아_콘서트시간_리스트));
+        when(concertRepository.findAllConcertTimesByConcertId(concertId)).thenReturn(List.of(mock(ConcertTime.class)));
+        when(concertRepository.isconcertTimeAvailable(anyLong())).thenReturn(true);
 
-        when(seatRepository.getAvailableSeatsbyConcertTimeId(anyLong())).thenReturn(Optional.of(Seat.builder().build()));
         //then
-        assertThat(concertService.getAvailableTimes(concertId).size()).isEqualTo(2);
+        assertThat(concertService.getAvailableTimes(concertId).size()).isEqualTo(1);
     }
 
 
@@ -162,8 +152,11 @@ public class ConcertServiceTest {
     void listAvailableConcertSeats(){
         long concertTimeId = 0L;
         //given&when
-        when(concertTimeRepository.findById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
-        when(seatRepository.getByConcertTimeId(concertTimeId)).thenReturn(fromSeatDTOtoEntity(fullAvailableSeatList));
+
+        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
+
+        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
+        when(concertRepository.findAllSeatsByConcertTimeId(concertTimeId)).thenReturn(fromSeatDTOtoEntity(fullAvailableSeatList));
         //then
         assertThat(concertService.getAvailableSeats(concertTimeId).size()).isEqualTo(fullAvailableSeatList.size());
     }
@@ -174,8 +167,8 @@ public class ConcertServiceTest {
 
         long concertTimeId = 0L;
         //given&when
-        when(concertTimeRepository.findById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
-        when(seatRepository.getByConcertTimeId(concertTimeId)).thenReturn(fromSeatDTOtoEntity(fullReservedSeatList));
+        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
+        when(concertRepository.findAllSeatsByConcertTimeId(concertTimeId)).thenReturn(fromSeatDTOtoEntity(fullReservedSeatList));
         //then
         assertThat(concertService.getAvailableSeats(concertTimeId).size()).isEqualTo(0);
     }
@@ -184,7 +177,7 @@ public class ConcertServiceTest {
     @DisplayName("선택한 콘서트 날짜를 찾지 못한 경우")
     void listConcertSeatsNotFound(){
         long concertTimeId = 0L;
-        when(concertTimeRepository.findById(concertTimeId)).thenReturn(Optional.empty());
+        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.empty());
         //then
         try{
             concertService.getAvailableSeats(concertTimeId);
