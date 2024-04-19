@@ -12,8 +12,8 @@ public class PointRequest {
     // amount
 
     private long userId;
-    private PointType pointType;
     private long amount;
+    private PointType pointType;
 
     public PointRequest(long userId, long amount, PointType pointType) {
         this.userId = userId;
