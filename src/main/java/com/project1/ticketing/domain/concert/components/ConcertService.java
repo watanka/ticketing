@@ -3,30 +3,30 @@ package com.project1.ticketing.domain.concert.components;
 import com.project1.ticketing.api.dto.response.ConcertResponse;
 import com.project1.ticketing.api.dto.response.ConcertTimeResponse;
 import com.project1.ticketing.api.dto.response.SeatResponse;
+import com.project1.ticketing.domain.concert.infrastructure.ConcertRepositoryImpl;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
-import com.project1.ticketing.domain.concert.repository.IConcertHallRepository;
 import com.project1.ticketing.domain.concert.repository.IConcertRepository;
 import com.project1.ticketing.domain.concert.repository.IConcertTimeRepository;
 import com.project1.ticketing.domain.concert.repository.ISeatRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ConcertService implements IConcertService{
 
     IConcertRepository concertRepository;
-    IConcertTimeRepository concertTimeRepository;
-    ISeatRepository seatRepository;
 
     ConcertValidator concertValidator;
     ConcertFilter concertFilter;
 
-    public ConcertService(IConcertRepository concertRepository, IConcertTimeRepository concertTimeRepository, ISeatRepository seatRepository, ConcertValidator concertValidator, ConcertFilter concertFilter) {
+    public ConcertService(ConcertRepositoryImpl concertRepository, ConcertValidator concertValidator, ConcertFilter concertFilter) {
+
+//        IConcertRepository concertRepository, IConcertTimeRepository concertTimeRepository, ISeatRepository seatRepository,
+//        this.concertRepository = concertRepository;
+//        this.concertTimeRepository = concertTimeRepository;
+//        this.seatRepository = seatRepository;
         this.concertRepository = concertRepository;
-        this.concertTimeRepository = concertTimeRepository;
-        this.seatRepository = seatRepository;
         this.concertValidator = concertValidator;
         this.concertFilter = concertFilter;
     }
@@ -34,7 +34,7 @@ public class ConcertService implements IConcertService{
     @Override
     public List<ConcertResponse> getAllConcerts() {
 
-        return concertRepository.getAll().stream()
+        return concertRepository.findAll().stream()
                 .map(ConcertResponse::from)
                 .collect(Collectors.toList());
     }
@@ -42,7 +42,7 @@ public class ConcertService implements IConcertService{
     @Override
     public List<ConcertTimeResponse> getAvailableTimes(long concertId) {
         concertValidator.validateConcert(concertId);
-        List<ConcertTime> concertTimeList = concertTimeRepository.getAllByConcertId(concertId);
+        List<ConcertTime> concertTimeList = concertRepository.findAllByConcertId(concertId);
 
         return concertFilter.filterAvailableTime(concertTimeList);
 
@@ -51,7 +51,7 @@ public class ConcertService implements IConcertService{
     @Override
     public List<SeatResponse> getAvailableSeats(long concertTimeId) {
         concertValidator.validateConcertTime(concertTimeId);
-        List<Seat> seatList = seatRepository.getByConcertTimeId(concertTimeId);
+        List<Seat> seatList = concertRepository.findByConcertTimeId(concertTimeId);
 
         return concertFilter.filterAvailableSeat(seatList);
 
@@ -60,17 +60,12 @@ public class ConcertService implements IConcertService{
     }
 
 
-    // 콘서트, 시간, 좌석 순 꽉 찼는지 확인
-    public boolean isConcertFull(long concertId){
-        concertValidator.validateConcert(concertId);
-        return concertRepository.isFull(concertId);
-    }
 
 
 
     public boolean isSeatReserved(long seatId){
         concertValidator.validateSeat(seatId);
-        return seatRepository.isAvailable(seatId);
+        return concertRepository.isAvailable(seatId);
     }
 
 }

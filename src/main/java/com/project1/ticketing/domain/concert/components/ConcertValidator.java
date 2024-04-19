@@ -16,7 +16,7 @@ public class ConcertValidator {
     }
 
     public void validateConcert(long concertId){
-        if (concertRepository.findById(concertId).isEmpty()){
+        if (concertRepository.findConcertById(concertId).isEmpty()){
             throw new RuntimeException("콘서트 정보를 찾을 수 없습니다.");
         }
     }

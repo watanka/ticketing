@@ -17,7 +17,7 @@ public class MemoryConcertTimeRepository implements IConcertTimeRepository {
         concertTimeMap.get(concertId).add(concertTime);
     }
     @Override
-    public List<ConcertTime> getAllByConcertId(long concertId) {
+    public List<ConcertTime> findAllByConcertId(long concertId) {
         return null;
     }
 

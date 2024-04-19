@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IConcertHallRepository {
 
-    List<ConcertHall> getAll();
+    List<ConcertHall> findAll();
     Optional<ConcertHall> findById(long hallId);
 
 

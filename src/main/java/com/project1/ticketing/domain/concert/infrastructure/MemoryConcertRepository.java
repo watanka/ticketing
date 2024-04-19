@@ -19,19 +19,15 @@ public class MemoryConcertRepository implements IConcertRepository{
     }
 
     @Override
-    public List<Concert> getAll() {
+    public List<Concert> findAll() {
         return concertMap.values().stream().toList();
     }
 
 
 
     @Override
-    public Optional<Concert> findById(long concertId) {
+    public Optional<Concert> findConcertById(long concertId) {
         return Optional.of(concertMap.get(concertId));
     }
 
-    @Override
-    public boolean isFull(long concertId) {
-        return false;
-    }
 }

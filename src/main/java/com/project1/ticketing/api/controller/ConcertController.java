@@ -21,7 +21,7 @@ public class ConcertController {
 
     IConcertService concertService;
     @Autowired
-    public ConcertController(FakeConcertService concertService) {
+    public ConcertController(ConcertService concertService) {
         this.concertService = concertService;
     }
 
