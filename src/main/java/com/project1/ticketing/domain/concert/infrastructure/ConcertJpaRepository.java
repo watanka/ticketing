@@ -15,13 +15,18 @@ public class ConcertJpaRepository {
     @PersistenceContext
     private EntityManager em;
 
-    List<Concert> getAll(){
-        Query query = em.createQuery("SELECT * FROM Concert");
-        return query.getResultList();
-    };
-    Optional<Concert> findById(long concertId){
-        return Optional.of(em.find(Concert.class, concertId));
+//    public List<Concert> getAll(){
+//        Query query = em.createQuery("SELECT * FROM concert;");
+//        return query.getResultList();
+//    };
+    public Concert findById(long concertId){
+        return em.find(Concert.class, concertId);
     };
 
+    public Concert save(Concert concert){
+        em.persist(concert);
+        return concert;
+
+    }
 
 }
