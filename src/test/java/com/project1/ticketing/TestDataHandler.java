@@ -1,10 +1,14 @@
-package com.project1.ticketing.concert;
+package com.project1.ticketing;
 
 import com.project1.ticketing.domain.concert.infrastructure.ConcertCoreRepositoryImpl;
 import com.project1.ticketing.domain.concert.models.Concert;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
+import com.project1.ticketing.domain.point.infrastructure.PointCoreRepositoryImpl;
+import com.project1.ticketing.domain.point.models.PointHistory;
+import com.project1.ticketing.domain.point.models.PointType;
+import com.project1.ticketing.domain.point.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,16 +19,19 @@ public class TestDataHandler {
 
 
     ConcertCoreRepositoryImpl concertRepositoryImpl;
-
+    PointCoreRepositoryImpl pointRepositoryImpl;
 
 
     @Autowired
-    public TestDataHandler(ConcertCoreRepositoryImpl concertRepositoryImpl) {
+    public TestDataHandler(ConcertCoreRepositoryImpl concertRepositoryImpl,
+                           PointCoreRepositoryImpl pointRepositoryImpl
+                           ) {
         this.concertRepositoryImpl = concertRepositoryImpl;
+        this.pointRepositoryImpl = pointRepositoryImpl;
 
     }
 
-    void settingConcertInfo(){
+    public void settingConcertInfo(){
 
         List<Seat> 전좌석예약가능 = List.of(
                 Seat.builder()
@@ -101,8 +108,35 @@ public class TestDataHandler {
 
         concertRepositoryImpl.saveConcert(concert);
 
+    }
 
+    public void settingPointInfo(){
+        User 신은성 = User.builder()
+                        .balance(30000)
+                        .build();
 
+        PointHistory 충전_20000 = PointHistory.builder()
+                                            .userId(신은성.getId())
+                                            .amount(20000)
+                                            .pointType(PointType.CHARGE)
+                                            .build();
+
+        PointHistory 사용_50000 = PointHistory.builder()
+                .userId(신은성.getId())
+                .amount(20000)
+                .pointType(PointType.USE)
+                .build();
+
+        PointHistory 사용_9000000 = PointHistory.builder()
+                .userId(신은성.getId())
+                .amount(9000000)
+                .pointType(PointType.USE)
+                .build();
+
+        pointRepositoryImpl.saveUser(신은성);
+        pointRepositoryImpl.savePointHistory(충전_20000);
+        pointRepositoryImpl.savePointHistory(사용_50000);
+        pointRepositoryImpl.savePointHistory(사용_9000000);
     }
 
 
