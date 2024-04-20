@@ -56,9 +56,6 @@ public class ConcertService implements IConcertService{
         List<Seat> seatList = concertRepository.findAllSeatsByConcertTimeId(concertTimeId);
 
         return concertFilter.filterAvailableSeat(seatList);
-
-
-
     }
 
 }
