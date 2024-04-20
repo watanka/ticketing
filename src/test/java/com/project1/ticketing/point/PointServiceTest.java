@@ -15,10 +15,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Optional;
 import static org.mockito.Mockito.when;
 
-public class PointHistoryServiceTest {
+public class PointServiceTest {
 
     PointValidator pointValidator;
     PointCoreRepository pointRepository;

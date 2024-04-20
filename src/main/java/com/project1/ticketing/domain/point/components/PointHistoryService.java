@@ -2,6 +2,7 @@ package com.project1.ticketing.domain.point.components;
 
 import com.project1.ticketing.api.dto.request.PointRequest;
 import com.project1.ticketing.api.dto.response.PointHistoryResponse;
+import com.project1.ticketing.domain.point.infrastructure.PointCoreRepositoryImpl;
 import com.project1.ticketing.domain.point.models.PointHistory;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class PointHistoryService implements IPointHistoryService {
     PointCoreRepository pointRepository;
+    @Autowired
     PointValidator pointValidator;
 
 
@@ -40,7 +42,11 @@ public class PointHistoryService implements IPointHistoryService {
         PointHistory pointHistory = new PointHistory(userId, amount, pointType);
         pointRepository.savePointHistory(pointHistory);
 
-        foundUser.usePoint(amount);
+        if (pointType == PointType.USE){
+            foundUser.usePoint(amount);
+        }else if (pointType == PointType.CHARGE){
+            foundUser.chargePoint(amount);
+        }
         pointRepository.saveUser(foundUser);
 
         return PointHistoryResponse.from(pointHistory);

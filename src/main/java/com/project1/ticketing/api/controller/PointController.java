@@ -13,30 +13,30 @@ import java.util.List;
 @RestController
 public class PointController {
 
-    IPointHistoryService pointHistoryService;
+    IPointHistoryService pointService;
 
     @Autowired
-    public PointController(IPointHistoryService pointService) {
-        this.pointHistoryService = pointHistoryService;
+    public PointController(PointHistoryService pointService) {
+        this.pointService = pointService;
     }
 
     @PostMapping("/points")
     public ResponseEntity<PointHistoryResponse> updatePoint(@RequestBody PointRequest pointRequest){
-        PointHistoryResponse pointResponse = pointHistoryService.updatePoint(pointRequest);
+        PointHistoryResponse pointResponse = pointService.updatePoint(pointRequest);
         return ResponseEntity.ok().body(pointResponse);
     }
 
 
     @GetMapping("/points/{user_id}")
     public ResponseEntity<PointHistoryResponse> checkBalance(@PathVariable(value="user_id") long userId){
-        PointHistoryResponse pointHistoryResponse = pointHistoryService.checkBalance(userId);
+        PointHistoryResponse pointHistoryResponse = pointService.checkBalance(userId);
         return ResponseEntity.ok().body(pointHistoryResponse);
 
     }
 
     @GetMapping("/point-history/{user_id}")
     public ResponseEntity<List<PointHistoryResponse>> checkAllPointhistory(@PathVariable(value="user_id") long userId){
-        List<PointHistoryResponse> pointHistoryResponseList = pointHistoryService.getAllPointHistory(userId);
+        List<PointHistoryResponse> pointHistoryResponseList = pointService.getAllPointHistory(userId);
         return ResponseEntity.ok().body(pointHistoryResponseList);
 
     }

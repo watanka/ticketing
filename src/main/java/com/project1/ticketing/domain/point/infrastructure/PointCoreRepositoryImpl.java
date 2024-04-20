@@ -19,7 +19,8 @@ public class PointCoreRepositoryImpl implements PointCoreRepository {
     UserJpaRepository userRepository;
     PointHistoryJpaRepository pointHistoryRepository;
 
-    public PointCoreRepositoryImpl(UserJpaRepository userRepository, PointHistoryJpaRepository pointHistoryRepository) {
+    public PointCoreRepositoryImpl(UserJpaRepository userRepository,
+                                   PointHistoryJpaRepository pointHistoryRepository) {
         this.userRepository = userRepository;
         this.pointHistoryRepository = pointHistoryRepository;
     }
