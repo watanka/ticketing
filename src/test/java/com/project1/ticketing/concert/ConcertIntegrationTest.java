@@ -96,7 +96,7 @@ public class ConcertIntegrationTest {
         // ConcertTimeList = [ConcertTime1: 전좌석 예약가능, concertTime2: 전좌석 매진]
 
         try{
-            List<ConcertTimeResponse> concertTimeResponseList = concertService.getAvailableTimes(3L);
+            concertService.getAvailableTimes(3L);
         }catch (RuntimeException e){
             assertThat(e.getMessage()).isEqualTo("콘서트 정보를 찾을 수 없습니다.");
         }
