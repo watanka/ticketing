@@ -27,7 +27,7 @@ public class Reservation{
     private long concertId;
     private ZonedDateTime concertTime;
 
-    private Seat seat;
+    private long seatId;
 
     private ReservationStatus status;
     private ZonedDateTime createAt;

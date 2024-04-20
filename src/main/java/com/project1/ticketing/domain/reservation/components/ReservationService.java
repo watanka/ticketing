@@ -24,7 +24,7 @@ public class ReservationService implements IReservationService {
 
         long userId = request.getUserId();
         long seatId = request.getSeatId();
-        long concertTImeId = request.getConcertTimeId();
+        String concertTIme = request.getConcertTime();
 
 
         // reservation 검증
@@ -36,16 +36,17 @@ public class ReservationService implements IReservationService {
         // 예약 및 좌석 상태 관리 이벤트 발행
         reservationValidator.validateSeat(seatId);
 
-        request
-
         Reservation reservation = Reservation.builder()
-                .userId(user)
-                .concertTimeId(concertTimeId)
+                .userId(userId)
+                .concertTime(ZonedDateTime.parse(concertTIme))
                 .seatId(seatId)
+                .status(ReservationStatus.TEMPORARY)
+                .createAt(ZonedDateTime.now())
                 .build();
-//
-//        reservationRepository.save(reservation);
-        return ReservationResponse.builder().build();
+
+        reservationRepository.save(reservation);
+
+        return ReservationResponse.from(reservation);
     }
 
     public Reservation updateReservationStatus(long reservationId){
