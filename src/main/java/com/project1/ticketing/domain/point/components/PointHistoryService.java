@@ -7,10 +7,12 @@ import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.point.repository.PointCoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class PointHistoryService implements IPointHistoryService {
     PointCoreRepository pointRepository;
     PointValidator pointValidator;

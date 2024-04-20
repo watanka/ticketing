@@ -4,9 +4,11 @@ import com.project1.ticketing.api.controller.PointController;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.point.repository.PointCoreRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class PointValidator {
 
     PointCoreRepository pointRepository;

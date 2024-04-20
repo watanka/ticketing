@@ -1,5 +1,6 @@
 package com.project1.ticketing.concert;
 
+import com.project1.ticketing.TestDataHandler;
 import com.project1.ticketing.api.dto.response.ConcertResponse;
 import com.project1.ticketing.api.dto.response.ConcertTimeResponse;
 import com.project1.ticketing.api.dto.response.SeatResponse;
@@ -26,18 +27,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class ConcertIntegrationTest {
 
     @Autowired
-    ConcertCoreRepositoryImpl concertRepositoryImpl;
-
-    @Autowired
-    ConcertService concertService;
-
+    ConcertCoreRepositoryImpl concertRepository;
     @Autowired
     TestDataHandler testDataHandler;
+    @Autowired
+    ConcertService concertService;
 
     @BeforeEach
     void setUp(){
 
-        concertRepositoryImpl.deleteAll();
+        concertRepository.deleteAll();
         // testDataHandler에 시험할 데이터 넣어놓음
         testDataHandler.settingConcertInfo();
     }
@@ -45,8 +44,8 @@ public class ConcertIntegrationTest {
     @Test
     void testJpaRepositoryWorking(){
         Concert concert = Concert.builder().name("나훈아50주년콘서트1").build();
-        Concert savedConcert = concertRepositoryImpl.saveConcert(concert);
-        Concert foundConcert = concertRepositoryImpl.findConcertById(savedConcert.getId()).orElseThrow();
+        Concert savedConcert = concertRepository.saveConcert(concert);
+        Concert foundConcert = concertRepository.findConcertById(savedConcert.getId()).orElseThrow();
 
         Assertions.assertThat(foundConcert.getId()).isEqualTo(concert.getId());
         Assertions.assertThat(foundConcert.getName()).isEqualTo(concert.getName());
@@ -56,8 +55,8 @@ public class ConcertIntegrationTest {
     @Test
     void testSpringJpaRepositoryWorking(){
         Concert concert = Concert.builder().name("나훈아50주년콘서트2").build();
-        Concert savedConcert = concertRepositoryImpl.saveConcert(concert);
-        Concert foundConcert = concertRepositoryImpl.findConcertById(savedConcert.getId()).orElseThrow();
+        Concert savedConcert = concertRepository.saveConcert(concert);
+        Concert foundConcert = concertRepository.findConcertById(savedConcert.getId()).orElseThrow();
 
         assertThat(foundConcert.getId()).isEqualTo(concert.getId());
         assertThat(foundConcert.getName()).isEqualTo(concert.getName());
@@ -71,7 +70,7 @@ public class ConcertIntegrationTest {
         Concert concert = Concert.builder()
                 .name("나훈아50주년콘서트")
                 .build();
-        concertRepositoryImpl.saveConcert(concert);
+        concertRepository.saveConcert(concert);
 
         List<ConcertResponse> concertResponseList = concertService.getAllConcerts();
         assertThat(concertResponseList.get(0).getName()).isEqualTo("나훈아50주년콘서트");

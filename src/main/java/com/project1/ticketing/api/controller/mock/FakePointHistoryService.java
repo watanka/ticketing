@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+//@Service
 public class FakePointHistoryService implements IPointHistoryService {
     @Override
     public PointHistoryResponse updatePoint(PointRequest request) {
