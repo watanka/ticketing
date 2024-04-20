@@ -21,28 +21,17 @@ public class Reservation{
     private long id;
 
 //    @ManyToOne
-    private User user;
+    private long userId;
 
-    private long concertTimeId;
 
-    private long seatId;
+    private long concertId;
+    private ZonedDateTime concertTime;
+
+    private Seat seat;
 
     private ReservationStatus status;
     private ZonedDateTime createAt;
 
-    public static Reservation makeReservation(User user,
-                                              long concertTimeId,
-                                              long seatId,
-                                              ReservationStatus reservationStatus
-                                              ){
-        return Reservation.builder()
-                .user(user)
-                .concertTimeId(concertTimeId)
-                .seatId(seatId)
-                .status(reservationStatus)
-                .createAt(ZonedDateTime.now())
-                .build();
-    }
 }
 
 

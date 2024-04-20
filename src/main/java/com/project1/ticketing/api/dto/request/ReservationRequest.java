@@ -9,16 +9,14 @@ import lombok.Setter;
 public class ReservationRequest {
 
     // token, user_id, concert_time, seat_num
-    private String token;
     private long userId;
-    private String concertTime;
+    private long concertTimeId;
     private long seatId;
 
 
-    public ReservationRequest(String token, long userId, String concertTime, long seatId) {
-        this.token = token;
+    public ReservationRequest(long userId, long concertTimeId, long seatId) {
         this.userId = userId;
-        this.concertTime = concertTime;
+        this.concertTimeId = concertTimeId;
         this.seatId = seatId;
     }
 

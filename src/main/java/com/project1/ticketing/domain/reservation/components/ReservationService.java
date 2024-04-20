@@ -1,43 +1,51 @@
 package com.project1.ticketing.domain.reservation.components;
 
-import com.project1.ticketing.domain.concert.models.ConcertTime;
-import com.project1.ticketing.domain.concert.models.Seat;
-import com.project1.ticketing.domain.point.models.User;
-import com.project1.ticketing.domain.reservation.infrastructure.MemoryReservationRepository;
+import com.project1.ticketing.api.dto.request.ReservationRequest;
+import com.project1.ticketing.api.dto.response.ReservationResponse;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
-import com.project1.ticketing.domain.reservation.repository.IReservationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public class ReservationService {
+public class ReservationService implements IReservationService {
 
-    IReservationRepository reservationRepository;
+    ReservationCoreRepository reservationRepository;
     ReservationValidator reservationValidator;
 
-    public ReservationService(IReservationRepository reservationRepository, ReservationValidator reservationValidator) {
+    public ReservationService(ReservationCoreRepository reservationRepository, ReservationValidator reservationValidator) {
         this.reservationRepository = reservationRepository;
         this.reservationValidator = reservationValidator;
     }
 
-    public void register(User user, long concertTimeId, long seatId){
-        reservationValidator.validate(user.getId(), concertTimeId, seatId);
+    public ReservationResponse register(ReservationRequest request){
+
+        long userId = request.getUserId();
+        long seatId = request.getSeatId();
+        long concertTImeId = request.getConcertTimeId();
+
+
+        // reservation 검증
+        // 좌석 예약 가능 확인
+        // 예약 생성
+        // 예약 저장 reservationRepository.save
+        // 좌석 상태 변경
+        // 좌석 상태 저장 seatRepository.save
+        // 예약 및 좌석 상태 관리 이벤트 발행
+        reservationValidator.validateSeat(seatId);
+
+        request
 
         Reservation reservation = Reservation.builder()
-                .user(user)
+                .userId(user)
                 .concertTimeId(concertTimeId)
                 .seatId(seatId)
                 .build();
-
-        reservationRepository.save(reservation);
-    }
-
-    public boolean checkReserved(long concertTimeId, long seatId){
-        return reservationRepository.findByConcertTimeIdAndSeatId(concertTimeId, seatId).isPresent();
+//
+//        reservationRepository.save(reservation);
+        return ReservationResponse.builder().build();
     }
 
     public Reservation updateReservationStatus(long reservationId){
@@ -66,4 +74,18 @@ public class ReservationService {
         return reservationRepository.findById(reservationId);
     }
 
+    @Override
+    public List<ReservationResponse> checkReservationList(long userId) {
+        // userId 검증
+
+        return null;
+    }
+
+    @Override
+    public ReservationResponse check(long userId, long reservationId) {
+        // userId 검증
+        // reservationId 검증
+
+        return null;
+    }
 }

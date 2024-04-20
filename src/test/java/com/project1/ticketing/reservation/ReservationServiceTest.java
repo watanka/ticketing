@@ -3,7 +3,7 @@ package com.project1.ticketing.reservation;
 import com.project1.ticketing.domain.reservation.components.ReservationService;
 import com.project1.ticketing.domain.reservation.components.ReservationValidator;
 import com.project1.ticketing.domain.reservation.models.Reservation;
-import com.project1.ticketing.domain.reservation.repository.IReservationRepository;
+import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 public class ReservationServiceTest {
 
-    IReservationRepository reservationRepository;
+    ReservationCoreRepository reservationRepository;
     ReservationValidator reservationValidator;
     ReservationService reservationService;
 
@@ -27,7 +27,7 @@ public class ReservationServiceTest {
     @BeforeEach
     void setUp(){
         reservationValidator = Mockito.mock(ReservationValidator.class);
-        reservationRepository = Mockito.mock(IReservationRepository.class);
+        reservationRepository = Mockito.mock(ReservationCoreRepository.class);
         reservationService = new ReservationService(reservationRepository, reservationValidator);
 
         reservationList = List.of(

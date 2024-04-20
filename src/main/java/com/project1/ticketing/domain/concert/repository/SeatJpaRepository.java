@@ -12,4 +12,6 @@ public interface SeatJpaRepository extends JpaRepository<Seat, Long> {
     Optional<Seat> findById(long seatId);
     List<Seat> findAllByConcertTimeId(long concertTimeId);
     boolean existsByConcertTimeIdAndStatus(long concertTimeId, SeatStatus status);
+
+    boolean findByIdIsStatus(long seatId, SeatStatus status);
 }
