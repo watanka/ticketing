@@ -14,11 +14,11 @@ public class ReservationValidator {
         this.seatRepository = seatRepository;
     }
 
-    public void validateSeat(long seatId){
-        if (!seatRepository.findByIdIsStatus(seatId, SeatStatus.AVAILABLE)){
+    public void validateSeat(long seatId) {
+        if (!seatRepository.findByIdIsStatus(seatId, SeatStatus.AVAILABLE)) {
             throw new RuntimeException("해당 좌석은 예약이 불가능합니다.");
-        };
-
+        }
+    }
         // 사용자 ID 없을 때
 
 
@@ -26,7 +26,7 @@ public class ReservationValidator {
 
         // 좌석이 예약 불가능상태일 때
 
-    }
+
 
 
 }

@@ -11,13 +11,13 @@ import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
-//@Entity
+@Entity
 @Getter @Setter
 @Builder
 public class Reservation{
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name="reservation_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="reservation_id")
     private long id;
 
 //    @ManyToOne
@@ -27,7 +27,8 @@ public class Reservation{
     private long concertId;
     private ZonedDateTime concertTime;
 
-    private long seatId;
+    private long seatNum;
+    private long price;
 
     private ReservationStatus status;
     private ZonedDateTime createAt;

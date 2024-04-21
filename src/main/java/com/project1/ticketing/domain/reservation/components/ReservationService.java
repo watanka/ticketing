@@ -1,7 +1,17 @@
 package com.project1.ticketing.domain.reservation.components;
 
 import com.project1.ticketing.api.dto.request.ReservationRequest;
+import com.project1.ticketing.api.dto.response.ConcertResponse;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
+import com.project1.ticketing.domain.concert.components.ConcertService;
+import com.project1.ticketing.domain.concert.infrastructure.ConcertCoreRepositoryImpl;
+import com.project1.ticketing.domain.concert.models.Concert;
+import com.project1.ticketing.domain.concert.models.Seat;
+import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
+import com.project1.ticketing.domain.concert.repository.SeatJpaRepository;
+import com.project1.ticketing.domain.point.models.User;
+import com.project1.ticketing.domain.point.repository.UserJpaRepository;
+import com.project1.ticketing.domain.reservation.infrastructure.ReservationCoreRepositoryImpl;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
@@ -9,15 +19,26 @@ import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepos
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ReservationService implements IReservationService {
 
-    ReservationCoreRepository reservationRepository;
+    ReservationCoreRepositoryImpl reservationRepository;
     ReservationValidator reservationValidator;
 
-    public ReservationService(ReservationCoreRepository reservationRepository, ReservationValidator reservationValidator) {
+    ConcertCoreRepository concertRepository;
+
+    UserJpaRepository userRepository;
+
+    public ReservationService(ReservationCoreRepositoryImpl reservationRepository,
+                              ReservationValidator reservationValidator,
+                              ConcertCoreRepository concertRepository,
+                              UserJpaRepository userRepository
+                              ) {
         this.reservationRepository = reservationRepository;
         this.reservationValidator = reservationValidator;
+        this.concertRepository = concertRepository;
+        this.userRepository = userRepository;
     }
 
     public ReservationResponse register(ReservationRequest request){
@@ -36,15 +57,22 @@ public class ReservationService implements IReservationService {
         // 예약 및 좌석 상태 관리 이벤트 발행
         reservationValidator.validateSeat(seatId);
 
+        Seat seat = concertRepository.findSeatById(seatId)
+                .orElseThrow();
+
         Reservation reservation = Reservation.builder()
                 .userId(userId)
                 .concertTime(ZonedDateTime.parse(concertTIme))
-                .seatId(seatId)
+                .seatNum(seat.getSeatNum())
+                .price(seat.getPrice())
                 .status(ReservationStatus.TEMPORARY)
                 .createAt(ZonedDateTime.now())
                 .build();
 
         reservationRepository.save(reservation);
+        concertRepository.saveSeat(seat);
+
+        //TODO: 5분 후 예약대기 상태를 업데이트하는 이벤트 발행
 
         return ReservationResponse.from(reservation);
     }
@@ -78,15 +106,27 @@ public class ReservationService implements IReservationService {
     @Override
     public List<ReservationResponse> checkReservationList(long userId) {
         // userId 검증
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()){
+            throw new RuntimeException("사용자를 찾을 수 없습니다.");
+        }
 
-        return null;
+        return reservationRepository.findAllByUserId(userId).stream()
+                .map(ReservationResponse::from)
+                .collect(Collectors.toList());
     }
 
     @Override
     public ReservationResponse check(long userId, long reservationId) {
         // userId 검증
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()){
+            throw new RuntimeException("사용자를 찾을 수 없습니다.");
+        }
         // reservationId 검증
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(); // new RuntimeException("해당 예약을 찾을 수 없습니다.")
 
-        return null;
+        return ReservationResponse.from(reservation);
     }
 }
