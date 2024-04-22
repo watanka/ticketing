@@ -24,6 +24,7 @@ public class Seat{
 
     long price;
 
+    @Enumerated(EnumType.STRING)
     SeatStatus status;
 
 
@@ -36,5 +37,9 @@ public class Seat{
                 .price(seatResponse.getPrice())
                 .status(SeatStatus.fromBool(seatResponse.isAvailable()))
                 .build();
+    }
+
+    public void changeStatus(SeatStatus seatStatus){
+        this.status = status;
     }
 }

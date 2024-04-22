@@ -5,10 +5,12 @@ import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import com.project1.ticketing.domain.reservation.repository.ReservationJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ReservationCoreRepositoryImpl implements ReservationCoreRepository {
 
     ReservationJpaRepository reservationRepository;
@@ -35,8 +37,8 @@ public class ReservationCoreRepositoryImpl implements ReservationCoreRepository 
     }
 
     @Override
-    public Optional<Reservation> findByConcertTimeIdAndSeatId(long concertTimeId, long seatId) {
-        return reservationRepository.findByConcertTimeIdAndSeatId(concertTimeId, seatId);
+    public Optional<Reservation> findBySeatId(long seatId) {
+        return reservationRepository.findBySeatId(seatId);
     }
 
 }

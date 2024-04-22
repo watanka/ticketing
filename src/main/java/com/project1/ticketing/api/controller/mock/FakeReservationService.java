@@ -69,4 +69,9 @@ public class FakeReservationService implements IReservationService {
                                     .expiredAt("2024/04/17 15:30:00 KST")
                                     .build();
     }
+
+    @Override
+    public boolean checkSeatReserved(long seatId) {
+        return true;
+    }
 }

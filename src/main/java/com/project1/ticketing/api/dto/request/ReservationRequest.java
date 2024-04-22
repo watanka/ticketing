@@ -10,13 +10,13 @@ public class ReservationRequest {
 
     // token, user_id, concert_time, seat_num
     private long userId;
-    private String concertTime;
+    private long concertTimeId;
     private long seatId;
 
 
-    public ReservationRequest(long userId, String concertTime, long seatId) {
+    public ReservationRequest(long userId, long concertTimeId, long seatId) {
         this.userId = userId;
-        this.concertTime = concertTime;
+        this.concertTimeId = concertTimeId;
         this.seatId = seatId;
     }
 

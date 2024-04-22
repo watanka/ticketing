@@ -1,51 +1,55 @@
 package com.project1.ticketing.domain.reservation.components;
 
 import com.project1.ticketing.api.dto.request.ReservationRequest;
-import com.project1.ticketing.api.dto.response.ConcertResponse;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
-import com.project1.ticketing.domain.concert.components.ConcertService;
-import com.project1.ticketing.domain.concert.infrastructure.ConcertCoreRepositoryImpl;
-import com.project1.ticketing.domain.concert.models.Concert;
+import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
+import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
-import com.project1.ticketing.domain.concert.repository.SeatJpaRepository;
+import com.project1.ticketing.domain.point.components.UserManager;
 import com.project1.ticketing.domain.point.models.User;
-import com.project1.ticketing.domain.point.repository.UserJpaRepository;
 import com.project1.ticketing.domain.reservation.infrastructure.ReservationCoreRepositoryImpl;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class ReservationService implements IReservationService {
 
-    ReservationCoreRepositoryImpl reservationRepository;
+    ReservationCoreRepository reservationRepository;
     ReservationValidator reservationValidator;
 
     ConcertCoreRepository concertRepository;
 
-    UserJpaRepository userRepository;
+    UserManager userManager;
 
-    public ReservationService(ReservationCoreRepositoryImpl reservationRepository,
+    @Autowired
+    public ReservationService(ReservationCoreRepository reservationRepository,
                               ReservationValidator reservationValidator,
                               ConcertCoreRepository concertRepository,
-                              UserJpaRepository userRepository
+                              UserManager userManager
                               ) {
         this.reservationRepository = reservationRepository;
         this.reservationValidator = reservationValidator;
         this.concertRepository = concertRepository;
-        this.userRepository = userRepository;
+        this.userManager = userManager;
     }
 
     public ReservationResponse register(ReservationRequest request){
 
         long userId = request.getUserId();
         long seatId = request.getSeatId();
-        String concertTIme = request.getConcertTime();
+        long concertTimeId = request.getConcertTimeId();
+
+        ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId)
+                .orElseThrow(() -> new RuntimeException("콘서트 시간을 찾을 수 없습니다."));
 
 
         // reservation 검증
@@ -60,11 +64,15 @@ public class ReservationService implements IReservationService {
         Seat seat = concertRepository.findSeatById(seatId)
                 .orElseThrow();
 
+        seat.changeStatus(SeatStatus.RESERVED);
+
         Reservation reservation = Reservation.builder()
                 .userId(userId)
-                .concertTime(ZonedDateTime.parse(concertTIme))
-                .seatNum(seat.getSeatNum())
-                .price(seat.getPrice())
+                .concertTime(concertTime.getTime().toString())
+//                .seatNum(seat.getSeatNum())
+//                .seatId(seatId)
+//                .price(seat.getPrice())
+                .seat(seat)
                 .status(ReservationStatus.TEMPORARY)
                 .createAt(ZonedDateTime.now())
                 .build();
@@ -106,7 +114,7 @@ public class ReservationService implements IReservationService {
     @Override
     public List<ReservationResponse> checkReservationList(long userId) {
         // userId 검증
-        Optional<User> user = userRepository.findById(userId);
+        Optional<User> user = userManager.findById(userId);
         if (user.isEmpty()){
             throw new RuntimeException("사용자를 찾을 수 없습니다.");
         }
@@ -119,7 +127,7 @@ public class ReservationService implements IReservationService {
     @Override
     public ReservationResponse check(long userId, long reservationId) {
         // userId 검증
-        Optional<User> user = userRepository.findById(userId);
+        Optional<User> user = userManager.findById(userId);
         if (user.isEmpty()){
             throw new RuntimeException("사용자를 찾을 수 없습니다.");
         }
@@ -129,4 +137,13 @@ public class ReservationService implements IReservationService {
 
         return ReservationResponse.from(reservation);
     }
+
+    @Override
+    public boolean checkSeatReserved(long seatId) {
+
+        Seat seat =  concertRepository.findSeatById(seatId).orElseThrow();
+        return seat.getStatus().toBoolean();
+    }
+
+
 }

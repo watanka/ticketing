@@ -17,7 +17,7 @@ public class ReservationController {
     IReservationService reservationService;
 
     @Autowired
-    public ReservationController(IReservationService reservationService) {
+    public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 

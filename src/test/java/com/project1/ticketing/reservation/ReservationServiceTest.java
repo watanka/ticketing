@@ -1,7 +1,13 @@
 package com.project1.ticketing.reservation;
 
+import com.project1.ticketing.api.dto.request.ReservationRequest;
+import com.project1.ticketing.domain.concert.models.Seat;
+import com.project1.ticketing.domain.concert.models.SeatStatus;
+import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
+import com.project1.ticketing.domain.point.components.UserManager;
 import com.project1.ticketing.domain.reservation.components.ReservationService;
 import com.project1.ticketing.domain.reservation.components.ReservationValidator;
+import com.project1.ticketing.domain.reservation.infrastructure.ReservationCoreRepositoryImpl;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import org.assertj.core.api.Assertions;
@@ -21,14 +27,23 @@ public class ReservationServiceTest {
 
     ReservationCoreRepository reservationRepository;
     ReservationValidator reservationValidator;
+
+    ConcertCoreRepository concertRepository;
+    UserManager userManager;
     ReservationService reservationService;
 
     List<Reservation> reservationList;
     @BeforeEach
     void setUp(){
-        reservationValidator = Mockito.mock(ReservationValidator.class);
         reservationRepository = Mockito.mock(ReservationCoreRepository.class);
-        reservationService = new ReservationService(reservationRepository, reservationValidator);
+        reservationValidator = Mockito.mock(ReservationValidator.class);
+        concertRepository = Mockito.mock(ConcertCoreRepository.class);
+        userManager = Mockito.mock(UserManager.class);
+        reservationService = new ReservationService(reservationRepository,
+                                                    reservationValidator,
+                                                    concertRepository,
+                                                    userManager
+                                                    );
 
         reservationList = List.of(
                 Reservation.builder().build(),
@@ -52,16 +67,15 @@ public class ReservationServiceTest {
     @Test
     @DisplayName("예약한 좌석 상태 변경 확인")
     void 예약한_좌석_상태_확인(){
-        long concertTimeId = 0L;
         long seatId = 0L;
 
+        when(concertRepository.findSeatById(seatId))
+                .thenReturn(Optional.of(Seat.builder().status(SeatStatus.AVAILABLE).build()));
 
-        when(reservationRepository.findByConcertTimeIdAndSeatId(concertTimeId, seatId))
-                .thenReturn(Optional.of(Reservation.builder().build()));
+        boolean isAvailable = reservationService.checkSeatReserved(seatId);
 
-        boolean isReserved = reservationService.checkReserved(concertTimeId, seatId);
+        Assertions.assertThat(isAvailable).isEqualTo(true);
 
-        Assertions.assertThat(isReserved).isEqualTo(true);
 
     }
 

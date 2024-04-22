@@ -16,7 +16,7 @@ public interface IReservationService {
 
     ReservationResponse check(long userId, long reservationId);
 
-
+    boolean checkSeatReserved(long seatId);
 
 
 }

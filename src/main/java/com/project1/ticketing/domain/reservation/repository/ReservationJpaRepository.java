@@ -13,5 +13,5 @@ public interface ReservationJpaRepository extends JpaRepository<Reservation, Lon
 
     List<Reservation> findAllByUserId(long userId);
 
-    Optional<Reservation> findByConcertTimeIdAndSeatId(long concertTimeId, long seatId);
+    Optional<Reservation> findBySeatId(long seatId);
 }

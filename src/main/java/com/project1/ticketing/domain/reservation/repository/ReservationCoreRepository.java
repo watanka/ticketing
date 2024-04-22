@@ -1,11 +1,13 @@
 package com.project1.ticketing.domain.reservation.repository;
 
 import com.project1.ticketing.domain.reservation.models.Reservation;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 
+@Repository
 public interface ReservationCoreRepository {
 
 
@@ -13,6 +15,6 @@ public interface ReservationCoreRepository {
     Optional<Reservation> findById(long reservationId);
     List<Reservation> findAllByUserId(long userId);
 
-    Optional<Reservation> findByConcertTimeIdAndSeatId(long concertTimeId, long seatId);
+    Optional<Reservation> findBySeatId(long seatId);
 
 }

@@ -2,13 +2,9 @@ package com.project1.ticketing.api.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.project1.ticketing.domain.reservation.models.Reservation;
-import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.ZonedDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -39,10 +35,10 @@ public class ReservationResponse {
         return ReservationResponse.builder()
                 .id(reservation.getId())
                 .userId(reservation.getUserId())
-                .seatNum(reservation.getSeatNum())
-                .price(reservation.getPrice())
+                .seatNum(reservation.getSeat().getSeatNum())
+                .price(reservation.getSeat().getPrice())
                 .status(reservation.getStatus().toString())
-                .concertTime(reservation.getConcertTime().toString())
+                .concertTime(reservation.getConcertTime())
                 .expiredAt(reservation.getCreateAt().plusMinutes(5).toString())
                 .build();
     }
