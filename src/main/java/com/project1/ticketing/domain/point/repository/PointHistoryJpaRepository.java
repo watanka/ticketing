@@ -10,4 +10,7 @@ import java.util.List;
 public interface PointHistoryJpaRepository extends JpaRepository<PointHistory, Long> {
 
     List<PointHistory> findAllByUserId(long userId);
+    void deleteAll();
+
+    PointHistory save(PointHistory pointHistory);
 }
