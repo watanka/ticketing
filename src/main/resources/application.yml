@@ -1,9 +1,13 @@
 spring:
-  config:
-    import:
-      -optional:file: .env[.properties]
-    activate:
-      on-profile: local
+#  profiles:
+#    active: local
+#  config:
+##    import:
+##      -optional:file: .env[.properties]
+#    activate:
+#      on-profile: local
+
+
   datasource:
     url: jdbc:mysql://localhost:3306/ticketing_db # ${DATASOURCE_URL}
     username: root # ${DATASOURCE_USER}
