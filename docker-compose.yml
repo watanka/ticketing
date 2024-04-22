@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  database-mysql:
+      image: 'mysql'
+      container_name: mysql_db
+      ports:
+        - "3307:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${DB_NAME}
+        MYSQL_USER: ${DB_USER}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+#        volumes:
+#          -mysql_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ticketing_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database-mysql
+    environment:
+      SPRING_DATASOURCE_URL: ${DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${DATASOURCE_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
