@@ -1,16 +1,3 @@
-FROM eclipse-temurin:17-jdk-alpine AS build
-VOLUME /tmp
-ARG JAR_PATH=build/libs/*.jar
-
-COPY ${JAR_PATH} app.jar
-
-FROM
-
-ENTRYPOINT ["java","-jar","/app.jar"]
-
-
-
-
 FROM gradle:7.3.3-jdk11 AS build
 WORKDIR /app
 COPY build.gradle settings.gradle ./
