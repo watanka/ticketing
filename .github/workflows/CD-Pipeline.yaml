@@ -12,7 +12,7 @@ env:
 
 
 jobs:
-  test:
+  checkout:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
