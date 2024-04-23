@@ -1,0 +1,8 @@
+jobs:
+  setting-env:
+    name: Setting Environment Variables
+    runs-on: ubuntu-latest
+    steps:
+      - name: secrets
+        run: |
+          echo "SECRET_API_KEY=$SECRET_API_KEY" >> .env
