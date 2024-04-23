@@ -1,30 +1,34 @@
 version: '3'
 
 services:
-  database-mysql:
-      image: 'mysql'
-      container_name: mysql_db
+  database-h2:
+      image: "oscarfonts/h2:latest"
+      container_name: h2_db
       ports:
-        - "3307:3307"
+        - "9002:9002"
       environment:
-        MYSQL_ROOT_HOST: root
-        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-        MYSQL_DATABASE: ${DB_NAME}
-        MYSQL_USER: ${DB_USER}
-        MYSQL_PASSWORD: ${DB_PASSWORD}
-        volumes:
-          -mysql_data:/var/lib/mysql
+        TZ: Asia/Seoul
+        H2_OPTIONS: -ifNotExists
+#        MYSQL_ROOT_HOST: root
+#        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+#        MYSQL_DATABASE: ${DB_NAME}
+#        MYSQL_USER: ${DB_USER}
+#        MYSQL_PASSWORD: ${DB_PASSWORD}
+      volumes:
+        - ./h2/:/opt/h2-data
 
   backend:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: ticketing_app
+    restart: always
     ports:
       - "8080:8080"
     depends_on:
-      - database-mysql
+      - database-h2
     environment:
       SPRING_DATASOURCE_URL: ${DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${DATASOURCE_USER}
-      SPRING_DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create
