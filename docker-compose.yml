@@ -5,7 +5,8 @@ services:
       image: "oscarfonts/h2:latest"
       container_name: h2_db
       ports:
-        - "9002:9002"
+        - ${DB_PORT}:${DB_PORT}
+#        - "8081:81"
       environment:
         TZ: Asia/Seoul
         H2_OPTIONS: -ifNotExists
@@ -16,19 +17,27 @@ services:
 #        MYSQL_PASSWORD: ${DB_PASSWORD}
       volumes:
         - ./h2/:/opt/h2-data
+      networks:
+        - ticketing_network
 
   backend:
     build:
       context: .
       dockerfile: Dockerfile
+      target: final
     container_name: ticketing_app
     restart: always
     ports:
-      - "8080:8080"
+      - "3000:3000"
     depends_on:
       - database-h2
     environment:
-      SPRING_DATASOURCE_URL: ${DATASOURCE_URL}
+      SPRING_DATASOURCE_URL: ${DATASOURCE_URL}:${DB_PORT}/${DB_NAME}
       SPRING_DATASOURCE_USERNAME: ${DB_USER}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+#      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: create
+    networks:
+      - ticketing_network
+
+networks:
+  ticketing_network:
