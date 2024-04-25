@@ -6,6 +6,7 @@ on:
       - 'feature*' # TODO: branch naming
 
 env:
+  PROFILE: develop
   AWS_REGION: ap-northeast-2
   ECR_REGISTRY: 729742072816.dkr.ecr.us-east-1.amazonaws.com/
   ECR_REPOSITORY: eunsung-ecr
