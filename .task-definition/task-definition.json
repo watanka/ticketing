@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "service-prod",
-      "image": "729742072816.dkr.ecr.ap-northeast-2.amazonaws.com/eunsung-ecr",
+      "image": "",
       "cpu": 0,
       "portMappings": [
         {
@@ -83,3 +83,4 @@
   "registeredBy": "arn:aws:iam::729742072816:root",
   "tags": []
 }
+

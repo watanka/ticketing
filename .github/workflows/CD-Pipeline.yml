@@ -1,0 +1,62 @@
+name: CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - ["dev", "main"]
+  push: # 테스트용
+    branches:
+      - ["feature.*"]
+  workflow_dispatch: # 수동 테스트용
+
+
+env:
+  PROFILE: develop
+  AWS_REGION: ap-northeast-2
+  ECR_REGISTRY: 729742072816.dkr.ecr.us-east-1.amazonaws.com/
+  ECR_REPOSITORY: eunsung-ecr
+
+
+
+jobs:
+  dev-cd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Login AWS ECR service
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push dev-image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          IMAGE_TAG: dev-${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --target=final
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+        # if you want to deploy development application, specify the steps
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: .task-definition/task-definition.json
+          container-name: service-prod
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy to ECS using task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ticketing-prod
+          cluster: cluster-ticketing
