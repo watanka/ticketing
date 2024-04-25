@@ -17,10 +17,11 @@ public class TokenTest {
 
     @BeforeEach
     void setup(){
-        List<Token> waitingLine = Mockito.mock(List.class);
-        tokenManager = new TokenManager(50, waitingLine);
+
 
     }
+
+
 
     @Test
     @DisplayName("활성화 토큰 수 체크")
@@ -34,14 +35,26 @@ public class TokenTest {
     }
 
     @Test
+    @DisplayName("토큰 활성화 상태 체크")
+    void token_status(){
+
+    }
+
+    @Test
+    @DisplayName("토큰의 대기열 순서 조회")
+    void check_token_order_in_waitingline(){
+
+    }
+
+    @Test
     @DisplayName("#maxActiveToken>#curActiveToken일 경우, 대기열 앞부터 활성화")
-    void 토큰_활성화_조건_테스트(){
+    void activate_token(){
 
     }
 
     @Test
     @DisplayName("최대 활성시간이 지난 토큰은 만료시킴")
-    void 토큰_만료_테스트(){
+    void expire_token(){
 
     }
 

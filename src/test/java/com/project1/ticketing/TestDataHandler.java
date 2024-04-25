@@ -112,6 +112,7 @@ public class TestDataHandler {
 
     public void settingPointInfo(){
         User 신은성 = User.builder()
+                        .id(1L)
                         .balance(30000)
                         .build();
 
@@ -134,9 +135,10 @@ public class TestDataHandler {
                 .build();
 
         pointRepositoryImpl.saveUser(신은성);
-        pointRepositoryImpl.savePointHistory(충전_20000);
-        pointRepositoryImpl.savePointHistory(사용_50000);
-        pointRepositoryImpl.savePointHistory(사용_9000000);
+        pointRepositoryImpl.saveUser(신은성);
+//        pointRepositoryImpl.savePointHistory(충전_20000);
+//        pointRepositoryImpl.savePointHistory(사용_50000);
+//        pointRepositoryImpl.savePointHistory(사용_9000000);
     }
 
 

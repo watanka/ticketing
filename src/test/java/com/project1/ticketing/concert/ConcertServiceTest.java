@@ -157,7 +157,7 @@ class ConcertServiceTest {
         when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
         when(concertRepository.findAllSeatsByConcertTimeId(concertTimeId)).thenReturn(fromSeatDTOtoEntity(fullAvailableSeatList));
         //then
-        assertThat(concertService.getAvailableSeats(concertTimeId)).hasSameSizeAs(fullAvailableSeatList);
+        assertThat(concertService.getAvailableSeats(concertTimeId).size()).isEqualTo(fullAvailableSeatList.size());
     }
 
     @Test
