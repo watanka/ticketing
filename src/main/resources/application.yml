@@ -1,29 +1,54 @@
 spring:
-#  profiles:
-#    active: local
-#  config:
-##    import:
-##      -optional:file: .env[.properties]
-#    activate:
-#      on-profile: local
+  profiles:
+    active: local
+---
 
-
+spring:
+  config:
+    activate:
+      on-profile: local
   jpa:
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
   datasource:
-    url: jdbc:h2:tcp://database-h2:9002/ticketing_db # jdbc:h2:tcp://localhost/~/ticketing # ${DATASOURCE_URL}
-    username: sa # ${DATASOURCE_USER}
-    password:  # ${DATASOURCE_PASSWORD}
-    driver-class-name: org.h2.Driver # com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:tcp://127.0.0.1/~/ticketing_db
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   h2:
     console:
-      enabled: true  # H2 콘솔 활성화 여부
-      path: /h2-console  # H2 콘솔 경로
+      enabled: true
+      path: /h2-console
 
   logging.level:
     org.hibernate.SQL: debug
     org.hibernate.type: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  datasource:
+    url: jdbc:h2:tcp://database-h2:9002/ticketing_db
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  logging.level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: true
+
+
+

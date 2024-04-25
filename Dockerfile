@@ -8,6 +8,7 @@ RUN gradle clean build --exclude-task test
 # 두 번째 스테이지: 실행 가능한 JAR 파일을 생성하여 Spring Boot 애플리케이션 실행
 FROM openjdk:17 AS final
 WORKDIR /app
+ENV PROFILE=dev
 COPY --from=build /app/build/libs/*.jar app.jar
 EXPOSE 3000
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${PROFILE}", "app.jar"]

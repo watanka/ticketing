@@ -1,7 +1,6 @@
 # 콘서트 티켓팅 서버 구축하기
 
 ---
-
 ## 요구사항 분석 및 기술정의서
 [링크↗](https://github.com/watanka/ticketing/wiki/%EC%BD%98%EC%84%9C%ED%8A%B8-%ED%8B%B0%EC%BC%93%ED%8C%85-%EC%8B%9C%EC%8A%A4%ED%85%9C)
 
@@ -32,3 +31,8 @@
 2. 배포되는 서버에 대한 검증용 브랜치가 따로 없는만큼, DEV와 PROD 환경을 동일하게 구성하고(Docker 활용) PROD 단계에서 문제가 없도록 구성한다.
     - DEV와 PROD환경에 차이가 있다면, 어떤 차이가 있는지 알아야한다.
     - PROD에서 문제가 없을 수 있도록 테스트 케이스에 특별히 유의하여 작성한다.
+
+## profiles
+- dev
+- test
+- prod
