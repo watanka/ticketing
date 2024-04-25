@@ -39,7 +39,7 @@ public class Seat{
                 .build();
     }
 
-    public void changeStatus(SeatStatus seatStatus){
+    public void changeStatus(SeatStatus status){
         this.status = status;
     }
 }

@@ -26,8 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-public class ConcertServiceTest {
+class ConcertServiceTest {
 
 
     ConcertCoreRepository concertRepository;
@@ -158,7 +157,7 @@ public class ConcertServiceTest {
         when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
         when(concertRepository.findAllSeatsByConcertTimeId(concertTimeId)).thenReturn(fromSeatDTOtoEntity(fullAvailableSeatList));
         //then
-        assertThat(concertService.getAvailableSeats(concertTimeId).size()).isEqualTo(fullAvailableSeatList.size());
+        assertThat(concertService.getAvailableSeats(concertTimeId)).hasSameSizeAs(fullAvailableSeatList);
     }
 
     @Test
@@ -170,7 +169,7 @@ public class ConcertServiceTest {
         when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
         when(concertRepository.findAllSeatsByConcertTimeId(concertTimeId)).thenReturn(fromSeatDTOtoEntity(fullReservedSeatList));
         //then
-        assertThat(concertService.getAvailableSeats(concertTimeId).size()).isEqualTo(0);
+        assertThat(concertService.getAvailableSeats(concertTimeId).size()).isZero();
     }
 
     @Test

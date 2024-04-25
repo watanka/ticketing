@@ -1,13 +1,10 @@
 package com.project1.ticketing.domain.point.infrastructure;
 
-import com.project1.ticketing.api.dto.response.PointHistoryResponse;
 import com.project1.ticketing.domain.point.models.PointHistory;
-import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.point.repository.PointCoreRepository;
 import com.project1.ticketing.domain.point.repository.PointHistoryJpaRepository;
 import com.project1.ticketing.domain.point.repository.UserJpaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

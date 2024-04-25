@@ -8,7 +8,6 @@ import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
 import com.project1.ticketing.domain.point.components.UserManager;
 import com.project1.ticketing.domain.point.models.User;
-import com.project1.ticketing.domain.reservation.infrastructure.ReservationCoreRepositoryImpl;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;

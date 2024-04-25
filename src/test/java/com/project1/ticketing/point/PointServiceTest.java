@@ -16,8 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.when;
-
-public class PointServiceTest {
+class PointServiceTest {
 
     PointValidator pointValidator;
     PointCoreRepository pointRepository;

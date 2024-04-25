@@ -1,18 +1,12 @@
 package com.project1.ticketing.api.controller;
 
-import com.project1.ticketing.api.dto.request.PaymentRequest;
-import com.project1.ticketing.api.dto.request.PointRequest;
-import com.project1.ticketing.api.dto.request.ReservationRequest;
-import com.project1.ticketing.api.dto.response.*;
 import com.project1.ticketing.domain.payment.models.Payment;
-import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.reservation.models.Reservation;
-import com.project1.ticketing.domain.reservation.models.ReservationStatus;
+
 import com.project1.ticketing.domain.token.models.Token;
 import org.springframework.stereotype.Component;
 
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
+
 import java.util.*;
 
 

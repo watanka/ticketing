@@ -1,6 +1,5 @@
 package com.project1.ticketing.api.controller;
 
-import com.project1.ticketing.api.controller.mock.FakeReservationService;
 import com.project1.ticketing.api.dto.request.ReservationRequest;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
 import com.project1.ticketing.domain.reservation.components.IReservationService;

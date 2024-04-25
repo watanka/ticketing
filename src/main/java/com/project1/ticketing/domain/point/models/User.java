@@ -1,10 +1,8 @@
 package com.project1.ticketing.domain.point.models;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 

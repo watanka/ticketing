@@ -15,3 +15,4 @@ public interface SeatJpaRepository extends JpaRepository<Seat, Long> {
 
     Optional<Seat> findByIdAndStatus(long seatId, SeatStatus status);
 }
+

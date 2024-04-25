@@ -4,7 +4,6 @@ import com.project1.ticketing.api.dto.response.ConcertResponse;
 import com.project1.ticketing.api.dto.response.ConcertTimeResponse;
 import com.project1.ticketing.api.dto.response.SeatResponse;
 import com.project1.ticketing.domain.concert.components.IConcertService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

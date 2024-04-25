@@ -61,7 +61,7 @@ public class PointHistoryService implements IPointHistoryService {
 
         return pointHistoryList.stream()
                 .map(PointHistoryResponse::from)
-                .collect(Collectors.toList());
+                .toList();
 
     }
 

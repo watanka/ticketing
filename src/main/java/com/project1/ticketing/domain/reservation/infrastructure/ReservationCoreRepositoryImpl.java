@@ -1,6 +1,5 @@
 package com.project1.ticketing.domain.reservation.infrastructure;
 
-import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import com.project1.ticketing.domain.reservation.repository.ReservationJpaRepository;

@@ -4,7 +4,6 @@ import com.project1.ticketing.api.dto.request.PointRequest;
 import com.project1.ticketing.api.dto.response.PointHistoryResponse;
 import com.project1.ticketing.domain.point.components.IPointHistoryService;
 import com.project1.ticketing.domain.point.models.PointType;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

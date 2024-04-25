@@ -1,15 +1,10 @@
 package com.project1.ticketing.api.controller;
 
-import com.project1.ticketing.api.controller.mock.FakeConcertService;
 import com.project1.ticketing.api.dto.response.ConcertResponse;
 import com.project1.ticketing.api.dto.response.ConcertTimeResponse;
 import com.project1.ticketing.api.dto.response.SeatResponse;
 import com.project1.ticketing.domain.concert.components.ConcertService;
 import com.project1.ticketing.domain.concert.components.IConcertService;
-import com.project1.ticketing.domain.concert.models.Concert;
-import com.project1.ticketing.domain.concert.models.ConcertTime;
-import com.project1.ticketing.domain.concert.models.Seat;
-import com.project1.ticketing.domain.concert.models.SeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,6 @@
 package com.project1.ticketing.domain.payment.models;
 
-import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.reservation.models.Reservation;
-import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

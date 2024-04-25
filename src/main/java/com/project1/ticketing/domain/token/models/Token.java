@@ -1,11 +1,9 @@
 package com.project1.ticketing.domain.token.models;
 
 
-import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
 
 //@Entity
 @Getter

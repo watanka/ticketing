@@ -75,7 +75,7 @@ public class PointServiceIntegrationTest {
 
         PointHistoryResponse pointHistoryResponse = pointHistoryService.checkBalance(userId);
 
-        assertThat(pointHistoryResponse.getAmount()).isEqualTo(0);
+        assertThat(pointHistoryResponse.getAmount()).isZero();
 
     }
 

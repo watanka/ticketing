@@ -2,7 +2,6 @@ package com.project1.ticketing.domain.point.components;
 
 import com.project1.ticketing.api.dto.request.PointRequest;
 import com.project1.ticketing.api.dto.response.PointHistoryResponse;
-import com.project1.ticketing.domain.point.models.PointType;
 
 import java.util.List;
 

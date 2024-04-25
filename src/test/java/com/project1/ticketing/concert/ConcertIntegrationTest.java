@@ -23,8 +23,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
-public class ConcertIntegrationTest {
+class ConcertIntegrationTest {
 
     @Autowired
     ConcertCoreRepositoryImpl concertRepository;
@@ -111,7 +110,7 @@ public class ConcertIntegrationTest {
         List<SeatResponse> seatResponseList = concertService.getAvailableSeats(concertTimeId);
 
         for (SeatResponse seatResponse : seatResponseList) {
-            assertThat(seatResponse.isAvailable()).isEqualTo(true);
+            assertThat(seatResponse.isAvailable()).isTrue();
         }
 
 

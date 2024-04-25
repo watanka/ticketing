@@ -3,7 +3,6 @@ package com.project1.ticketing.domain.concert.components;
 import com.project1.ticketing.api.dto.response.ConcertResponse;
 import com.project1.ticketing.api.dto.response.ConcertTimeResponse;
 import com.project1.ticketing.api.dto.response.SeatResponse;
-import com.project1.ticketing.domain.concert.infrastructure.ConcertCoreRepositoryImpl;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
@@ -38,7 +37,7 @@ public class ConcertService implements IConcertService{
 
         return concertRepository.findAllConcerts().stream()
                 .map(ConcertResponse::from)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

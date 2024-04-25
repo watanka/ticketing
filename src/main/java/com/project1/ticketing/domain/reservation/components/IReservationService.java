@@ -2,7 +2,6 @@ package com.project1.ticketing.domain.reservation.components;
 
 import com.project1.ticketing.api.dto.request.ReservationRequest;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
-import com.project1.ticketing.domain.point.models.User;
 
 import java.util.List;
 

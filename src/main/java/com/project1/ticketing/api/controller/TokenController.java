@@ -3,7 +3,6 @@ package com.project1.ticketing.api.controller;
 import com.project1.ticketing.api.dto.request.TokenRequest;
 import com.project1.ticketing.api.dto.response.TokenResponse;
 import com.project1.ticketing.api.usecase.TokenUseCase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

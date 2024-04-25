@@ -1,11 +1,7 @@
 package com.project1.ticketing;
 
-import org.springframework.context.ApplicationEventPublisher;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 
 public class queueTest {

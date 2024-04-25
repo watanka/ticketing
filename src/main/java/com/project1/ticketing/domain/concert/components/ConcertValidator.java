@@ -1,6 +1,4 @@
 package com.project1.ticketing.domain.concert.components;
-
-import com.project1.ticketing.domain.concert.infrastructure.ConcertCoreRepositoryImpl;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

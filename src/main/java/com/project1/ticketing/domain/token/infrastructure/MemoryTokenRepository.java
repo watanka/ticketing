@@ -3,8 +3,6 @@ package com.project1.ticketing.domain.token.infrastructure;
 import com.project1.ticketing.domain.token.models.Token;
 import com.project1.ticketing.domain.token.repository.ITokenRepository;
 
-import java.util.HashMap;
-import java.util.Map;
 
 //
 public class MemoryTokenRepository implements ITokenRepository {
