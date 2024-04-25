@@ -31,7 +31,19 @@
         "secretOptions": []
       },
       "systemControls": []
+    },
+    {
+      "name": "mysql",
+      "image": "public.ecr.aws/docker/library/mysql:latest",
+      "cpu": 0,
+      "portMappings": [],
+      "essential": true,
+      "environment": [],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": []
     }
+
   ],
   "family": "ticketing-prod",
   "executionRoleArn": "arn:aws:iam::729742072816:role/ecsTaskExecutionRole",
