@@ -5,9 +5,6 @@ on:
     branches:
       - "dev"
       - "main"
-  push: # 테스트용
-    branches:
-      - "feature.*"
   workflow_dispatch: # 수동 테스트용
 
 
