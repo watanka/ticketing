@@ -24,7 +24,7 @@ jobs:
             *.gradle*
             **/gradle-wrapper.properties
       - name: Grant Permission to gradlex
-        run: chmod +x ./gradlex
+        run: chmod +x gradlex
       - run: ./gradlew build --no-daemon test
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
