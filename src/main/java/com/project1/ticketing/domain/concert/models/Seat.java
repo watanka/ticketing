@@ -28,7 +28,12 @@ public class Seat{
     SeatStatus status;
 
 
-
+    // test용도
+    public Seat(long seatNum, long concertTimeId, long price){
+        this.seatNum = seatNum;
+        this.concertTimeId = concertTimeId;
+        status = SeatStatus.AVAILABLE;
+    }
 
     public static Seat from(SeatResponse seatResponse){
         return Seat.builder()

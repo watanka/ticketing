@@ -24,6 +24,9 @@ public class Concert{
     @OneToMany(mappedBy="concertId", cascade = CascadeType.ALL)
     private List<ConcertTime> concertTimeList = new ArrayList<>();
 
+    public Concert(String name){
+        this.name = name;
+    }
 
 
     public static Concert from(ConcertResponse concertResponse){

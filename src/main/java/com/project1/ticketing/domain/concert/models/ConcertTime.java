@@ -34,6 +34,12 @@ public class ConcertTime{
     int maxSeatNum;
     int currAvailableSeatNum; // seat정보에 따라 업데이트
 
+    //Test 용도
+    public ConcertTime(long id, ZonedDateTime time){
+        this.id = id;
+        this.time = time;
+    }
+
 
     public static ZonedDateTime fromStr(String timeStr){
         /// str format: "yyyy/MM/dd/ HH:mm:ss z" e.g) "2024/04/13/ 20:30:00 KST"
