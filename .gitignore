@@ -18,7 +18,7 @@ bin/
 !**/src/test/**/bin/
 
 ### environment variables ##
-.env
+*.env
 
 ### IntelliJ IDEA ###
 .idea
