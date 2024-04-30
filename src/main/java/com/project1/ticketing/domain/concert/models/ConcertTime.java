@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
-@Table(name="concerttime")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class ConcertTime{
@@ -27,8 +26,8 @@ public class ConcertTime{
     @Column(name="concert_id")
     private long concertId;
 
-    @OneToMany(mappedBy="concertTimeId", cascade = CascadeType.ALL)
-    private List<Seat> seats = new ArrayList<>();
+//    @OneToMany(mappedBy="concertTimeId", cascade = CascadeType.ALL)
+//    private List<Seat> seats = new ArrayList<>();
 
     long concertHallId;
     int maxSeatNum;
