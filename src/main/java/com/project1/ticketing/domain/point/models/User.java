@@ -17,6 +17,10 @@ public class User{
     long id;
     long balance;
 
+    public User(long balance){
+        this.balance = balance;
+    }
+
     public User(long id, long balance) {
         this.id = id;
         this.balance = balance;

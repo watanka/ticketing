@@ -5,6 +5,8 @@ import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.point.repository.PointCoreRepository;
 import com.project1.ticketing.domain.point.repository.PointHistoryJpaRepository;
 import com.project1.ticketing.domain.point.repository.UserJpaRepository;
+import org.hibernate.LockMode;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
