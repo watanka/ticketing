@@ -83,7 +83,7 @@ public class TestDataHandler {
         List<ConcertTime> 나훈아_concertTimeList = List.of(
                 ConcertTime.builder()
                         .time(ConcertTime.fromStr("2024/04/20/ 17:00:00 KST"))
-                        .seats(전좌석예약가능)
+//                        .seats(전좌석예약가능)
                         .concertId(1L)
                         .concertHallId(0L)
                         .maxSeatNum(50)
@@ -91,7 +91,7 @@ public class TestDataHandler {
                         .build(),
                 ConcertTime.builder()
                         .time(ConcertTime.fromStr("2024/04/27/ 17:00:00 KST"))
-                        .seats(전좌석_매진)
+//                        .seats(전좌석_매진)
                         .concertId(1L) // TODO: 어떻게 넣을 때 연관된 concertID를 인식하고 넣지?
                         .concertHallId(0L)
                         .maxSeatNum(50)

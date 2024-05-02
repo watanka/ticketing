@@ -8,6 +8,8 @@ import com.project1.ticketing.domain.concert.repository.ConcertJpaRepository;
 import com.project1.ticketing.domain.concert.repository.ConcertTimeJpaRepository;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
 import com.project1.ticketing.domain.concert.repository.SeatJpaRepository;
+import jakarta.persistence.LockModeType;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,6 +45,7 @@ public class ConcertCoreRepositoryImpl implements ConcertCoreRepository {
     }
 
     @Override
+    @Lock(LockModeType.OPTIMISTIC)
     public Seat saveSeat(Seat seat) {
         return seatJpaRepository.save(seat);
     }
@@ -58,13 +61,14 @@ public class ConcertCoreRepositoryImpl implements ConcertCoreRepository {
     }
 
     @Override
-    public Optional<Seat> findSeatById(long seatId) {
-        return seatJpaRepository.findById(seatId);
-    }
-
-    @Override
     public List<Concert> findAllConcerts() {
         return concertJpaRepository.findAll();
+    }
+
+    @Lock(LockModeType.OPTIMISTIC)
+    @Override
+    public Optional<Seat> findSeatById(long seatId) {
+        return seatJpaRepository.findById(seatId);
     }
 
     @Override

@@ -27,6 +27,8 @@ public class Seat{
     @Enumerated(EnumType.STRING)
     SeatStatus status;
 
+    @Version
+    private int version;
 
     // test용도
     public Seat(long seatNum, long concertTimeId, long price){
