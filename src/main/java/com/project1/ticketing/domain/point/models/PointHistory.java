@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 
 @Entity
 @Getter
@@ -16,6 +17,9 @@ public class PointHistory {
     private Long id;
     private PointType pointType;
     private long userId;
+
+    @Version
+    private long version;
 
     private long amount;
 

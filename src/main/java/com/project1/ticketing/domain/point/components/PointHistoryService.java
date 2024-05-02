@@ -7,6 +7,7 @@ import com.project1.ticketing.domain.point.models.PointHistory;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.point.repository.PointCoreRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class PointHistoryService implements IPointHistoryService {
 
 
     @Override
+    @Transactional
     public PointHistoryResponse updatePoint(PointRequest request) {
         long userId = request.getUserId();
         long amount = request.getAmount();

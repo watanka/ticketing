@@ -3,6 +3,7 @@ package com.project1.ticketing.domain.point.components;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.point.repository.PointCoreRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ public class PointValidator {
     public PointValidator(PointCoreRepository pointRepository) {
         this.pointRepository = pointRepository;
     }
+
 
     public User validateUser(long userId){
         return pointRepository.getUser(userId).orElseThrow(

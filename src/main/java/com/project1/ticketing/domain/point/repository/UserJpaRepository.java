@@ -17,6 +17,8 @@ public interface UserJpaRepository extends JpaRepository<User, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     User save(User user);
+
+    @Lock(LockModeType.PESSIMISTIC_READ)
     Optional<User> findById(long userId);
 
 }
