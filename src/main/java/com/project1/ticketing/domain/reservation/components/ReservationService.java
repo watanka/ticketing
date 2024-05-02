@@ -12,6 +12,8 @@ import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +51,7 @@ public class ReservationService implements IReservationService {
         long seatId = request.getSeatId();
         long concertTimeId = request.getConcertTimeId();
 
+        System.out.println("콘서트 시간 확인");
         ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId)
                 .orElseThrow(() -> new RuntimeException("콘서트 시간을 찾을 수 없습니다."));
 
@@ -60,26 +63,32 @@ public class ReservationService implements IReservationService {
         // 좌석 상태 변경
         // 좌석 상태 저장 seatRepository.save
         // 예약 및 좌석 상태 관리 이벤트 발행
+        System.out.println("좌석 상태 검증 시작");
         reservationValidator.validateSeat(seatId);
 
+        System.out.println("좌석 조회");
         Seat seat = concertRepository.findSeatById(seatId)
                 .orElseThrow();
-
+        System.out.println("좌석 상태 변경");
         seat.changeStatus(SeatStatus.RESERVED);
 
+        System.out.println("예약 생성");
         Reservation reservation = Reservation.builder()
                 .userId(userId)
                 .concertTime(concertTime.getTime().toString())
-//                .seatNum(seat.getSeatNum())
-//                .seatId(seatId)
-//                .price(seat.getPrice())
-                .seat(seat)
+                .seatNum(seat.getSeatNum())
+                .seatId(seatId)
+                .price(seat.getPrice())
+
                 .status(ReservationStatus.TEMPORARY)
                 .createAt(ZonedDateTime.now())
                 .build();
 
-        reservationRepository.save(reservation);
+
+        System.out.println("좌석 정보 저장");
         concertRepository.saveSeat(seat);
+//        System.out.println("예약 정보 저장");
+//        reservationRepository.save(reservation);
 
         //TODO: 5분 후 예약대기 상태를 업데이트하는 이벤트 발행
 
