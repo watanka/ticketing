@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ConcertJpaRepository extends JpaRepository<Concert, Long> {
     Concert save(Concert concert);
-    Optional<Concert> findById(long concertId);
+    Concert findById(long concertId);
     List<Concert> findAll();
 
 

@@ -26,7 +26,7 @@ public class ReservationCoreRepositoryImpl implements ReservationCoreRepository 
 
 
     @Override
-    public Optional<Reservation> findById(long reservationId) {
+    public Reservation findById(long reservationId) {
         return reservationRepository.findById(reservationId);
     }
 

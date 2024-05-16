@@ -52,8 +52,7 @@ public class ReservationService implements IReservationService {
         long concertTimeId = request.getConcertTimeId();
 
         System.out.println("콘서트 시간 확인");
-        ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId)
-                .orElseThrow(() -> new RuntimeException("콘서트 시간을 찾을 수 없습니다."));
+        ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId);
 
 
         // reservation 검증
@@ -67,8 +66,7 @@ public class ReservationService implements IReservationService {
         reservationValidator.validateSeat(seatId);
 
         System.out.println("좌석 조회");
-        Seat seat = concertRepository.findSeatById(seatId)
-                .orElseThrow();
+        Seat seat = concertRepository.findSeatById(seatId);
         System.out.println("좌석 상태 변경");
         seat.changeStatus(SeatStatus.RESERVED);
 
@@ -97,27 +95,23 @@ public class ReservationService implements IReservationService {
 
     public Reservation updateReservationStatus(long reservationId){
 
-        Optional<Reservation> reservation = reservationRepository.findById(reservationId);
-        if (reservation.isEmpty()){
-            throw new RuntimeException("예약을 찾을 수 없습니다.");
-        }
-        Reservation selectedReservation = reservation.get();
+        Reservation reservation = reservationRepository.findById(reservationId);
 
-        ZonedDateTime reservationExpiredTime = selectedReservation.getCreateAt().plusMinutes(5);
+        ZonedDateTime reservationExpiredTime = reservation.getCreateAt().plusMinutes(5);
 
 
         if (ZonedDateTime.now().isAfter(reservationExpiredTime)){
-            selectedReservation.setStatus(ReservationStatus.CANCELLED);
-            reservationRepository.save(selectedReservation);
+            reservation.setStatus(ReservationStatus.CANCELLED);
+            reservationRepository.save(reservation);
         }
-        return selectedReservation;
+        return reservation;
     }
 
     public List<Reservation> findAllByUserId(long userId){
         return reservationRepository.findAllByUserId(userId);
     }
 
-    public Optional<Reservation> findByReservationId(long reservationId){
+    public Reservation findByReservationId(long reservationId){
         return reservationRepository.findById(reservationId);
     }
 
@@ -142,8 +136,7 @@ public class ReservationService implements IReservationService {
             throw new RuntimeException("사용자를 찾을 수 없습니다.");
         }
         // reservationId 검증
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(); // new RuntimeException("해당 예약을 찾을 수 없습니다.")
+        Reservation reservation = reservationRepository.findById(reservationId);
 
         return ReservationResponse.from(reservation);
     }
@@ -151,7 +144,7 @@ public class ReservationService implements IReservationService {
     @Override
     public boolean checkSeatReserved(long seatId) {
 
-        Seat seat =  concertRepository.findSeatById(seatId).orElseThrow();
+        Seat seat =  concertRepository.findSeatById(seatId);
         return seat.getStatus().toBoolean();
     }
 

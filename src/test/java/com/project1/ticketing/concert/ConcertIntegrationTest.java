@@ -47,7 +47,7 @@ class ConcertIntegrationTest {
     void testJpaRepositoryWorking(){
         Concert concert = Concert.builder().name("나훈아50주년콘서트1").build();
         Concert savedConcert = concertRepository.saveConcert(concert);
-        Concert foundConcert = concertRepository.findConcertById(savedConcert.getId()).orElseThrow();
+        Concert foundConcert = concertRepository.findConcertById(savedConcert.getId());
 
         Assertions.assertThat(foundConcert.getId()).isEqualTo(concert.getId());
         Assertions.assertThat(foundConcert.getName()).isEqualTo(concert.getName());
@@ -58,7 +58,7 @@ class ConcertIntegrationTest {
     void testSpringJpaRepositoryWorking(){
         Concert concert = Concert.builder().name("나훈아50주년콘서트2").build();
         Concert savedConcert = concertRepository.saveConcert(concert);
-        Concert foundConcert = concertRepository.findConcertById(savedConcert.getId()).orElseThrow();
+        Concert foundConcert = concertRepository.findConcertById(savedConcert.getId());
 
         assertThat(foundConcert.getId()).isEqualTo(concert.getId());
         assertThat(foundConcert.getName()).isEqualTo(concert.getName());

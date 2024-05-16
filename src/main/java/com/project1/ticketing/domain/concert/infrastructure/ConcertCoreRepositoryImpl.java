@@ -51,12 +51,12 @@ public class ConcertCoreRepositoryImpl implements ConcertCoreRepository {
     }
 
     @Override
-    public Optional<Concert> findConcertById(long concertId) {
+    public Concert findConcertById(long concertId) {
         return concertJpaRepository.findById(concertId);
     }
 
     @Override
-    public Optional<ConcertTime> findConcertTimeById(long concertTimeId) {
+    public ConcertTime findConcertTimeById(long concertTimeId) {
         return concertTimeJpaRepository.findById(concertTimeId);
     }
 
@@ -67,7 +67,7 @@ public class ConcertCoreRepositoryImpl implements ConcertCoreRepository {
 
     @Lock(LockModeType.OPTIMISTIC)
     @Override
-    public Optional<Seat> findSeatById(long seatId) {
+    public Seat findSeatById(long seatId) {
         return seatJpaRepository.findById(seatId);
     }
 

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ConcertTimeJpaRepository extends JpaRepository<ConcertTime, Long> {
     ConcertTime save(ConcertTime concertTime);
-    Optional<ConcertTime> findById(long concertTimeId);
+    ConcertTime findById(long concertTimeId);
     List<ConcertTime> findAllByConcertId(long concertId);
 
 }

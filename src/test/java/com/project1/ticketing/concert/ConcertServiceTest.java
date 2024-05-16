@@ -137,7 +137,7 @@ class ConcertServiceTest {
 
 
         //given & when
-        when(concertRepository.findConcertById(concertId)).thenReturn(Optional.of(mock(Concert.class)));
+        when(concertRepository.findConcertById(concertId)).thenReturn(mock(Concert.class));
         when(concertRepository.findAllConcertTimesByConcertId(concertId)).thenReturn(List.of(mock(ConcertTime.class)));
         when(concertRepository.isconcertTimeAvailable(anyLong())).thenReturn(true);
 
@@ -152,9 +152,9 @@ class ConcertServiceTest {
         long concertTimeId = 0L;
         //given&when
 
-        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
+        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(mock(ConcertTime.class));
 
-        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
+        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(mock(ConcertTime.class));
         when(concertRepository.findAllSeatsByConcertTimeId(concertTimeId)).thenReturn(fromSeatDTOtoEntity(fullAvailableSeatList));
         //then
         assertThat(concertService.getAvailableSeats(concertTimeId).size()).isEqualTo(fullAvailableSeatList.size());
@@ -166,7 +166,7 @@ class ConcertServiceTest {
 
         long concertTimeId = 0L;
         //given&when
-        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.of(mock(ConcertTime.class)));
+        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(mock(ConcertTime.class));
         when(concertRepository.findAllSeatsByConcertTimeId(concertTimeId)).thenReturn(fromSeatDTOtoEntity(fullReservedSeatList));
         //then
         assertThat(concertService.getAvailableSeats(concertTimeId).size()).isZero();
@@ -176,7 +176,7 @@ class ConcertServiceTest {
     @DisplayName("선택한 콘서트 날짜를 찾지 못한 경우")
     void listConcertSeatsNotFound(){
         long concertTimeId = 0L;
-        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(Optional.empty());
+        when(concertRepository.findConcertTimeById(concertTimeId)).thenReturn(null);
         //then
         try{
             concertService.getAvailableSeats(concertTimeId);

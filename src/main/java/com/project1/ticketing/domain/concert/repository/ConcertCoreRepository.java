@@ -21,11 +21,11 @@ public interface ConcertCoreRepository {
 
     List<Concert> findAllConcerts();
 
-    Optional<Concert> findConcertById(long concertId);
+    Concert findConcertById(long concertId);
 
-    Optional<ConcertTime> findConcertTimeById(long concertTimeId);
+    ConcertTime findConcertTimeById(long concertTimeId);
 
-    public Optional<Seat> findSeatById(long seatId);
+    public Seat findSeatById(long seatId);
 
 
     // read List

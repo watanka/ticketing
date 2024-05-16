@@ -14,19 +14,19 @@ public class ConcertValidator {
     }
 
     public void validateConcert(long concertId){
-        if (concertRepository.findConcertById(concertId).isEmpty()){
+        if (concertRepository.findConcertById(concertId) == null){
             throw new RuntimeException("콘서트 정보를 찾을 수 없습니다.");
         }
     }
 
     public void validateConcertTime(long concertTimeId){
-        if (concertRepository.findConcertTimeById(concertTimeId).isEmpty()){
+        if (concertRepository.findConcertTimeById(concertTimeId) == null){
             throw new RuntimeException("콘서트 시간 정보를 찾을 수 없습니다.");
         }
     }
 
     public void validateSeat(long seatId){
-        if (concertRepository.findSeatById(seatId).isEmpty()){
+        if (concertRepository.findSeatById(seatId) == null){
             throw new RuntimeException("좌석 정보를 찾을 수 없습니다.");
         }
     }

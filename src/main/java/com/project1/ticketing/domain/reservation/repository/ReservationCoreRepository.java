@@ -12,7 +12,7 @@ public interface ReservationCoreRepository {
 
 
     Reservation save(Reservation reservation);
-    Optional<Reservation> findById(long reservationId);
+    Reservation findById(long reservationId);
     List<Reservation> findAllByUserId(long userId);
 
     Optional<Reservation> findBySeatId(long seatId);

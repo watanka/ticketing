@@ -109,7 +109,7 @@ public class ReservationConcurrencyTest {
 ////        CompletableFuture.runAsync(() -> reservationService.register(reservationRequest1))
 //        ).join();
 
-        Seat foundSeat = concertCoreRepository.findSeatById(seat.getId()).orElseThrow();
+        Seat foundSeat = concertCoreRepository.findSeatById(seat.getId());
         System.out.println(foundSeat.getVersion());
         System.out.println("# Success: " + successCnt + " # Fail: " + failCnt);
         Assertions.assertThat(foundSeat.getStatus()).isEqualTo(SeatStatus.RESERVED);
