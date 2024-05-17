@@ -4,6 +4,7 @@ import com.project1.ticketing.api.dto.response.ConcertResponse;
 import com.project1.ticketing.api.dto.response.ConcertTimeResponse;
 import com.project1.ticketing.api.dto.response.SeatResponse;
 import com.project1.ticketing.domain.concert.components.IConcertService;
+import com.project1.ticketing.domain.concert.models.SeatStatus;
 
 import java.util.List;
 
@@ -68,6 +69,9 @@ public class FakeConcertService implements IConcertService {
         );
     }
 
+    @Override
+    public void patchSeatStatus(long seatId, SeatStatus status) {
+    }
 
 
 }
