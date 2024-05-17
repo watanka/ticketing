@@ -36,6 +36,10 @@ public class PaymentService{
         return payment;
     }
 
+    public Payment cancel(Reservation reservation){
+        return null;
+    }
+
     public Optional<Payment> checkPayment(long paymentId) {
         return paymentRepository.findById(paymentId);
     }
