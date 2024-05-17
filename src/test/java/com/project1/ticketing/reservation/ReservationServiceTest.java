@@ -70,7 +70,7 @@ public class ReservationServiceTest {
         long seatId = 0L;
 
         when(concertRepository.findSeatById(seatId))
-                .thenReturn(Optional.of(Seat.builder().status(SeatStatus.AVAILABLE).build()));
+                .thenReturn(Seat.builder().status(SeatStatus.AVAILABLE).build());
 
         boolean isAvailable = reservationService.checkSeatReserved(seatId);
 
@@ -91,7 +91,7 @@ public class ReservationServiceTest {
                 .id(reservationId)
                 .build();
 
-        when(reservationRepository.findById(reservationId)).thenReturn(Optional.of( reservation));
+        when(reservationRepository.findById(reservationId)).thenReturn(reservation);
         // TODO: 내부 시간 모킹 필요
 
 
