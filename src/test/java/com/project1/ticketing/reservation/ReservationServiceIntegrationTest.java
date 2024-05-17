@@ -5,10 +5,8 @@ import com.project1.ticketing.api.dto.request.ReservationRequest;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
 import com.project1.ticketing.domain.concert.components.ConcertService;
 import com.project1.ticketing.domain.concert.infrastructure.ConcertCoreRepositoryImpl;
-import com.project1.ticketing.domain.concert.models.Concert;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
-import com.project1.ticketing.domain.point.components.UserManager;
 import com.project1.ticketing.domain.point.infrastructure.PointCoreRepositoryImpl;
 import com.project1.ticketing.domain.reservation.components.ReservationService;
 import com.project1.ticketing.domain.reservation.infrastructure.ReservationCoreRepositoryImpl;
@@ -61,9 +59,9 @@ public class ReservationServiceIntegrationTest {
         Seat selectedSeat = Seat.from( concertService.getAvailableSeats(concertTime.getId()).get(0));
 
         ReservationRequest reservationRequest = new ReservationRequest(userId, concertTime.getId(), selectedSeat.getId());
-        ReservationResponse reservationResponse = reservationService.register(reservationRequest);
+        ReservationResponse reservationResponse = reservationService.reserve(reservationRequest);
 
-        Reservation foundReservation = reservationCoreRepository.findById(reservationResponse.getId()).orElseThrow();
+        Reservation foundReservation = reservationCoreRepository.findById(reservationResponse.getId());
 
         Assertions.assertThat(foundReservation.getStatus()).isEqualTo(ReservationStatus.TEMPORARY);
 

@@ -8,6 +8,8 @@ import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
 import com.project1.ticketing.domain.point.components.UserManager;
 import com.project1.ticketing.domain.point.models.User;
+import com.project1.ticketing.domain.reservation.event.ReservationEvent;
+import com.project1.ticketing.domain.reservation.event.ReservationEventPublisher;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
@@ -32,6 +34,8 @@ public class ReservationService implements IReservationService {
 
     UserManager userManager;
 
+    ReservationEventPublisher reservationEventPublisher;
+
     @Autowired
     public ReservationService(ReservationCoreRepository reservationRepository,
                               ReservationValidator reservationValidator,
@@ -45,7 +49,7 @@ public class ReservationService implements IReservationService {
     }
 
     @Transactional
-    public ReservationResponse register(ReservationRequest request){
+    public ReservationResponse reserve(ReservationRequest request){
 
         long userId = request.getUserId();
         long seatId = request.getSeatId();
@@ -83,12 +87,9 @@ public class ReservationService implements IReservationService {
                 .build();
 
 
-        System.out.println("좌석 정보 저장");
-        concertRepository.saveSeat(seat);
-//        System.out.println("예약 정보 저장");
-//        reservationRepository.save(reservation);
 
         //TODO: 5분 후 예약대기 상태를 업데이트하는 이벤트 발행
+        reservationEventPublisher.reservationOccupy(new ReservationEvent(this, reservation.getId()));
 
         return ReservationResponse.from(reservation);
     }
