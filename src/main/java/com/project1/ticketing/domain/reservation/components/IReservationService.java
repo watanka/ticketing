@@ -8,7 +8,7 @@ import java.util.List;
 public interface IReservationService {
 
 
-    ReservationResponse register(ReservationRequest request);
+    ReservationResponse reserve(ReservationRequest request);
 
 
     List<ReservationResponse> checkReservationList(long userId);

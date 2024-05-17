@@ -12,7 +12,7 @@ public class FakeReservationService implements IReservationService {
 
 
     @Override
-    public ReservationResponse register(ReservationRequest request) {
+    public ReservationResponse reserve(ReservationRequest request) {
         return ReservationResponse.builder()
                 .id(0L)
                 .userId(request.getUserId())

@@ -3,32 +3,19 @@ package com.project1.ticketing.reservation;
 import com.project1.ticketing.api.dto.request.ReservationRequest;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
 import com.project1.ticketing.domain.concert.infrastructure.ConcertCoreRepositoryImpl;
-import com.project1.ticketing.domain.concert.models.Concert;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
-import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
-import com.project1.ticketing.domain.point.components.UserManager;
 import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.point.repository.UserJpaRepository;
 import com.project1.ticketing.domain.reservation.components.ReservationService;
-import com.project1.ticketing.domain.reservation.infrastructure.ReservationCoreRepositoryImpl;
-import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import org.assertj.core.api.Assertions;
-import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -90,7 +77,7 @@ public class ReservationConcurrencyTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
-                    ReservationResponse reservationResponse = reservationService.register(reservationRequest1);
+                    ReservationResponse reservationResponse = reservationService.reserve(reservationRequest1);
                     successCnt.incrementAndGet();
                 }catch (Exception e){
                     System.out.println("Catch Optimistic Exception!");
