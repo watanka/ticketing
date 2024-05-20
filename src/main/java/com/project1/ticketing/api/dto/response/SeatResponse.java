@@ -20,7 +20,7 @@ public class SeatResponse {
         return SeatResponse.builder()
                 .id(seat.getId())
                 .seatNum(seat.getSeatNum())
-                .concertHallId(seat.getConcertHallId())
+//                .concertHallId(seat.getConcertHallId())
                 .price(seat.getPrice())
                 .available(seat.getStatus().toBoolean())
                 .build();

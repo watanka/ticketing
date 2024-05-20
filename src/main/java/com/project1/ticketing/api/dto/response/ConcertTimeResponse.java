@@ -12,17 +12,17 @@ import java.time.format.DateTimeFormatter;
 public class ConcertTimeResponse {
     long id;
     ZonedDateTime time;
-    long concertHallId;
-    int maxSeatNum;
-    int currAvailableSeatNum;
+//    long concertHallId;
+//    int maxSeatNum;
+//    int currAvailableSeatNum;
 
     public static ConcertTimeResponse from(ConcertTime concertTime){
         return ConcertTimeResponse.builder()
                 .id(concertTime.getId())
                 .time(concertTime.getTime())
-                .concertHallId(concertTime.getConcertHallId())
-                .maxSeatNum(concertTime.getMaxSeatNum())
-                .currAvailableSeatNum(concertTime.getCurrAvailableSeatNum())
+//                .concertHallId(concertTime.getConcertHallId())
+//                .maxSeatNum(concertTime.getMaxSeatNum())
+//                .currAvailableSeatNum(concertTime.getCurrAvailableSeatNum())
                 .build();
     }
 

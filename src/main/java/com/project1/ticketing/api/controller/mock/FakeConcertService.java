@@ -27,16 +27,16 @@ public class FakeConcertService implements IConcertService {
                 ConcertTimeResponse.builder()
                         .id(0L)
                         .time(ConcertTimeResponse.fromStr("2024/04/20/ 10:00:00 KST"))
-                        .concertHallId(0L)
-                        .maxSeatNum(50)
-                        .currAvailableSeatNum(50)
+//                        .concertHallId(0L)
+//                        .maxSeatNum(50)
+//                        .currAvailableSeatNum(50)
                         .build(),
                 ConcertTimeResponse.builder()
                         .id(0L)
                         .time(ConcertTimeResponse.fromStr("2024/05/20/ 10:00:00 KST"))
-                        .concertHallId(0L)
-                        .maxSeatNum(50)
-                        .currAvailableSeatNum(50)
+//                        .concertHallId(0L)
+//                        .maxSeatNum(50)
+//                        .currAvailableSeatNum(50)
                         .build()
         );
     }

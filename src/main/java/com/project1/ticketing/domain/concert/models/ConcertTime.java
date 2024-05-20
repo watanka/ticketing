@@ -1,6 +1,7 @@
 package com.project1.ticketing.domain.concert.models;
 
 import com.project1.ticketing.api.dto.response.ConcertTimeResponse;
+import com.project1.ticketing.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,15 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="concert_time")
 @AllArgsConstructor
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public class ConcertTime{
+public class ConcertTime extends BaseEntity {
 
-    @Id @GeneratedValue
-    @Column(name="concerttime_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="concert_time_id")
     long id;
 
     private ZonedDateTime time;
@@ -28,10 +30,6 @@ public class ConcertTime{
 
 //    @OneToMany(mappedBy="concertTimeId", cascade = CascadeType.ALL)
 //    private List<Seat> seats = new ArrayList<>();
-
-    long concertHallId;
-    int maxSeatNum;
-    int currAvailableSeatNum; // seat정보에 따라 업데이트
 
     //Test 용도
     public ConcertTime(long id, ZonedDateTime time){
@@ -49,9 +47,9 @@ public class ConcertTime{
         return ConcertTime.builder()
                 .id(concertTimeResponse.getId())
                 .time(concertTimeResponse.getTime())
-                .concertHallId(concertTimeResponse.getConcertHallId())
-                .maxSeatNum(concertTimeResponse.getMaxSeatNum())
-                .currAvailableSeatNum(concertTimeResponse.getCurrAvailableSeatNum())
+//                .concertHallId(concertTimeResponse.getConcertHallId())
+//                .maxSeatNum(concertTimeResponse.getMaxSeatNum())
+//                .currAvailableSeatNum(concertTimeResponse.getCurrAvailableSeatNum())
                 .build();
     }
 

@@ -1,6 +1,7 @@
 package com.project1.ticketing.domain.concert.models;
 
 import com.project1.ticketing.api.dto.response.SeatResponse;
+import com.project1.ticketing.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,26 +10,23 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Seat{
+public class Seat extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     long seatNum;
 
-    @Column(name="concerttime_id")
+    @Column(name="concert_time_id")
     private long concertTimeId;
 
-    @Column(name="concerthall_id")
-    long concertHallId;
+//    @Column(name="concert_hall_id")
+//    long concertHallId;
 
     long price;
 
     @Enumerated(EnumType.STRING)
     SeatStatus status;
-
-    @Version
-    private int version;
 
     // test용도
     public Seat(long seatNum, long concertTimeId, long price){
@@ -40,7 +38,7 @@ public class Seat{
     public static Seat from(SeatResponse seatResponse){
         return Seat.builder()
                 .id(seatResponse.getId())
-                .concertHallId(seatResponse.getConcertHallId())
+//                .concertHallId(seatResponse.getConcertHallId())
                 .price(seatResponse.getPrice())
                 .status(SeatStatus.fromBool(seatResponse.isAvailable()))
                 .build();
