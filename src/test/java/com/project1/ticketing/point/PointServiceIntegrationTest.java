@@ -1,17 +1,12 @@
 package com.project1.ticketing.point;
 
-import com.project1.ticketing.TestDataHandler;
 import com.project1.ticketing.api.dto.request.PointRequest;
 import com.project1.ticketing.api.dto.response.PointHistoryResponse;
 import com.project1.ticketing.domain.point.components.PointHistoryService;
-import com.project1.ticketing.domain.point.components.PointValidator;
 import com.project1.ticketing.domain.point.infrastructure.PointCoreRepositoryImpl;
-import com.project1.ticketing.domain.point.models.PointHistory;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
 import jakarta.transaction.Transactional;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -104,7 +99,7 @@ public class PointServiceIntegrationTest {
         PointHistoryResponse pointHistoryResponse = pointHistoryService.checkBalance(userId);
 
         assertThat(pointHistoryResponse.getAmount()).isEqualTo(30000L);
-        assertThat(pointHistoryResponse.getPointType()).isEqualTo(PointType.BALANCE.toString());
+        assertThat(pointHistoryResponse.getPointType()).isEqualTo(PointType.CHECK.toString());
     }
 
 }

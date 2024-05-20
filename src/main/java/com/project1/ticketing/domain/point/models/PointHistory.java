@@ -1,5 +1,6 @@
 package com.project1.ticketing.domain.point.models;
 
+import com.project1.ticketing.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,16 +11,19 @@ import org.springframework.data.jpa.repository.Lock;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PointHistory {
+@Table(name="point_history")
+public class PointHistory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
     private PointType pointType;
     private long userId;
 
-    @Version
-    private long version;
+//    @Version
+//    private long version;
 
     private long amount;
 

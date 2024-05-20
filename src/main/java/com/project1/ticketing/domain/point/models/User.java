@@ -1,5 +1,6 @@
 package com.project1.ticketing.domain.point.models;
 
+import com.project1.ticketing.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,12 +11,13 @@ import java.util.Objects;
 @Getter
 @Builder
 @Table(name="users")
-public class User{
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-    long balance;
+    @Builder.Default
+    long balance = 0;
 
     public User(long balance){
         this.balance = balance;

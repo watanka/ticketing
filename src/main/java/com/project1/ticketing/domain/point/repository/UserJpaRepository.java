@@ -15,10 +15,10 @@ import static org.hibernate.LockMode.PESSIMISTIC_WRITE;
 @Repository
 public interface UserJpaRepository extends JpaRepository<User, Long> {
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+//    @Lock(LockModeType.PESSIMISTIC_WRITE)
     User save(User user);
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
+//    @Lock(LockModeType.PESSIMISTIC_READ)
     User findById(long userId);
 
 }

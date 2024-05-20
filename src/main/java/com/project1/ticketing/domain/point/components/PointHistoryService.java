@@ -2,7 +2,6 @@ package com.project1.ticketing.domain.point.components;
 
 import com.project1.ticketing.api.dto.request.PointRequest;
 import com.project1.ticketing.api.dto.response.PointHistoryResponse;
-import com.project1.ticketing.domain.point.infrastructure.PointCoreRepositoryImpl;
 import com.project1.ticketing.domain.point.models.PointHistory;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PointHistoryService implements IPointHistoryService {
@@ -75,7 +73,7 @@ public class PointHistoryService implements IPointHistoryService {
         User foundUser = pointValidator.validateUser(userId);
         return PointHistoryResponse.builder()
                 .userId(userId)
-                .pointType(PointType.BALANCE.toString())
+                .pointType(PointType.CHECK.toString())
                 .amount(foundUser.getBalance())
                 .build();
 
