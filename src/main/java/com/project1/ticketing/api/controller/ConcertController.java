@@ -27,7 +27,7 @@ public class ConcertController {
         return ResponseEntity.ok().body(concertList);
     }
 
-    @GetMapping("/concerts/{concert_id}/concert-times")
+    @GetMapping("/concerts/{concert_id}/available-times")
     public ResponseEntity<List<ConcertTimeResponse>> getAvailableTimes(@PathVariable(value="concert_id") long concertId){
         List<ConcertTimeResponse> concertTimeResponseList = concertService.getAvailableTimes(concertId);
 

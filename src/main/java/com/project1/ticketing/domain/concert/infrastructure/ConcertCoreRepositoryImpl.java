@@ -9,12 +9,14 @@ import com.project1.ticketing.domain.concert.repository.ConcertTimeJpaRepository
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
 import com.project1.ticketing.domain.concert.repository.SeatJpaRepository;
 import jakarta.persistence.LockModeType;
+import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Repository
 public class ConcertCoreRepositoryImpl implements ConcertCoreRepository {
 
@@ -23,13 +25,6 @@ public class ConcertCoreRepositoryImpl implements ConcertCoreRepository {
     ConcertTimeJpaRepository concertTimeJpaRepository;
     SeatJpaRepository seatJpaRepository;
 
-    public ConcertCoreRepositoryImpl(ConcertJpaRepository concertJpaRepository,
-                                     ConcertTimeJpaRepository concertTimeJpaRepository,
-                                     SeatJpaRepository seatJpaRepository) {
-        this.concertJpaRepository = concertJpaRepository;
-        this.concertTimeJpaRepository = concertTimeJpaRepository;
-        this.seatJpaRepository = seatJpaRepository;
-    }
 
     @Override
     public void deleteAll(){concertJpaRepository.deleteAll();};

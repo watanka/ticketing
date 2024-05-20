@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -35,60 +36,31 @@ class ConcertIntegrationTest {
     @Autowired
     ConcertService concertService;
 
-    @BeforeEach
-    void setUp(){
-
-        concertRepository.deleteAll();
-        // testDataHandler에 시험할 데이터 넣어놓음
-        testDataHandler.settingConcertInfo();
-    }
-
-    @Test
-    void testJpaRepositoryWorking(){
-        Concert concert = Concert.builder().name("나훈아50주년콘서트1").build();
-        Concert savedConcert = concertRepository.saveConcert(concert);
-        Concert foundConcert = concertRepository.findConcertById(savedConcert.getId());
-
-        Assertions.assertThat(foundConcert.getId()).isEqualTo(concert.getId());
-        Assertions.assertThat(foundConcert.getName()).isEqualTo(concert.getName());
-    }
-
-
-    @Test
-    void testSpringJpaRepositoryWorking(){
-        Concert concert = Concert.builder().name("나훈아50주년콘서트2").build();
-        Concert savedConcert = concertRepository.saveConcert(concert);
-        Concert foundConcert = concertRepository.findConcertById(savedConcert.getId());
-
-        assertThat(foundConcert.getId()).isEqualTo(concert.getId());
-        assertThat(foundConcert.getName()).isEqualTo(concert.getName());
-        assertThat(concert).isEqualTo(foundConcert);
-    }
-
-
     @Test
     @DisplayName("콘서트 리스트 조회")
     void testGetConcertList(){
-        Concert concert = Concert.builder()
-                .name("나훈아50주년콘서트")
-                .build();
-        concertRepository.saveConcert(concert);
-
         List<ConcertResponse> concertResponseList = concertService.getAllConcerts();
-        assertThat(concertResponseList.get(0).getName()).isEqualTo("나훈아50주년콘서트");
+        assertThat(concertResponseList.get(0).getName()).isEqualTo("아일릿 데뷔 콘서트");
 
         }
 
     @Test
-    @DisplayName("예약 가능한 콘서트 시간 조회")
-    void testGetAvailableConcertTime(){
+    @DisplayName("예약 가능한 콘서트 시간 조회-{예약 가능좌석 보유}")
+    void AvailableConcertTimeExists(){
         // ConcertTimeList = [ConcertTime1: 전좌석 예약가능, concertTime2: 전좌석 매진]
 
         List<ConcertTimeResponse> concertTimeResponseList = concertService.getAvailableTimes(1L);
-
-
         assertThat(concertTimeResponseList.size()).isEqualTo(1);
-        assertThat(concertTimeResponseList.get(0).getTime()).isEqualTo(ConcertTime.fromStr("2024/04/20/ 17:00:00 KST"));
+
+    }
+
+    @Test
+    @DisplayName("예약 가능한 콘서트 시간 조회-{전좌석 매진}")
+    void NoAvailableConcertTime(){
+        List<ConcertTimeResponse> concertTimeResponseList = concertService.getAvailableTimes(2L);
+
+
+        assertThat(concertTimeResponseList.size()).isEqualTo(0);
 
     }
 

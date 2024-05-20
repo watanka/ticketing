@@ -89,13 +89,11 @@ class ConcertServiceTest {
                 ConcertTimeResponse.builder()
                         .id(0L)
                         .time(ConcertTime.fromStr("2024/04/15/ 17:00:00 KST"))
-                        .maxSeatNum(50)
-                        .currAvailableSeatNum(0).build(),
+                        .build(),
                 ConcertTimeResponse.builder()
                         .time(ConcertTime.fromStr("2024/04/16/ 17:00:00 KST"))
                         .id(1L)
-                        .maxSeatNum(50)
-                        .currAvailableSeatNum(50).build()
+                        .build()
         );
 
 
@@ -115,13 +113,11 @@ class ConcertServiceTest {
                 ConcertTimeResponse.builder()
                         .time(ConcertTime.fromStr("2024/04/20/ 17:00:00 KST"))
                         .id(2L)
-                        .maxSeatNum(50)
-                        .currAvailableSeatNum(24).build(),
+                        .build(),
                 ConcertTimeResponse.builder()
                         .time(ConcertTime.fromStr("2024/04/21/ 17:00:00 KST"))
                         .id(3L)
-                        .maxSeatNum(50)
-                        .currAvailableSeatNum(22).build()
+                        .build()
         );
 
         잠실_종합운동장 = ConcertHall.builder()
