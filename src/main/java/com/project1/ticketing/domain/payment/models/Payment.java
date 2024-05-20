@@ -1,15 +1,17 @@
 package com.project1.ticketing.domain.payment.models;
 
+import com.project1.ticketing.domain.common.BaseEntity;
 import com.project1.ticketing.domain.reservation.models.Reservation;
+import jakarta.persistence.Entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
-//@Entity
+@Entity
 @Getter @Setter
-public class Payment {
+public class Payment extends BaseEntity {
 
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,17 +19,27 @@ public class Payment {
 
 //    @OneToOne
 //    @JoinColumn(name = "reservation_id")
-    Reservation reservation;
-
-    ZonedDateTime createAt;
+    long reservationId;
+    long seatId;
+    long userId;
+    long price;
     PaymentStatus paymentStatus;
 
     @Builder
-    public Payment(Reservation reservation) {
-        this.reservation = reservation;
-        this.createAt = ZonedDateTime.now();
-        this.paymentStatus = PaymentStatus.NOTPAID;
+    public Payment(long reservationId, long seatId, long userId, long price, PaymentStatus paymentStatus) {
+        this.reservationId = reservationId;
+        this.seatId = seatId;
+        this.userId = userId;
+        this.price = price;
+        this.paymentStatus = paymentStatus;
     }
+
+
+
+
+
+
+
 
     public void updateStatus(PaymentStatus paymentStatus){
         this.paymentStatus = paymentStatus;

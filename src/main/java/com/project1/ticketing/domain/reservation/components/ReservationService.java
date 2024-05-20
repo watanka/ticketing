@@ -85,15 +85,13 @@ public class ReservationService implements IReservationService {
     }
 
     public void updateReservationStatus(){
-        System.out.println("예약 상태 업데이트 스케쥴러 발동");
         List<Reservation> reservationList = reservationRepository.findAllByStatus(ReservationStatus.TEMPORARY);
 
         for (Reservation reservation : reservationList) {
             if (ZonedDateTime.now().isAfter(reservation.getExpiredAt())){
 
                 // 예약 상태 변경
-                reservation.setStatus(ReservationStatus.CANCELLED);
-                reservationRepository.save(reservation);
+                updateSingleReservationStatus(reservation, ReservationStatus.CANCELLED);
 
                 // 좌석 상태 변경
                 long seatId = reservation.getSeatId();
@@ -155,6 +153,11 @@ public class ReservationService implements IReservationService {
         concertRepository.saveSeat(seat);
 
         return ReservationResponse.from(reservation);
+    }
+
+    public void updateSingleReservationStatus(Reservation reservation, ReservationStatus status){
+        reservation.setStatus(status);
+        reservationRepository.save(reservation);
     }
 
 

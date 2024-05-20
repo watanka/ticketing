@@ -78,4 +78,9 @@ public class PointHistoryService implements IPointHistoryService {
                 .build();
 
     }
+
+    public User findUser(long userId){
+        return pointRepository.getUser(userId);
+    }
+
 }
