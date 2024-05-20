@@ -5,7 +5,10 @@ import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class ReservationMonitor {
     ReservationCoreRepository reservationCoreRepository;
     ConcertService concertService;
