@@ -7,6 +7,7 @@ import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
 import com.project1.ticketing.domain.point.components.UserManager;
 import com.project1.ticketing.domain.reservation.components.ReservationService;
 import com.project1.ticketing.domain.reservation.components.ReservationValidator;
+import com.project1.ticketing.domain.reservation.event.ReservationEventPublisher;
 import com.project1.ticketing.domain.reservation.infrastructure.ReservationCoreRepositoryImpl;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
@@ -14,6 +15,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.when;
@@ -30,6 +32,8 @@ public class ReservationServiceTest {
 
     ConcertCoreRepository concertRepository;
     UserManager userManager;
+
+    ReservationEventPublisher reservationEventPublisher;
     ReservationService reservationService;
 
     List<Reservation> reservationList;
@@ -39,10 +43,13 @@ public class ReservationServiceTest {
         reservationValidator = Mockito.mock(ReservationValidator.class);
         concertRepository = Mockito.mock(ConcertCoreRepository.class);
         userManager = Mockito.mock(UserManager.class);
+        reservationEventPublisher = Mockito.mock(ReservationEventPublisher.class) ;
+
         reservationService = new ReservationService(reservationRepository,
                                                     reservationValidator,
                                                     concertRepository,
-                                                    userManager
+                                                    userManager,
+                                                    reservationEventPublisher
                                                     );
 
         reservationList = List.of(

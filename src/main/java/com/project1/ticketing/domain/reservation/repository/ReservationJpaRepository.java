@@ -1,6 +1,7 @@
 package com.project1.ticketing.domain.reservation.repository;
 
 import com.project1.ticketing.domain.reservation.models.Reservation;
+import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,4 +15,7 @@ public interface ReservationJpaRepository extends JpaRepository<Reservation, Lon
     List<Reservation> findAllByUserId(long userId);
 
     Optional<Reservation> findBySeatId(long seatId);
+
+    List<Reservation> findAllByStatus(ReservationStatus status);
+
 }

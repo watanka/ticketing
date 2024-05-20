@@ -10,3 +10,6 @@ INSERT INTO seat (seat_num, concert_time_id, price, status, created_at, updated_
 INSERT INTO seat (seat_num, concert_time_id, price, status, created_at, updated_at) VALUES (4, 2, 500000, 'RESERVED', now(), now());
 INSERT INTO seat (seat_num, concert_time_id, price, status, created_at, updated_at) VALUES (5, 2, 300000, 'RESERVED', now(), now());
 INSERT INTO seat (seat_num, concert_time_id, price, status, created_at, updated_at) VALUES (6, 2, 200000, 'RESERVED', now(), now());
+
+INSERT INTO users (balance, created_at, updated_at) VALUES (0, now(), now());
+INSERT INTO users (balance, created_at, updated_at) VALUES (0, now(), now());

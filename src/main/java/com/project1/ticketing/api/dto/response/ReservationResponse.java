@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.ZonedDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -18,10 +20,10 @@ public class ReservationResponse {
     private String status;
     private String concertTime;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String expiredAt;
+    private ZonedDateTime expiredAt;
 
 
-    public ReservationResponse(long id, long userId, long seatNum, long price, String status, String concertTime, String expiredAt) {
+    public ReservationResponse(long id, long userId, long seatNum, long price, String status, String concertTime, ZonedDateTime expiredAt) {
         this.id = id;
         this.userId = userId;
         this.seatNum = seatNum;
@@ -39,7 +41,7 @@ public class ReservationResponse {
                 .price(reservation.getPrice())
                 .status(reservation.getStatus().toString())
                 .concertTime(reservation.getConcertTime())
-                .expiredAt(reservation.getCreateAt().plusMinutes(5).toString())
+                .expiredAt(reservation.getCreatedAt().plusMinutes(5))
                 .build();
     }
 

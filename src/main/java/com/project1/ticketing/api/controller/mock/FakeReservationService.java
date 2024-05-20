@@ -5,6 +5,7 @@ import com.project1.ticketing.api.dto.response.ReservationResponse;
 import com.project1.ticketing.domain.reservation.components.IReservationService;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -20,7 +21,7 @@ public class FakeReservationService implements IReservationService {
                 .price(300000)
                 .status("TEMPORARY")
                 .concertTime("2024/04/20 17:00:00 KST")
-                .expiredAt("2024/04/17 15:30:00 KST")
+                .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
                 .build();
     }
 
@@ -43,7 +44,7 @@ public class FakeReservationService implements IReservationService {
                         .price(300000)
                         .status("TEMPORARY")
                         .concertTime("2024/04/20 17:00:00 KST")
-                        .expiredAt("2024/04/17 15:30:00 KST")
+                        .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
                         .build(),
                 ReservationResponse.builder()
                         .id(0L)
@@ -52,7 +53,7 @@ public class FakeReservationService implements IReservationService {
                         .price(300000)
                         .status("TEMPORARY")
                         .concertTime("2024/04/20 17:00:00 KST")
-                        .expiredAt("2024/04/17 15:30:00 KST")
+                        .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
                         .build()
         );
     }
@@ -66,7 +67,7 @@ public class FakeReservationService implements IReservationService {
                                     .price(300000)
                                     .status("TEMPORARY")
                                     .concertTime("2024/04/20 17:00:00 KST")
-                                    .expiredAt("2024/04/17 15:30:00 KST")
+                                    .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
                                     .build();
     }
 

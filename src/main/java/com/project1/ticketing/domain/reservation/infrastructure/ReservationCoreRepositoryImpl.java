@@ -1,6 +1,7 @@
 package com.project1.ticketing.domain.reservation.infrastructure;
 
 import com.project1.ticketing.domain.reservation.models.Reservation;
+import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import com.project1.ticketing.domain.reservation.repository.ReservationJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,11 @@ public class ReservationCoreRepositoryImpl implements ReservationCoreRepository 
     public Optional<Reservation> findBySeatId(long seatId) {
         return reservationRepository.findBySeatId(seatId);
     }
+
+    @Override
+    public List<Reservation> findAllByStatus(ReservationStatus status) {
+        return reservationRepository.findAllByStatus(status);
+    }
+
 
 }

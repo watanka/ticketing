@@ -6,6 +6,7 @@ import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
+import com.project1.ticketing.domain.concert.repository.SeatJpaRepository;
 import com.project1.ticketing.domain.point.components.UserManager;
 import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.reservation.event.ReservationEvent;
@@ -13,6 +14,7 @@ import com.project1.ticketing.domain.reservation.event.ReservationEventPublisher
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -25,28 +27,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ReservationService implements IReservationService {
 
     ReservationCoreRepository reservationRepository;
     ReservationValidator reservationValidator;
 
     ConcertCoreRepository concertRepository;
-
     UserManager userManager;
 
     ReservationEventPublisher reservationEventPublisher;
 
-    @Autowired
-    public ReservationService(ReservationCoreRepository reservationRepository,
-                              ReservationValidator reservationValidator,
-                              ConcertCoreRepository concertRepository,
-                              UserManager userManager
-                              ) {
-        this.reservationRepository = reservationRepository;
-        this.reservationValidator = reservationValidator;
-        this.concertRepository = concertRepository;
-        this.userManager = userManager;
-    }
 
     @Transactional
     public ReservationResponse reserve(ReservationRequest request){
@@ -81,31 +72,36 @@ public class ReservationService implements IReservationService {
                 .seatNum(seat.getSeatNum())
                 .seatId(seatId)
                 .price(seat.getPrice())
-
                 .status(ReservationStatus.TEMPORARY)
-                .createAt(ZonedDateTime.now())
+                .expiredAt(ZonedDateTime.now().plusMinutes(5))
                 .build();
 
 
-
+        reservationRepository.save(reservation);
         //TODO: 5분 후 예약대기 상태를 업데이트하는 이벤트 발행
-        reservationEventPublisher.reservationOccupy(new ReservationEvent(this, reservation.getId()));
+//        reservationEventPublisher.reservationOccupy(new ReservationEvent(this, reservation.getId()));
 
         return ReservationResponse.from(reservation);
     }
 
-    public Reservation updateReservationStatus(long reservationId){
+    public void updateReservationStatus(){
+        System.out.println("예약 상태 업데이트 스케쥴러 발동");
+        List<Reservation> reservationList = reservationRepository.findAllByStatus(ReservationStatus.TEMPORARY);
 
-        Reservation reservation = reservationRepository.findById(reservationId);
+        for (Reservation reservation : reservationList) {
+            if (ZonedDateTime.now().isAfter(reservation.getExpiredAt())){
 
-        ZonedDateTime reservationExpiredTime = reservation.getCreateAt().plusMinutes(5);
+                // 예약 상태 변경
+                reservation.setStatus(ReservationStatus.CANCELLED);
+                reservationRepository.save(reservation);
 
-
-        if (ZonedDateTime.now().isAfter(reservationExpiredTime)){
-            reservation.setStatus(ReservationStatus.CANCELLED);
-            reservationRepository.save(reservation);
+                // 좌석 상태 변경
+                long seatId = reservation.getSeatId();
+                Seat foundSeat = concertRepository.findSeatById(seatId);
+                foundSeat.changeStatus(SeatStatus.AVAILABLE);
+                concertRepository.saveSeat(foundSeat);
+            }
         }
-        return reservation;
     }
 
     public List<Reservation> findAllByUserId(long userId){
@@ -130,11 +126,11 @@ public class ReservationService implements IReservationService {
     public ReservationResponse check(long userId, long reservationId) {
         // userId 검증
         User user = userManager.findById(userId);
-
         // reservationId 검증
         Reservation reservation = reservationRepository.findById(reservationId);
 
         return ReservationResponse.from(reservation);
+
     }
 
     @Override
