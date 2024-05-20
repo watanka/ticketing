@@ -42,4 +42,14 @@ public class ReservationController {
         ReservationResponse reservationResponse = reservationService.check(userId, reservationId);
         return ResponseEntity.ok().body(reservationResponse);
     }
+
+    @GetMapping("reservations/users/{user_id}/cancel/{reservation_id}")
+    public ResponseEntity<ReservationResponse> cancel(
+            @PathVariable(value="user_id") long userId,
+            @PathVariable(value="reservation_id") long reservationId
+    ){
+        ReservationResponse reservationResponse = reservationService.cancel(userId, reservationId);
+        return ResponseEntity.ok().body(reservationResponse);
+    }
+
 }

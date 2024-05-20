@@ -75,4 +75,17 @@ public class FakeReservationService implements IReservationService {
     public boolean checkSeatReserved(long seatId) {
         return true;
     }
+
+    @Override
+    public ReservationResponse cancel(long userId, long reservationId) {
+        return  ReservationResponse.builder()
+                .id(0L)
+                .userId(0)
+                .seatNum(14)
+                .price(300000)
+                .status("CANCELLED")
+                .concertTime("2024/04/20 17:00:00 KST")
+                .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
+                .build();
+    }
 }

@@ -140,5 +140,22 @@ public class ReservationService implements IReservationService {
         return seat.getStatus().toBoolean();
     }
 
+    @Override
+    public ReservationResponse cancel(long userId, long reservationId) {
+
+        // 예약 확인
+        Reservation reservation = reservationRepository.findById(reservationId);
+        // 좌석 확인
+        Seat seat = concertRepository.findSeatById(reservation.getSeatId());
+        // 예약 상태 변경
+        reservation.setStatus(ReservationStatus.CANCELLED);
+        reservationRepository.save(reservation);
+        // 좌석 상태 변경
+        seat.changeStatus(SeatStatus.AVAILABLE);
+        concertRepository.saveSeat(seat);
+
+        return ReservationResponse.from(reservation);
+    }
+
 
 }
