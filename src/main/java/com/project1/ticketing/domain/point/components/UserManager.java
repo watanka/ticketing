@@ -16,7 +16,7 @@ public class UserManager {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findById(long userId){
+    public User findById(long userId){
         return userRepository.findById(userId);
     }
 

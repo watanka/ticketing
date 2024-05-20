@@ -19,9 +19,8 @@ public class PointValidator {
     }
 
 
-    public User validateUser(long userId){
-        return pointRepository.getUser(userId).orElseThrow(
-                ()->new RuntimeException("사용자를 찾지 못하였습니다."));
+    public User validateUser(long userId) {
+        return pointRepository.getUser(userId);
     }
 
     public void validatePoint(long balance, long amount, PointType pointType){

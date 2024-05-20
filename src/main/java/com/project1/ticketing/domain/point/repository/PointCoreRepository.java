@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface PointCoreRepository {
     // 조회
 
-    Optional<User> getUser(long userId);
+    User getUser(long userId);
     List<PointHistory> getAllPointHistoryByUserId(long userId);
 
     // 쓰기

@@ -30,7 +30,7 @@ public class PointCoreRepositoryImpl implements PointCoreRepository {
     }
 
     @Override
-    public Optional<User> getUser(long userId) {
+    public User getUser(long userId) {
         return userRepository.findById(userId);
     }
 

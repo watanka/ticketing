@@ -119,10 +119,7 @@ public class ReservationService implements IReservationService {
     @Override
     public List<ReservationResponse> checkReservationList(long userId) {
         // userId 검증
-        Optional<User> user = userManager.findById(userId);
-        if (user.isEmpty()){
-            throw new RuntimeException("사용자를 찾을 수 없습니다.");
-        }
+        User user = userManager.findById(userId);
 
         return reservationRepository.findAllByUserId(userId).stream()
                 .map(ReservationResponse::from)
@@ -132,10 +129,8 @@ public class ReservationService implements IReservationService {
     @Override
     public ReservationResponse check(long userId, long reservationId) {
         // userId 검증
-        Optional<User> user = userManager.findById(userId);
-        if (user.isEmpty()){
-            throw new RuntimeException("사용자를 찾을 수 없습니다.");
-        }
+        User user = userManager.findById(userId);
+
         // reservationId 검증
         Reservation reservation = reservationRepository.findById(reservationId);
 
