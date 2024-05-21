@@ -2,7 +2,9 @@ package com.project1.ticketing.domain.payment.components;
 
 import com.project1.ticketing.domain.payment.models.PaymentStatus;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PaymentValidator {
 
     // 예약 시간 지남
