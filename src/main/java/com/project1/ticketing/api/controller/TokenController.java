@@ -3,25 +3,24 @@ package com.project1.ticketing.api.controller;
 import com.project1.ticketing.api.dto.request.TokenRequest;
 import com.project1.ticketing.api.dto.response.TokenResponse;
 import com.project1.ticketing.api.usecase.TokenUseCase;
+import com.project1.ticketing.domain.token.components.TokenService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
+@RestController
+@RequiredArgsConstructor
 public class TokenController {
 
-    TokenUseCase tokenUseCase;
-
-//    @Autowired
-//    public TokenController(TokenUseCase tokenUseCase) {
-//        this.tokenUseCase = tokenUseCase;
-//    }
+    private final TokenService tokenService;
 
 
-    @PostMapping("/tokens/concerts/{concert_id}")
-    public ResponseEntity<TokenResponse> getInLine(@PathVariable(value="concert_id") long concertId,
-                                                   @RequestBody TokenRequest tokenRequest){
-//        System.out.println("concertId: " + concertId);
-//        String uuid = tokenRequestDTO.getUuid();
-//
+    @PostMapping("/tokens")
+    public ResponseEntity<TokenResponse> queue(@RequestBody TokenRequest tokenRequest){
+
+        tokenService.
 //
 //        TokenResponseDTO tokenResponseDTO = tokenUseCase.insertInQueue(concertId, uuid);
 //
@@ -29,9 +28,8 @@ public class TokenController {
 //        return ResponseEntity.ok().body(tokenResponseDTO);
     }
 //
-    @GetMapping("/tokens/concerts/{concert_id}")
-    public ResponseEntity<TokenResponse> checkWaitNum(@PathVariable(value="concert_id") long concertId,
-                                                      @RequestHeader("Authorization") String token) throws Exception {
+    @GetMapping("/tokens/")
+    public ResponseEntity<TokenResponse> checkWaitNum(@RequestHeader("Authorization") String token) throws Exception {
 //
 //        //TODO: 유저ID로 토큰찾는 로직이 필요함
 //

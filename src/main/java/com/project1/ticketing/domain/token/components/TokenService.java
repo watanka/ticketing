@@ -2,24 +2,31 @@ package com.project1.ticketing.domain.token.components;
 
 import com.project1.ticketing.domain.token.models.Token;
 import com.project1.ticketing.domain.token.models.TokenStatus;
+import com.project1.ticketing.domain.token.repository.ITokenRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
+@RequiredArgsConstructor
 public class TokenService {
-    private List<Token> waitingLine;
-    private long maxActiveTokenNum;
-    private long currWaitingNum;
-    public TokenService(long maxActiveTokenNum, List<Token> waitingLine) {
-        this.maxActiveTokenNum = maxActiveTokenNum;
-        this.waitingLine = waitingLine;
+
+    private final ITokenRepository tokenRepository;
+
+
+    public Token queue(long userId){
+
+        Token newToken = Token.builder()
+                .tokenId()
+                            .userId(userId)
+                            .
+        return tokenRepository.save(token);
+
     }
 
-    public void put(Token token) {
-        waitingLine.add(token);
-        token.setWaitingNum(++currWaitingNum);
-    }
 
     public List<Token> getByStatus(TokenStatus tokenStatus){
         return waitingLine.stream()
@@ -28,17 +35,7 @@ public class TokenService {
     }
 
     public void activate(){
-        long currActiveTokenCount = countActiveToken();
-        long numToActivate = maxActiveTokenNum - currActiveTokenCount;
-        List<Token> tokensInWait = getByStatus(TokenStatus.WAIT);
-        tokensInWait.sort(Comparator.comparingLong(Token::getWaitingNum));
-
-        tokensInWait.subList(0, (int) Math.min(numToActivate, tokensInWait.size()));
-
-        for (Token token : tokensInWait) {
-            System.out.println("토큰 uuid "+token.getUserId()+"활성화");
-            token.setStatus(TokenStatus.ACTIVE);
-        }
+        tokenRepository.findByStatus
     }
 
 

@@ -3,26 +3,37 @@ package com.project1.ticketing.domain.token.infrastructure;
 import com.project1.ticketing.domain.token.models.Token;
 import com.project1.ticketing.domain.token.repository.ITokenRepository;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 //
 public class MemoryTokenRepository implements ITokenRepository {
 //
 //    Map<Long, Map<String, Token>> waitQueue = new HashMap<>(); // {concert_id : {tokenId : Token}}
 //    Map<Long, Integer> waitingNumMap = new HashMap<>();
+    Map<Long, Token> waitQueue = new ConcurrentHashMap<>();
+    AtomicInteger waitingNum;
+
+    @Override
+    public Token save(long userId) {
+
+        Token token = Token.builder()
+                            .tokenId(waitingNum.incrementAndGet())
+                            .userId(userId)
+                            .isExpired(false)
+                            .build();
 
 
-    public void save(long concertId, String uuid){
-//        Token Token = new Token(concertId, uuid);
-//
-//        Map<String, Token> tokenByConcerts = waitQueue.getOrDefault(concertId, new HashMap<>());
-//        tokenByConcerts.put()
-//
+
+        waitQueue.put(userId, token);
+        return token;
+
     }
-//
-    public Token findById(long concertId, String token){
-        return null;
+
+    @Override
+    public Token findByUserId(long userId) {
+        return waitQueue.get(userId);
     }
-
-
-
 }
