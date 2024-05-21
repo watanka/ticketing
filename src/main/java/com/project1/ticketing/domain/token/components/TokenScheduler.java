@@ -16,6 +16,5 @@ public class TokenScheduler {
 
     @Scheduled(cron = "0 * * * * *")
     public void expireTokens(){
-        redisZSetService.zSetRemoveRangeByScore()
     }
 }

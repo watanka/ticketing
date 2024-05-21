@@ -36,7 +36,7 @@ public class TokenService {
         tokensInWait.subList(0, (int) Math.min(numToActivate, tokensInWait.size()));
 
         for (Token token : tokensInWait) {
-            System.out.println("토큰 uuid "+token.getUuid()+"활성화");
+            System.out.println("토큰 uuid "+token.getUserId()+"활성화");
             token.setStatus(TokenStatus.ACTIVE);
         }
     }
