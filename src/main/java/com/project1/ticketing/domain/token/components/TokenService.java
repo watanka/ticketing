@@ -1,5 +1,6 @@
 package com.project1.ticketing.domain.token.components;
 
+import com.project1.ticketing.api.dto.response.TokenResponse;
 import com.project1.ticketing.domain.token.models.Token;
 import com.project1.ticketing.domain.token.models.TokenStatus;
 import com.project1.ticketing.domain.token.repository.ITokenRepository;
@@ -17,13 +18,17 @@ public class TokenService {
     private final ITokenRepository tokenRepository;
 
 
-    public Token queue(long userId){
+    public TokenResponse queue(long userId){
 
         Token newToken = Token.builder()
                 .tokenId()
-                            .userId(userId)
-                            .
-        return tokenRepository.save(token);
+                .userId(userId)
+                .
+        .build();
+        tokenRepository.save(newToken);
+
+
+        TokenResponse
 
     }
 

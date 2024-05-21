@@ -1,20 +1,20 @@
 package com.project1.ticketing.api.dto.response;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@Builder
 public class TokenResponse {
 
-    private String uuid;
-    private String token;
+    private long userId;
+    private long tokenId;
     private long waitingNum;
 
-    public TokenResponse(String uuid, String token, long waitingNum) {
-        this.uuid = uuid;
-        this.token = token;
-        this.waitingNum = waitingNum;
-    }
+
 }

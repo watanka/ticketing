@@ -20,7 +20,7 @@ public class TokenController {
     @PostMapping("/tokens")
     public ResponseEntity<TokenResponse> queue(@RequestBody TokenRequest tokenRequest){
 
-        tokenService.
+        tokenService.queue(tokenRequest.getUserId());
 //
 //        TokenResponseDTO tokenResponseDTO = tokenUseCase.insertInQueue(concertId, uuid);
 //
