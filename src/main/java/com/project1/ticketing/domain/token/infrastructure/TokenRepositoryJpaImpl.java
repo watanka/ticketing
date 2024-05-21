@@ -1,8 +1,11 @@
 package com.project1.ticketing.domain.token.infrastructure;
 
 import com.project1.ticketing.domain.token.models.Token;
+import com.project1.ticketing.domain.token.models.TokenStatus;
 import com.project1.ticketing.domain.token.repository.ITokenRepository;
 import com.project1.ticketing.domain.token.repository.TokenJpaRepository;
+
+import java.util.List;
 
 public class TokenRepositoryJpaImpl implements ITokenRepository {
 
@@ -15,6 +18,11 @@ public class TokenRepositoryJpaImpl implements ITokenRepository {
     @Override
     public Token findByUserId(long userId) {
         return tokenJpaRepository.findById(userId);
+    }
+
+    @Override
+    public List<Token> findByStatus(TokenStatus status) {
+        return tokenJpaRepository.findByStatus(status);
     }
 
 

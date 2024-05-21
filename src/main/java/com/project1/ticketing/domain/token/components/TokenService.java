@@ -19,37 +19,18 @@ public class TokenService {
 
 
     public TokenResponse queue(long userId){
-
-        Token newToken = Token.builder()
-                .tokenId()
-                .userId(userId)
-                .
-        .build();
-        tokenRepository.save(newToken);
-
-
-        TokenResponse
-
+        return null;
     }
 
 
     public List<Token> getByStatus(TokenStatus tokenStatus){
-        return waitingLine.stream()
-                .filter(token -> token.getStatus() == tokenStatus)
-                .collect(Collectors.toList());
+        return null;
     }
 
     public void activate(){
-        tokenRepository.findByStatus
+        List<Token> tokensToActivate = tokenRepository.findByStatus(TokenStatus.WAIT);
     }
 
-
-    public long countActiveToken(){
-        System.out.println("counting");
-        return waitingLine.stream()
-                .filter(token ->token.getStatus() == TokenStatus.ACTIVE)
-                .count();
-    }
 
     // 입장할 값
 
