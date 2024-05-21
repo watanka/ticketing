@@ -2,6 +2,9 @@ package com.project1.ticketing.domain.token.models;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +19,7 @@ import java.time.ZonedDateTime;
 @ToString
 public class Token{
 
-
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long tokenId;
     private long userId;
     private boolean isExpired;

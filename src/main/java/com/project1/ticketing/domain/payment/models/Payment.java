@@ -3,6 +3,9 @@ package com.project1.ticketing.domain.payment.models;
 import com.project1.ticketing.domain.common.BaseEntity;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +16,7 @@ import java.time.ZonedDateTime;
 @Getter @Setter
 public class Payment extends BaseEntity {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
 //    @OneToOne
