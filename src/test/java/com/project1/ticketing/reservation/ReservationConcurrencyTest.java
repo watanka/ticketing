@@ -97,7 +97,7 @@ public class ReservationConcurrencyTest {
 //        ).join();
 
         Seat foundSeat = concertCoreRepository.findSeatById(seat.getId());
-        System.out.println(foundSeat.getVersion());
+        System.out.println(foundSeat);
         System.out.println("# Success: " + successCnt + " # Fail: " + failCnt);
         Assertions.assertThat(foundSeat.getStatus()).isEqualTo(SeatStatus.RESERVED);
 
