@@ -26,8 +26,10 @@ public class TokenRepositoryJpaImpl implements ITokenRepository {
     }
 
     @Override
-    public List<Token> findByStatus(TokenStatus status) {
-        return tokenJpaRepository.findByStatus(status);
+    public List<Token> findByStatus(TokenStatus status) throws RuntimeException{
+        List<Token> selectedTokens = tokenJpaRepository.findByStatus(status);
+
+        return selectedTokens;
     }
 
 //    public List<Token> findTokensOrderByExpiredAt(int n){

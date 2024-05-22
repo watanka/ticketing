@@ -1,12 +1,10 @@
 package com.project1.ticketing.domain.token.components;
 
-import com.project1.ticketing.domain.token.repository.ITokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@EnableScheduling
+
 @RequiredArgsConstructor
 @Component
 public class TokenScheduler {
@@ -14,9 +12,16 @@ public class TokenScheduler {
 
     private final TokenService tokenService;
 
-    @Scheduled(cron = "* 1 * * * *")
+    @Scheduled(fixedDelay = 1 * 60 * 1000)
     public void expireTokens(){
-        tokenService.activate();
-        tokenService.updateWaitingNum();
+        System.out.println("======================");
+        System.out.println("token monitoring...");
+        long numActivateTokens = tokenService.activate();
+        long numWatkingTokens = tokenService.updateWaitingNum();
+
+        System.out.println("# activated tokens: "+ numActivateTokens + "\n# waiting tokens: " + numWatkingTokens);
+        System.out.println("======================");
     }
 }
+
+

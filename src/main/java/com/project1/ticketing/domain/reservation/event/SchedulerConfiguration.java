@@ -12,6 +12,7 @@ public class SchedulerConfiguration {
 
     @Scheduled(fixedDelay = 1 * 60 * 1000 )
     public void run(){
+        System.out.println("reservation monitoring");
         reservationService.updateReservationStatus();
     }
 

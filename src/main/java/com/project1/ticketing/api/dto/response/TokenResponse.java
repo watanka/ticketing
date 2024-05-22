@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @Builder
-public class TokenResponse {
+public class TokenResponse{
 
     private long userId;
     private long tokenId;

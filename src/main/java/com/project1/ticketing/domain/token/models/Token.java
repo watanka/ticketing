@@ -1,6 +1,7 @@
 package com.project1.ticketing.domain.token.models;
 
 
+import com.project1.ticketing.domain.token.components.TokenService;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,11 +29,12 @@ public class Token{
     private long waitingNum;
 
     @Builder
-    public Token(long waitingNum, long userId, boolean isExpired, ZonedDateTime expiredAt) {
+    public Token(long waitingNum, long userId, boolean isExpired, ZonedDateTime expiredAt, TokenStatus status) {
         this.waitingNum = waitingNum;
         this.userId = userId;
         this.isExpired = isExpired;
         this.expiredAt = expiredAt;
+        this.status = status;
     }
 
     public void expire(){

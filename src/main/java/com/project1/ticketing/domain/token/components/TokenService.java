@@ -8,9 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.min;
 
 @Service
 @RequiredArgsConstructor
@@ -20,16 +23,29 @@ public class TokenService {
 
 
     public TokenResponse queue(long userId){
-        List<Token> tokenWaiting = tokenRepository.findByStatus(TokenStatus.WAIT);
-        long waitingNum = tokenWaiting.size() + 1; //이미 기다리고 있는 줄 바로 뒤에 세움
+        // TODO: 검증로직 추가
+        // 존재하는 유저인지
+        // 이미 토큰을 발급받지는 않았는지?
+        TokenStatus status = TokenStatus.WAIT;;
+        long waitingNum = 0;
 
-        // Token 생성
+        List<Token> tokenWaiting = tokenRepository.findByStatus(TokenStatus.WAIT);
+        waitingNum = tokenWaiting.size() + 1;
+         //이미 기다리고 있는 줄 바로 뒤에 세움
+        if (tokenWaiting.size() != 0){
+            System.out.println("No Waiting Found.");
+            waitingNum = 0;
+        }
+
         Token newToken = Token.builder()
                 .userId(userId)
                 .isExpired(false)
                 .expiredAt(ZonedDateTime.now())
                 .waitingNum(waitingNum)
+                .status(status)
                 .build();
+
+        tokenRepository.save(newToken);
 
         return TokenResponse.from(newToken);
     }
@@ -39,31 +55,46 @@ public class TokenService {
         return null;
     }
 
-    public void activate() {
+    public long activate(){
 
         int ACTIVATE_NUM = 50;
+
         List<Token> tokensToActivate = tokenRepository.findByStatus(TokenStatus.WAIT);
+        if (tokensToActivate.size() == 0){
+            System.out.println("skip since no tokens waiting.");
+            return 0;
+        }
         tokensToActivate.sort(Comparator.comparing(Token::getExpiredAt));
-        tokensToActivate.subList(0, ACTIVATE_NUM);
+        tokensToActivate = tokensToActivate.subList(0, Math.min(ACTIVATE_NUM, tokensToActivate.size()));
 
         for (Token token : tokensToActivate) {
             token.activate();
             tokenRepository.save(token);
-
         }
+
+        return tokensToActivate.size();
+
+
 
     }
 
-    public void updateWaitingNum(){
+    public long updateWaitingNum(){
+
+
         List<Token> tokensToUpdateWaitingNum = tokenRepository.findByStatus(TokenStatus.WAIT);
+        if (tokensToUpdateWaitingNum.size() == 0){
+            System.out.println("No Token waiting.");
+            return 0;
+        }
         tokensToUpdateWaitingNum.sort(Comparator.comparing(Token::getExpiredAt));
+
 
         int newWaitingNum = 1;
         for (Token token : tokensToUpdateWaitingNum) {
             token.updateWaitingNum(newWaitingNum++);
             tokenRepository.save(token);
         }
-
+        return newWaitingNum;
         // 대기중인 토큰들의 waitingNum을 업데이트해줌
     }
 

@@ -27,7 +27,7 @@ public class TokenController {
 
 
     @GetMapping("/tokens")
-    public ResponseEntity<TokenResponse> checkWaitNum(@RequestBody TokenRequest tokenRequest) throws Exception {
+    public ResponseEntity<TokenResponse> checkWaitNum(@RequestBody TokenRequest tokenRequest){
         TokenResponse tokenResponse = tokenService.checkWaitingNum(tokenRequest.userId());
         return ResponseEntity.ok().body(tokenResponse);
     }
