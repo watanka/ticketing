@@ -29,9 +29,9 @@ public class PointHistoryService implements IPointHistoryService {
     @Override
     @Transactional
     public PointHistoryResponse updatePoint(PointRequest request) {
-        long userId = request.getUserId();
-        long amount = request.getAmount();
-        PointType pointType = request.getPointType();
+        long userId = request.userId();
+        long amount = request.amount();
+        PointType pointType = request.pointType();
 
         // TODO: validator가 조회한 유저를 리턴하는 건 검증외에 또 다른 책임을 갖게되는 것 같아서 문제이지만, 코드가 좀더 깔끔해보이는 것 같다.
         User foundUser = pointValidator.validateUser(userId);

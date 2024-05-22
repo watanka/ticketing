@@ -42,9 +42,9 @@ public class ReservationService implements IReservationService {
     @Transactional
     public ReservationResponse reserve(ReservationRequest request){
 
-        long userId = request.getUserId();
-        long seatId = request.getSeatId();
-        long concertTimeId = request.getConcertTimeId();
+        long userId = request.userId();
+        long seatId = request.seatId();
+        long concertTimeId = request.concertTimeId();
 
         System.out.println("콘서트 시간 확인");
         ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId);

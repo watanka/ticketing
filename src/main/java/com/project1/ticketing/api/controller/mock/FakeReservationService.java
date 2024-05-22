@@ -16,8 +16,8 @@ public class FakeReservationService implements IReservationService {
     public ReservationResponse reserve(ReservationRequest request) {
         return ReservationResponse.builder()
                 .id(0L)
-                .userId(request.getUserId())
-                .seatNum(request.getSeatId())
+                .userId(request.userId())
+                .seatNum(request.seatId())
                 .price(300000)
                 .status("TEMPORARY")
                 .concertTime("2024/04/20 17:00:00 KST")

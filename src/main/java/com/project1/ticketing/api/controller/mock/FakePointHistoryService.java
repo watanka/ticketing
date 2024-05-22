@@ -12,9 +12,9 @@ public class FakePointHistoryService implements IPointHistoryService {
     @Override
     public PointHistoryResponse updatePoint(PointRequest request) {
 
-        long userId = request.getUserId();
-        long amount = request.getAmount();
-        PointType pointType = request.getPointType();
+        long userId = request.userId();
+        long amount = request.amount();
+        PointType pointType = request.pointType();
 
         if (userId==0L && pointType == PointType.USE){ // 실패 케이스
             throw new RuntimeException("잔액이 부족합니다.");
