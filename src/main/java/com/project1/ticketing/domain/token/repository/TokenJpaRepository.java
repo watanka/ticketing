@@ -14,7 +14,7 @@ public interface TokenJpaRepository extends JpaRepository<Token, Long> {
     Token save(Token token);
     Token findById(long userId);
 
-    List<Token> findByStatus(TokenStatus tokenStatus);
+    List<Token> findAllByStatus(TokenStatus tokenStatus);
 
 //    List<Token> findTopNByOrderByExpiredAtAsc(int n);
 

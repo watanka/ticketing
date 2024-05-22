@@ -37,6 +37,9 @@ public class Token{
         this.status = status;
     }
 
+    protected Token() {
+    }
+
     public void expire(){
         this.status = TokenStatus.DONE;
         this.isExpired = true;

@@ -30,11 +30,12 @@ public class TokenService {
         long waitingNum = 0;
 
         List<Token> tokenWaiting = tokenRepository.findByStatus(TokenStatus.WAIT);
-        waitingNum = tokenWaiting.size() + 1;
          //이미 기다리고 있는 줄 바로 뒤에 세움
-        if (tokenWaiting.size() != 0){
+        if (tokenWaiting == null){
             System.out.println("No Waiting Found.");
-            waitingNum = 0;
+
+        }else{
+            waitingNum = tokenWaiting.size() + 1;
         }
 
         Token newToken = Token.builder()
@@ -60,7 +61,7 @@ public class TokenService {
         int ACTIVATE_NUM = 50;
 
         List<Token> tokensToActivate = tokenRepository.findByStatus(TokenStatus.WAIT);
-        if (tokensToActivate.size() == 0){
+        if (tokensToActivate == null){
             System.out.println("skip since no tokens waiting.");
             return 0;
         }
@@ -103,6 +104,9 @@ public class TokenService {
     public TokenResponse checkWaitingNum(long userId){
         // 조회할때마다 waitingNum 업데이트해줘야함
         Token token = tokenRepository.findByUserId(userId);
+        if (token == null){
+            throw new RuntimeException("유저 ID {" + userId + "}의 토큰을 찾을 수 없습니다.");
+        }
         // TODO: exception
         return TokenResponse.from(token);
 
