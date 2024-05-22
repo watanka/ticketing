@@ -1,12 +1,5 @@
 package com.project1.ticketing.api.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Getter
-@AllArgsConstructor
-public class TokenRequest {
-    private long userId;
-
-}
+public record TokenRequest(long userId){}
