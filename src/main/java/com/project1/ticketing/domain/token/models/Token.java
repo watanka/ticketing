@@ -28,10 +28,11 @@ public class Token{
     private long waitingNum;
 
     @Builder
-    public Token(long tokenId, long userId, boolean isExpired) {
-        this.tokenId = tokenId;
+    public Token(long waitingNum, long userId, boolean isExpired, ZonedDateTime expiredAt) {
+        this.waitingNum = waitingNum;
         this.userId = userId;
         this.isExpired = isExpired;
+        this.expiredAt = expiredAt;
     }
 
     public void expire(){
@@ -46,6 +47,10 @@ public class Token{
     public void activate(){
         this.status = TokenStatus.ACTIVE;
         this.expiredAt = ZonedDateTime.now().plusMinutes(5); // TODO: 상수로 변경
+    }
+
+    public void updateWaitingNum(long waitingNum){
+        this.waitingNum = waitingNum;
     }
 
 }

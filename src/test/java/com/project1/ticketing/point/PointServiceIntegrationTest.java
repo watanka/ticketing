@@ -37,11 +37,8 @@ public class PointServiceIntegrationTest {
                 .build();
         pointCoreRepository.saveUser(신은성);
         long userId = 신은성.getId();
-        PointRequest 포인트충전요청_30000 = PointRequest.builder()
-                                        .userId(userId)
-                                        .amount(30000L)
-                                        .pointType(PointType.CHARGE)
-                                        .build();
+        PointRequest 포인트충전요청_30000 = new PointRequest(userId, 30000L, PointType.CHARGE);
+
 
         pointHistoryService.updatePoint(포인트충전요청_30000);
 
@@ -61,11 +58,8 @@ public class PointServiceIntegrationTest {
                 .build();
         pointCoreRepository.saveUser(신은성);
         long userId = 신은성.getId();
-        PointRequest 포인트사용요청_30000 = PointRequest.builder()
-                .userId(userId)
-                .amount(30000L)
-                .pointType(PointType.USE)
-                .build();
+        PointRequest 포인트사용요청_30000 = new PointRequest(userId, 30000L, PointType.USE);
+
 
         pointHistoryService.updatePoint(포인트사용요청_30000);
 
@@ -84,11 +78,8 @@ public class PointServiceIntegrationTest {
                 .build();
         pointCoreRepository.saveUser(신은성);
         long userId = 신은성.getId();
-        PointRequest 포인트사용요청_9000000 = PointRequest.builder()
-                .userId(userId)
-                .amount(9000000)
-                .pointType(PointType.USE)
-                .build();
+        PointRequest 포인트사용요청_9000000 = new PointRequest(userId, 90000000, PointType.USE)
+
 
         try{
             pointHistoryService.updatePoint(포인트사용요청_9000000);

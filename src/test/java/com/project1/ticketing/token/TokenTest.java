@@ -34,11 +34,6 @@ public class TokenTest {
 
     }
 
-    @Test
-    @DisplayName("토큰 활성화 상태 체크")
-    void token_status(){
-
-    }
 
     @Test
     @DisplayName("토큰의 대기열 순서 조회")
@@ -46,15 +41,10 @@ public class TokenTest {
 
     }
 
-    @Test
-    @DisplayName("#maxActiveToken>#curActiveToken일 경우, 대기열 앞부터 활성화")
-    void activate_token(){
-
-    }
 
     @Test
-    @DisplayName("최대 활성시간이 지난 토큰은 만료시킴")
-    void expire_token(){
+    @DisplayName("토큰 대기열 순서 조회")
+    void 대기열_순서를_확인한다(){
 
     }
 

@@ -20,22 +20,16 @@ public class TokenController {
     @PostMapping("/tokens")
     public ResponseEntity<TokenResponse> queue(@RequestBody TokenRequest tokenRequest){
 
-        tokenService.queue(tokenRequest.getUserId());
-//
-//        TokenResponseDTO tokenResponseDTO = tokenUseCase.insertInQueue(concertId, uuid);
-//
-        return null;
-//        return ResponseEntity.ok().body(tokenResponseDTO);
+        TokenResponse tokenResponse = tokenService.queue(tokenRequest.userId());
+        return ResponseEntity.ok().body(tokenResponse);
+
     }
-//
-    @GetMapping("/tokens/")
-    public ResponseEntity<TokenResponse> checkWaitNum(@RequestHeader("Authorization") String token) throws Exception {
-//
-//        //TODO: 유저ID로 토큰찾는 로직이 필요함
-//
-//        TokenResponseDTO tokenResponseDTO = tokenUseCase.getWaitNumByToken(concertId, token);
-//        return ResponseEntity.ok().body(tokenResponseDTO);
-        return null;
+
+
+    @GetMapping("/tokens")
+    public ResponseEntity<TokenResponse> checkWaitNum(@RequestBody TokenRequest tokenRequest) throws Exception {
+        TokenResponse tokenResponse = tokenService.checkWaitingNum(tokenRequest.userId());
+        return ResponseEntity.ok().body(tokenResponse);
     }
 }
 //
