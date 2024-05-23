@@ -27,14 +27,14 @@ class TokenStatusCheckTaskSet(TaskSet):
     @task
     def check_token_status(self):
         for user_id in range(1, 61):
-            response = self.client.get(f"/tokens", json={'userId' : user_id})
+            response = self.client.get(f"/tokens", params={'userId' : user_id})
             json_data = response.json()
 
-            # if user_id <= 50:
-            #     assert json_data['status'] == "ACTIVE", f"User {user_id} expected ACTIVE but got {json_data['status']}"
-            # else:
-            #     assert json_data['status'] == "WAIT", f"User {user_id} expected WAIT but got {json_data['status']}"
-            #     assert 1 <= json_data['waitingNum'] <= 10, f"User {user_id} has waitingNum out of range: {json_data['waitingNum']}"
+            if user_id <= 50:
+                assert json_data['status'] == "ACTIVE", f"User {user_id} expected ACTIVE but got {json_data['status']}"
+            else:
+                assert json_data['status'] == "WAIT", f"User {user_id} expected WAIT but got {json_data['status']}"
+                assert 1 <= json_data['waitingNum'] <= 10, f"User {user_id} has waitingNum out of range: {json_data['waitingNum']}"
 
             print(f"Checked user ID: {user_id}, Status: {json_data['status']}, WaitingNum: {json_data.get('waitingNum', 'N/A')}")
 
