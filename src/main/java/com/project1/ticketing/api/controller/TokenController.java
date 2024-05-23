@@ -37,15 +37,10 @@ public class TokenController {
     }
 
     @Operation(summary = "check token")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful response",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = TokenResponse.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid input")
-    })
-    @GetMapping(value="/tokens", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TokenResponse> checkWaitNum(@RequestParam TokenRequest request){
-        TokenResponse tokenResponse = tokenService.checkWaitingNum(request.userId());
+    @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TokenResponse.class)))
+    @GetMapping("/tokens")
+    public ResponseEntity<TokenResponse> checkWaitNum(@RequestParam(value="userId") long userId){
+        TokenResponse tokenResponse = tokenService.checkWaitingNum(userId);
         return ResponseEntity.ok().body(tokenResponse);
     }
 }
