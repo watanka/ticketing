@@ -8,39 +8,26 @@ import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
 import com.project1.ticketing.domain.payment.models.Payment;
 import com.project1.ticketing.domain.payment.models.PaymentStatus;
 import com.project1.ticketing.domain.payment.repository.IPaymentRepository;
-import com.project1.ticketing.domain.payment.repository.PaymentJpaRepository;
 import com.project1.ticketing.domain.point.components.PointHistoryService;
 import com.project1.ticketing.domain.point.models.PointType;
 import com.project1.ticketing.domain.point.models.User;
-import com.project1.ticketing.domain.point.repository.PointCoreRepository;
-import com.project1.ticketing.domain.point.repository.UserRepository;
 import com.project1.ticketing.domain.reservation.components.ReservationService;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
-import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class PaymentService{
-    IPaymentRepository paymentRepository;
-    ReservationService reservationService;
-    ConcertCoreRepository concertRepository;
-    ConcertService concertService;
+    private final IPaymentRepository paymentRepository;
+    private final ReservationService reservationService;
+    private final ConcertCoreRepository concertRepository;
+    private final ConcertService concertService;
+    private final PointHistoryService pointHistoryService;
+    private final PaymentValidator paymentValidator;
 
-    PointHistoryService pointHistoryService;
-    PaymentValidator paymentValidator;
-
-    public PaymentService(IPaymentRepository paymentRepository, ReservationService reservationService, ConcertCoreRepository concertRepository, ConcertService concertService, PointHistoryService pointHistoryService, PaymentValidator paymentValidator) {
-        this.paymentRepository = paymentRepository;
-        this.concertRepository = concertRepository;
-        this.concertService = concertService;
-        this.pointHistoryService = pointHistoryService;
-        this.paymentValidator = paymentValidator;
-        this.reservationService = reservationService;
-    }
 
     public Payment pay(long reservationId) {
 
@@ -54,10 +41,9 @@ public class PaymentService{
         Payment payment = new Payment(  reservationId,
                                         reservation.getSeatId(),
                                         reservation.getUserId(),
-                                        price,
-                                        PaymentStatus.NOTPAID);
+                                        price);
 
-        paymentValidator.validate(price, user.getBalance());
+        paymentValidator.validatePoint(payment, user);
 
         // 유저 포인트 차감
         // 포인트 내역 생성

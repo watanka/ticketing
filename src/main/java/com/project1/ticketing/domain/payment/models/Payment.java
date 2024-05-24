@@ -18,9 +18,6 @@ public class Payment extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-
-//    @OneToOne
-//    @JoinColumn(name = "reservation_id")
     long reservationId;
     long seatId;
     long userId;
@@ -28,22 +25,23 @@ public class Payment extends BaseEntity {
     PaymentStatus paymentStatus;
 
     @Builder
-    public Payment(long reservationId, long seatId, long userId, long price, PaymentStatus paymentStatus) {
+    public Payment(long reservationId, long seatId, long userId, long price) {
         this.reservationId = reservationId;
         this.seatId = seatId;
         this.userId = userId;
         this.price = price;
-        this.paymentStatus = paymentStatus;
+        this.paymentStatus = PaymentStatus.NOTPAID;
     }
-
-
-
-
-
-
-
 
     public void updateStatus(PaymentStatus paymentStatus){
         this.paymentStatus = paymentStatus;
     }
+
+    public boolean checkBalanceSufficient(long userBalance){
+        boolean ableToPay = (userBalance >= this.price);
+        return ableToPay;
+    }
+
+
+
 }

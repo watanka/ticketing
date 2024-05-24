@@ -9,10 +9,14 @@ import lombok.Setter;
 public class PaymentResponse {
 
     private long userId;
-    private Payment payment;
+    private long reservationId;
+    private long seatId;
+    private long price;
 
-    public PaymentResponse(long userId, Payment payment) {
+    public PaymentResponse(long userId, long reservationId, long seatId, long price) {
         this.userId = userId;
-        this.payment = payment;
+        this.reservationId = reservationId;
+        this.seatId = seatId;
+        this.price = price;
     }
 }
