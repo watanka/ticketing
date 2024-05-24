@@ -28,7 +28,7 @@ public class PointConcurrencyTest {
     void 동시에_충전시_차례대로() throws InterruptedException {
         User user = new User(30000L);
         userManager.save(user);
-        User foundUser = userManager.findById(1L).get();
+        User foundUser = userManager.findById(1L);
         Assertions.assertThat(foundUser).isEqualTo(user);
 
         PointRequest pointRequest = new PointRequest(user.getId(), 10000, PointType.CHARGE);

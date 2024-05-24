@@ -94,7 +94,7 @@ public class ReservationServiceTest {
         ZonedDateTime registeredTime = ZonedDateTime.parse("2024-04-17T12:30:00+05:00", DateTimeFormatter.ISO_ZONED_DATE_TIME);
 
         Reservation reservation = Reservation.builder()
-                .createAt(registeredTime)
+                .expiredAt(ZonedDateTime.now().plusMinutes(5))
                 .id(reservationId)
                 .build();
 

@@ -78,7 +78,7 @@ public class PointServiceIntegrationTest {
                 .build();
         pointCoreRepository.saveUser(신은성);
         long userId = 신은성.getId();
-        PointRequest 포인트사용요청_9000000 = new PointRequest(userId, 90000000, PointType.USE)
+        PointRequest 포인트사용요청_9000000 = new PointRequest(userId, 90000000, PointType.USE);
 
 
         try{
