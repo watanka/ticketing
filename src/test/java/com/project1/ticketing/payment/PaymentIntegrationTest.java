@@ -3,8 +3,10 @@ package com.project1.ticketing.payment;
 import com.project1.ticketing.domain.payment.components.PaymentService;
 import com.project1.ticketing.domain.payment.components.PaymentValidator;
 import com.project1.ticketing.domain.payment.repository.IPaymentRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
