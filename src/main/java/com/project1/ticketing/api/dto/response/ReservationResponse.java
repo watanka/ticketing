@@ -2,34 +2,34 @@ package com.project1.ticketing.api.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.project1.ticketing.domain.reservation.models.Reservation;
+import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.ZonedDateTime;
 
-@Getter
-@Setter
+
 @Builder
-public class ReservationResponse {
+public record ReservationResponse (long id,
+                                   long userId,
+                                   long seatNum,
+                                   long price,
+                                   ReservationStatus status,
+                                   long concertTimeId,
+                                   ZonedDateTime expiredAt
 
-    private long id;
-    private long userId;
-    private long seatNum;
-    private long price;
-    private String status;
-    private String concertTime;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private ZonedDateTime expiredAt;
+) {
 
 
-    public ReservationResponse(long id, long userId, long seatNum, long price, String status, String concertTime, ZonedDateTime expiredAt) {
+
+    public ReservationResponse(long id, long userId, long seatNum, long price, ReservationStatus status, long concertTimeId, ZonedDateTime expiredAt) {
         this.id = id;
         this.userId = userId;
         this.seatNum = seatNum;
         this.price = price;
         this.status = status;
-        this.concertTime = concertTime;
+        this.concertTimeId = concertTimeId;
         this.expiredAt = expiredAt;
     }
 
@@ -39,8 +39,8 @@ public class ReservationResponse {
                 .userId(reservation.getUserId())
                 .seatNum(reservation.getSeatNum())
                 .price(reservation.getPrice())
-                .status(reservation.getStatus().toString())
-                .concertTime(reservation.getConcertTime())
+                .status(reservation.getStatus())
+                .concertTimeId(reservation.getConcertTimeId())
                 .expiredAt(reservation.getCreatedAt().plusMinutes(5))
                 .build();
     }

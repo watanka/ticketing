@@ -67,4 +67,8 @@ public class ConcertService implements IConcertService{
 
     }
 
+    public Seat getSeatById(long seatId){
+        return concertRepository.findSeatById(seatId);
+    }
+
 }

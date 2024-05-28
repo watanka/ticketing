@@ -18,7 +18,7 @@ public class ReservationMonitor {
         Reservation reservation = reservationCoreRepository.findById(reservationId);
         Long seatId = reservation.getSeatId();
 
-        reservation.setStatus(ReservationStatus.REGISTERED);
+        reservation.setStatus(ReservationStatus.PAID);
         concertService.patchSeatStatus(seatId, SeatStatus.RESERVED);
         Thread thread = new Thread(new Runnable() {
             @Override

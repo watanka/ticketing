@@ -7,6 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-public record PointRequest
-        (long userId, long amount, PointType pointType){
-}
+public record PointRequest(long userId,
+                           long amount,
+                           PointType pointType){}

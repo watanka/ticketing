@@ -3,6 +3,7 @@ package com.project1.ticketing.api.controller.mock;
 import com.project1.ticketing.api.dto.request.ReservationRequest;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
 import com.project1.ticketing.domain.reservation.components.IReservationService;
+import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -19,8 +20,8 @@ public class FakeReservationService implements IReservationService {
                 .userId(request.userId())
                 .seatNum(request.seatId())
                 .price(300000)
-                .status("TEMPORARY")
-                .concertTime("2024/04/20 17:00:00 KST")
+                .status(ReservationStatus.TEMPORARY)
+                .concertTimeId(1L)
                 .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
                 .build();
     }
@@ -33,17 +34,17 @@ public class FakeReservationService implements IReservationService {
                         .userId(0)
                         .seatNum(12)
                         .price(300000)
-                        .status("REGISTERED")
-                        .concertTime("2024/04/20 17:00:00 KST")
-//                        .expiredAt("2024/04/17 15:30:00 KST") // if registered, No ExpiredAt
+                        .status(ReservationStatus.PAID)
+                        .concertTimeId(1L)
+                        .expiredAt(ZonedDateTime.parse( "2024/04/20 17:00:00 KST")) // if registered, No ExpiredAt
                         .build(),
                 ReservationResponse.builder()
                         .id(0L)
                         .userId(0)
                         .seatNum(13)
                         .price(300000)
-                        .status("TEMPORARY")
-                        .concertTime("2024/04/20 17:00:00 KST")
+                        .status(ReservationStatus.TEMPORARY)
+                        .concertTimeId(1L)
                         .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
                         .build(),
                 ReservationResponse.builder()
@@ -51,8 +52,8 @@ public class FakeReservationService implements IReservationService {
                         .userId(0)
                         .seatNum(14)
                         .price(300000)
-                        .status("TEMPORARY")
-                        .concertTime("2024/04/20 17:00:00 KST")
+                        .status(ReservationStatus.TEMPORARY)
+                        .concertTimeId(1L)
                         .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
                         .build()
         );
@@ -65,8 +66,8 @@ public class FakeReservationService implements IReservationService {
                                     .userId(0)
                                     .seatNum(14)
                                     .price(300000)
-                                    .status("TEMPORARY")
-                                    .concertTime("2024/04/20 17:00:00 KST")
+                                    .status(ReservationStatus.TEMPORARY)
+                                    .concertTimeId(1L)
                                     .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
                                     .build();
     }
@@ -83,8 +84,8 @@ public class FakeReservationService implements IReservationService {
                 .userId(0)
                 .seatNum(14)
                 .price(300000)
-                .status("CANCELLED")
-                .concertTime("2024/04/20 17:00:00 KST")
+                .status(ReservationStatus.CANCELLED)
+                .concertTimeId(1L)
                 .expiredAt(ZonedDateTime.parse( "2024/04/17 15:30:00 KST"))
                 .build();
     }

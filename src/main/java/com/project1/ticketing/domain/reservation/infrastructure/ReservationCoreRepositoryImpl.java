@@ -4,6 +4,7 @@ import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import com.project1.ticketing.domain.reservation.repository.ReservationJpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,14 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class ReservationCoreRepositoryImpl implements ReservationCoreRepository {
 
-    ReservationJpaRepository reservationRepository;
-
-    @Autowired
-    public ReservationCoreRepositoryImpl(ReservationJpaRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
-    }
+    private final ReservationJpaRepository reservationRepository;
 
     @Override
     public Reservation save(Reservation reservation) {
