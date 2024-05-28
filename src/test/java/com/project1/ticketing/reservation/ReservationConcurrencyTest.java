@@ -23,48 +23,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootTest
 public class ReservationConcurrencyTest {
-
-    Seat seat;
-    ConcertTime concertTime;
-    User user1;
-    User user2;
-
     @Autowired
     ConcertCoreRepositoryImpl concertCoreRepository;
 
     @Autowired
     ReservationService reservationService;
-    @Autowired
-    ReservationCoreRepository reservationCoreRepository;
 
-    @Autowired
-    UserJpaRepository userJpaRepository;
-
-    @BeforeEach
-    void setup(){
-        // 좌석 셋팅
-        concertTime = new ConcertTime(0L,
-                ConcertTime.fromStr("2024/04/13/ 20:30:00 KST")
-                );
-        seat = new Seat(0L, concertTime.getId(), 30000L);
-
-        user1 = User.builder().balance(30000L).build();
-        user2 = User.builder().balance(30000L).build();
-
-
-        concertCoreRepository.saveConcertTime(concertTime);
-        concertCoreRepository.saveSeat(seat);
-
-        userJpaRepository.save(user1);
-        userJpaRepository.save(user2);
-        // 유저 셋팅
-    }
 
     @Test
     void 동시에_하나의_좌석_예약시도() throws InterruptedException {
 
-        int threadCount = 5;
-        ReservationRequest reservationRequest1 = new ReservationRequest(user1.getId(), concertTime.getId(), seat.getId());
+        int threadCount = 20;
+
+        long seatId = 1L;
+        long concertTimeId = 1L;
+        long userId = 1L;
+
+        ReservationRequest reservationRequest1 = new ReservationRequest(userId, concertTimeId, seatId);
 //
 
         AtomicInteger successCnt = new AtomicInteger(0);
@@ -96,7 +71,7 @@ public class ReservationConcurrencyTest {
 ////        CompletableFuture.runAsync(() -> reservationService.register(reservationRequest1))
 //        ).join();
 
-        Seat foundSeat = concertCoreRepository.findSeatById(seat.getId());
+        Seat foundSeat = concertCoreRepository.findSeatById(seatId);
         System.out.println(foundSeat);
         System.out.println("# Success: " + successCnt + " # Fail: " + failCnt);
         Assertions.assertThat(foundSeat.getStatus()).isEqualTo(SeatStatus.RESERVED);
