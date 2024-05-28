@@ -61,7 +61,7 @@ public class ReservationServiceIntegrationTest {
         ReservationRequest reservationRequest = new ReservationRequest(userId, concertTime.getId(), selectedSeat.getId());
         ReservationResponse reservationResponse = reservationService.reserve(reservationRequest);
 
-        Reservation foundReservation = reservationCoreRepository.findById(reservationResponse.getId());
+        Reservation foundReservation = reservationCoreRepository.findById(reservationResponse.id());
 
         Assertions.assertThat(foundReservation.getStatus()).isEqualTo(ReservationStatus.TEMPORARY);
 

@@ -21,6 +21,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 @SpringBootTest
 public class ReservationConcurrencyTest {
     @Autowired
@@ -33,7 +35,7 @@ public class ReservationConcurrencyTest {
     @Test
     void 동시에_하나의_좌석_예약시도() throws InterruptedException {
 
-        int threadCount = 20;
+        int threadCount = 40;
 
         long seatId = 1L;
         long concertTimeId = 1L;
@@ -72,9 +74,12 @@ public class ReservationConcurrencyTest {
 //        ).join();
 
         Seat foundSeat = concertCoreRepository.findSeatById(seatId);
-        System.out.println(foundSeat);
         System.out.println("# Success: " + successCnt + " # Fail: " + failCnt);
-        Assertions.assertThat(foundSeat.getStatus()).isEqualTo(SeatStatus.RESERVED);
+
+        assertThat(successCnt.get()).isEqualTo(1);
+        assertThat(failCnt.get()).isEqualTo(threadCount-1);
+
+        assertThat(foundSeat.getStatus()).isEqualTo(SeatStatus.RESERVED);
 
     }
 

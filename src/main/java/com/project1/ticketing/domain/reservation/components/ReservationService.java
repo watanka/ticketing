@@ -68,11 +68,10 @@ public class ReservationService implements IReservationService {
         System.out.println("예약 생성");
         Reservation reservation = Reservation.builder()
                 .userId(userId)
-                .concertTime(concertTime.getTime().toString())
+                .concertTimeId(concertTime.getId())
                 .seatNum(seat.getSeatNum())
                 .seatId(seatId)
                 .price(seat.getPrice())
-                .status(ReservationStatus.TEMPORARY)
                 .expiredAt(ZonedDateTime.now().plusMinutes(5))
                 .build();
 

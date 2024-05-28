@@ -95,7 +95,6 @@ public class ReservationServiceTest {
 
         Reservation reservation = Reservation.builder()
                 .expiredAt(ZonedDateTime.now().plusMinutes(5))
-                .id(reservationId)
                 .build();
 
         when(reservationRepository.findById(reservationId)).thenReturn(reservation);
