@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 public class PaymentService{
     private final IPaymentRepository paymentRepository;
     private final ReservationService reservationService;
-    private final ConcertCoreRepository concertRepository;
     private final ConcertService concertService;
     private final PointHistoryService pointHistoryService;
     private final PaymentValidator paymentValidator;
@@ -32,32 +31,26 @@ public class PaymentService{
     public Payment pay(long reservationId) {
 
         Reservation reservation = reservationService.findByReservationId(reservationId);
-        Seat seat = concertRepository.findSeatById(reservation.getSeatId());
-        long price = seat.getPrice();
-
+        Seat seat = concertService.getSeatById(reservation.getSeatId());
         User user = pointHistoryService.findUser(reservation.getUserId());
 
         // payment 생성하는 로직 분리?
-        Payment payment = new Payment(  reservationId,
-                                        reservation.getSeatId(),
-                                        reservation.getUserId(),
-                                        price);
+        Payment payment = new Payment(reservation);
 
         paymentValidator.validatePoint(payment, user);
 
         // 유저 포인트 차감
         // 포인트 내역 생성
+        long price = seat.getPrice();
         pointHistoryService.updatePoint(new PointRequest(user.getId(), price, PointType.USE));
 
         // 좌석 정보 변경 // 예약시 TEMPORARY 상태없이 바로 RESERVED 상태이기 때문에 따로 변경 안해도되긴 함.
         concertService.patchSeatStatus(seat.getId(), SeatStatus.RESERVED);
 
         // 예약 정보 변경
-        reservationService.updateSingleReservationStatus(reservation, ReservationStatus.REGISTERED);
+        reservationService.updateSingleReservationStatus(reservation, ReservationStatus.PAID);
 
-
-        payment.updateStatus(PaymentStatus.PAID);
-        paymentRepository.save(payment);
+        updateStatus(payment, PaymentStatus.PAID);
 
         return payment;
     }
@@ -69,4 +62,11 @@ public class PaymentService{
     public Payment checkPayment(long paymentId) {
         return paymentRepository.findById(paymentId);
     }
+
+    public Payment updateStatus(Payment payment, PaymentStatus status){
+        payment.updateStatus(status);
+        paymentRepository.save(payment);
+        return payment;
+    }
+
 }

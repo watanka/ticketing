@@ -13,7 +13,6 @@ import java.time.ZonedDateTime;
 
 @Entity
 @Getter @Setter
-
 public class Reservation extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="reservation_id")
@@ -24,7 +23,7 @@ public class Reservation extends BaseEntity {
 
 
     private long concertId;
-    private String concertTime;
+    private long concertTimeId;
 
     private long seatId;
     private long seatNum;
@@ -37,30 +36,25 @@ public class Reservation extends BaseEntity {
     private ReservationStatus status;
 
     @Builder
-    public Reservation(long id, long userId, long concertId, String concertTime, long seatId, long seatNum, long price, ZonedDateTime expiredAt, ReservationStatus status) {
-        this.id = id;
+    public Reservation(long userId, long concertId, long concertTimeId, long seatId, long seatNum, long price, ZonedDateTime expiredAt) {
         this.userId = userId;
         this.concertId = concertId;
-        this.concertTime = concertTime;
+        this.concertTimeId = concertTimeId;
         this.seatId = seatId;
         this.seatNum = seatNum;
         this.price = price;
         this.expiredAt = expiredAt;
-        this.status = status;
+        this.status = ReservationStatus.TEMPORARY;
     }
-
-
-
 
     protected Reservation(){
     }
 
     public static Reservation from(ReservationResponse reservationResponse){
         return Reservation.builder()
-                .id(reservationResponse.getId())
-                .userId(reservationResponse.getUserId())
-                .concertTime(reservationResponse.getConcertTime())
-                .expiredAt(reservationResponse.getExpiredAt())
+                .userId(reservationResponse.userId())
+                .concertTimeId(reservationResponse.concertTimeId())
+                .expiredAt(reservationResponse.expiredAt())
                 .build();
     }
 
