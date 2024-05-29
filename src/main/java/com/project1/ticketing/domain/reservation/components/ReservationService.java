@@ -16,15 +16,20 @@ import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.springframework.transaction.TransactionDefinition.*;
 
 @Service
 @AllArgsConstructor
@@ -39,7 +44,7 @@ public class ReservationService implements IReservationService {
     ReservationEventPublisher reservationEventPublisher;
 
 
-    @Transactional
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public ReservationResponse reserve(ReservationRequest request){
 
         long userId = request.userId();
@@ -49,21 +54,15 @@ public class ReservationService implements IReservationService {
         System.out.println("콘서트 시간 확인");
         ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId);
 
-
-        // reservation 검증
-        // 좌석 예약 가능 확인
-        // 예약 생성
-        // 예약 저장 reservationRepository.save
-        // 좌석 상태 변경
-        // 좌석 상태 저장 seatRepository.save
-        // 예약 및 좌석 상태 관리 이벤트 발행
-//        System.out.println("좌석 상태 검증 시작");
+        System.out.println("좌석 상태 검증 시작");
 //        reservationValidator.validateSeat(seatId);
         System.out.println("좌석 조회");
         Seat seat = concertRepository.findSeatById(seatId);
-        System.out.println("seat Version : " + seat.getVersion());
-        System.out.println("좌석 상태 변경");
+
         seat.changeStatus(SeatStatus.RESERVED);
+        concertRepository.saveSeat(seat);
+
+        System.out.println("좌석 상태 변경");
 
         System.out.println("예약 생성");
         Reservation reservation = Reservation.builder()

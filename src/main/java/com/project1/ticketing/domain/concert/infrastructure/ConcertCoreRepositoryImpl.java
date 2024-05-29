@@ -40,10 +40,10 @@ public class ConcertCoreRepositoryImpl implements ConcertCoreRepository {
     }
 
     @Override
-    @Lock(LockModeType.OPTIMISTIC)
     public Seat saveSeat(Seat seat) {
         return seatJpaRepository.save(seat);
     }
+
 
     @Override
     public Concert findConcertById(long concertId) {

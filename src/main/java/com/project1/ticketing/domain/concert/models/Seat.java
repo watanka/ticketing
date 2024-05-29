@@ -5,6 +5,8 @@ import com.project1.ticketing.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.ZonedDateTime;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -49,5 +51,6 @@ public class Seat extends BaseEntity {
 
     public void changeStatus(SeatStatus status){
         this.status = status;
+        this.version++;
     }
 }
