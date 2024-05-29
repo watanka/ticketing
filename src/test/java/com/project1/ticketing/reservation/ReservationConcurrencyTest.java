@@ -10,16 +10,19 @@ import com.project1.ticketing.domain.point.models.User;
 import com.project1.ticketing.domain.point.repository.UserJpaRepository;
 import com.project1.ticketing.domain.reservation.components.ReservationService;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
+import jakarta.persistence.OptimisticLockException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -35,14 +38,10 @@ public class ReservationConcurrencyTest {
     @Test
     void 동시에_하나의_좌석_예약시도() throws InterruptedException {
 
-        int threadCount = 40;
+        int threadCount = 50;
 
         long seatId = 1L;
         long concertTimeId = 1L;
-        long userId = 1L;
-
-        ReservationRequest reservationRequest1 = new ReservationRequest(userId, concertTimeId, seatId);
-//
 
         AtomicInteger successCnt = new AtomicInteger(0);
         AtomicInteger failCnt = new AtomicInteger(0);
@@ -52,26 +51,26 @@ public class ReservationConcurrencyTest {
 
 
         for (int i = 0; i < threadCount; i++) {
+            AtomicLong userId = new AtomicLong(i);
             executorService.submit(() -> {
                 try {
+                    ReservationRequest reservationRequest1 = new ReservationRequest(userId.get(), concertTimeId, seatId);
+
                     ReservationResponse reservationResponse = reservationService.reserve(reservationRequest1);
+                    System.out.println("reservation obtained by user" + reservationResponse.userId());
                     successCnt.incrementAndGet();
-                }catch (Exception e){
-                    System.out.println("Catch Optimistic Exception!");
+                } catch (OptimisticLockingFailureException e) {
+                    System.out.println("Optimistic Locking Failure");
+                    failCnt.incrementAndGet();
+                } catch (RuntimeException e){
                     System.out.println("Error Message: " + e.getMessage());
                     failCnt.incrementAndGet();
-                }finally {
-                            latch.countDown();
-                        }
+                } finally {
+                    latch.countDown();
+                }
                     });
         }
         latch.await();
-
-//        reservationService.register(reservationRequest1);
-//        CompletableFuture.allOf(
-//            CompletableFuture.runAsync(() -> reservationService.register(reservationRequest1))
-////        CompletableFuture.runAsync(() -> reservationService.register(reservationRequest1))
-//        ).join();
 
         Seat foundSeat = concertCoreRepository.findSeatById(seatId);
         System.out.println("# Success: " + successCnt + " # Fail: " + failCnt);

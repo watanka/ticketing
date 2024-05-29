@@ -4,33 +4,26 @@ import com.project1.ticketing.api.dto.response.ReservationResponse;
 import com.project1.ticketing.domain.common.BaseEntity;
 import com.project1.ticketing.domain.concert.models.Seat;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="reservation_id")
     private long id;
-
-//    @ManyToOne
     private long userId;
-
 
     private long concertId;
     private long concertTimeId;
-
     private long seatId;
     private long seatNum;
+
     private long price;
     private ZonedDateTime expiredAt;
-
-//    @OneToOne
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
@@ -47,8 +40,6 @@ public class Reservation extends BaseEntity {
         this.status = ReservationStatus.TEMPORARY;
     }
 
-    protected Reservation(){
-    }
 
     public static Reservation from(ReservationResponse reservationResponse){
         return Reservation.builder()

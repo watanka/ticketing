@@ -20,13 +20,15 @@ public class Seat extends BaseEntity {
     @Column(name="concert_time_id")
     private long concertTimeId;
 
-//    @Column(name="concert_hall_id")
-//    long concertHallId;
-
     long price;
 
     @Enumerated(EnumType.STRING)
     SeatStatus status;
+
+    @Version
+    private int version;
+
+
 
     // test용도
     public Seat(long seatNum, long concertTimeId, long price){
@@ -34,6 +36,7 @@ public class Seat extends BaseEntity {
         this.concertTimeId = concertTimeId;
         status = SeatStatus.AVAILABLE;
     }
+
 
     public static Seat from(SeatResponse seatResponse){
         return Seat.builder()

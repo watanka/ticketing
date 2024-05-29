@@ -57,11 +57,11 @@ public class ReservationService implements IReservationService {
         // 좌석 상태 변경
         // 좌석 상태 저장 seatRepository.save
         // 예약 및 좌석 상태 관리 이벤트 발행
-        System.out.println("좌석 상태 검증 시작");
-        reservationValidator.validateSeat(seatId);
-
+//        System.out.println("좌석 상태 검증 시작");
+//        reservationValidator.validateSeat(seatId);
         System.out.println("좌석 조회");
         Seat seat = concertRepository.findSeatById(seatId);
+        System.out.println("seat Version : " + seat.getVersion());
         System.out.println("좌석 상태 변경");
         seat.changeStatus(SeatStatus.RESERVED);
 
@@ -75,10 +75,7 @@ public class ReservationService implements IReservationService {
                 .expiredAt(ZonedDateTime.now().plusMinutes(5))
                 .build();
 
-
         reservationRepository.save(reservation);
-        //TODO: 5분 후 예약대기 상태를 업데이트하는 이벤트 발행
-//        reservationEventPublisher.reservationOccupy(new ReservationEvent(this, reservation.getId()));
 
         return ReservationResponse.from(reservation);
     }
