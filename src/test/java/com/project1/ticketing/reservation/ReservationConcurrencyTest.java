@@ -42,6 +42,8 @@ public class ReservationConcurrencyTest {
         int threadCount = 5000;
 
         long seatId = 1L;
+        long userId = 1L;
+        long concertId = 1L;
         long concertTimeId = 1L;
 
         AtomicInteger successCnt = new AtomicInteger(0);
@@ -52,16 +54,13 @@ public class ReservationConcurrencyTest {
 
 
         for (int i = 0; i < threadCount; i++) {
-            AtomicLong userId = new AtomicLong(i);
             executorService.submit(() -> {
                 try {
-                    ReservationRequest reservationRequest1 = new ReservationRequest(userId.get(), concertTimeId, seatId);
+                    ReservationRequest reservationRequest = new ReservationRequest(userId, concertId, concertTimeId, seatId);
+                    ReservationResponse reservationResponse = reservationService.reserve(reservationRequest);
 
-                    ReservationResponse reservationResponse = reservationService.reserve(reservationRequest1);
-                    System.out.println("reservation obtained by user" + reservationResponse.userId());
                     successCnt.incrementAndGet();
                 }catch (RuntimeException e){
-                    System.out.println("Error Message: " + e.getMessage());
                     failCnt.incrementAndGet();
                 } finally {
                     latch.countDown();

@@ -9,6 +9,7 @@ import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,16 +59,21 @@ public class ConcertService implements IConcertService{
         return concertFilter.filterAvailableSeat(seatList);
     }
 
-    @Override
-    public void patchSeatStatus(long seatId, SeatStatus status) {
-        Seat seat = concertRepository.findSeatById(seatId);
-        if (seat != null){
-            seat.changeStatus(status);
-        }
+    public Seat findSeatByConcertTimeIdAndSeatNum(long concertTimeId, long seatNum){
+        return concertRepository.findSeatByConcertTimeIdAndSeatNum(concertTimeId, seatNum);
 
     }
 
-    public Seat getSeatById(long seatId){
+    @Override
+    public void patchSeatStatus(Seat seat, SeatStatus status) {
+        if (seat != null){
+            seat.changeStatus(status);
+        }
+        concertRepository.saveSeat(seat);
+
+    }
+
+    public Seat findSeatById(long seatId){
         return concertRepository.findSeatById(seatId);
     }
 

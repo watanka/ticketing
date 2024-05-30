@@ -2,6 +2,7 @@ package com.project1.ticketing.domain.reservation.components;
 
 import com.project1.ticketing.api.dto.request.ReservationRequest;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
+import com.project1.ticketing.domain.concert.components.ConcertService;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
@@ -37,8 +38,7 @@ public class ReservationService implements IReservationService {
 
     ReservationCoreRepository reservationRepository;
     ReservationValidator reservationValidator;
-
-    ConcertCoreRepository concertRepository;
+    ConcertService concertService;
     UserManager userManager;
 
     ReservationEventPublisher reservationEventPublisher;
@@ -47,34 +47,12 @@ public class ReservationService implements IReservationService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public ReservationResponse reserve(ReservationRequest request){
 
-        long userId = request.userId();
-        long seatId = request.seatId();
-        long concertTimeId = request.concertTimeId();
+        Seat seat = concertService.findSeatByConcertTimeIdAndSeatNum(request.concertTimeId(), request.seatNum());
 
-        System.out.println("콘서트 시간 확인");
-        ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId);
+        reservationValidator.validateSeat(seat);
+        concertService.patchSeatStatus(seat, SeatStatus.RESERVED);
 
-        System.out.println("좌석 상태 검증 시작");
-//        reservationValidator.validateSeat(seatId);
-        System.out.println("좌석 조회");
-        Seat seat = concertRepository.findSeatById(seatId);
-
-        seat.changeStatus(SeatStatus.RESERVED);
-        concertRepository.saveSeat(seat);
-
-        System.out.println("좌석 상태 변경");
-
-        System.out.println("예약 생성");
-        Reservation reservation = Reservation.builder()
-                .userId(userId)
-                .concertTimeId(concertTime.getId())
-                .seatNum(seat.getSeatNum())
-                .seatId(seatId)
-                .price(seat.getPrice())
-                .expiredAt(ZonedDateTime.now().plusMinutes(5))
-                .build();
-
-        reservationRepository.save(reservation);
+        Reservation reservation = reservationRepository.save(request.toEntity());
 
         return ReservationResponse.from(reservation);
     }
@@ -84,15 +62,11 @@ public class ReservationService implements IReservationService {
 
         for (Reservation reservation : reservationList) {
             if (ZonedDateTime.now().isAfter(reservation.getExpiredAt())){
-
                 // 예약 상태 변경
                 updateSingleReservationStatus(reservation, ReservationStatus.CANCELLED);
-
                 // 좌석 상태 변경
-                long seatId = reservation.getSeatId();
-                Seat foundSeat = concertRepository.findSeatById(seatId);
-                foundSeat.changeStatus(SeatStatus.AVAILABLE);
-                concertRepository.saveSeat(foundSeat);
+                Seat foundSeat = concertService.findSeatByConcertTimeIdAndSeatNum(reservation.getConcertTimeId(), reservation.getSeatNum());
+                concertService.patchSeatStatus(foundSeat, SeatStatus.AVAILABLE);
             }
         }
     }
@@ -129,7 +103,7 @@ public class ReservationService implements IReservationService {
     @Override
     public boolean checkSeatReserved(long seatId) {
 
-        Seat seat =  concertRepository.findSeatById(seatId);
+        Seat seat =  concertService.findSeatById(seatId);
         return seat.getStatus().toBoolean();
     }
 
@@ -139,13 +113,12 @@ public class ReservationService implements IReservationService {
         // 예약 확인
         Reservation reservation = reservationRepository.findById(reservationId);
         // 좌석 확인
-        Seat seat = concertRepository.findSeatById(reservation.getSeatId());
+        Seat seat = concertService.findSeatByConcertTimeIdAndSeatNum(reservation.getConcertTimeId(), reservation.getSeatNum());
         // 예약 상태 변경
         reservation.setStatus(ReservationStatus.CANCELLED);
         reservationRepository.save(reservation);
         // 좌석 상태 변경
-        seat.changeStatus(SeatStatus.AVAILABLE);
-        concertRepository.saveSeat(seat);
+        concertService.patchSeatStatus(seat, SeatStatus.AVAILABLE);
 
         return ReservationResponse.from(reservation);
     }

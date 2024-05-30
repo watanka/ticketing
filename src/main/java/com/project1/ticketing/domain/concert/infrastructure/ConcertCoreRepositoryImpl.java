@@ -45,6 +45,7 @@ public class ConcertCoreRepositoryImpl implements ConcertCoreRepository {
     }
 
 
+
     @Override
     public Concert findConcertById(long concertId) {
         return concertJpaRepository.findById(concertId);
@@ -64,6 +65,11 @@ public class ConcertCoreRepositoryImpl implements ConcertCoreRepository {
     @Override
     public Seat findSeatById(long seatId) {
         return seatJpaRepository.findById(seatId);
+    }
+
+    @Override
+    public Seat findSeatByConcertTimeIdAndSeatNum(long concertTimeId, long seatNum){
+        return seatJpaRepository.findSeatByConcertTimeIdAndSeatNum(concertTimeId, seatNum);
     }
 
     @Override
