@@ -15,6 +15,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+        show_sql: true
     defer-datasource-initialization: true
     generate-ddl: true
   h2:
