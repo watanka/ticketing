@@ -19,7 +19,6 @@ public class Reservation extends BaseEntity {
 
     private long concertId;
     private long concertTimeId;
-    private long seatId;
     private long seatNum;
 
     private long price;
@@ -29,11 +28,10 @@ public class Reservation extends BaseEntity {
     private ReservationStatus status;
 
     @Builder
-    public Reservation(long userId, long concertId, long concertTimeId, long seatId, long seatNum, long price, ZonedDateTime expiredAt) {
+    public Reservation(long userId, long concertId, long concertTimeId, long seatNum, long price, ZonedDateTime expiredAt) {
         this.userId = userId;
         this.concertId = concertId;
         this.concertTimeId = concertTimeId;
-        this.seatId = seatId;
         this.seatNum = seatNum;
         this.price = price;
         this.expiredAt = expiredAt;
