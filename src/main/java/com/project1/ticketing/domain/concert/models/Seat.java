@@ -27,8 +27,8 @@ public class Seat extends BaseEntity {
     @Enumerated(EnumType.STRING)
     SeatStatus status;
 
-    @Version
-    private int version;
+//    @Version
+//    private int version;
 
 
 
@@ -51,6 +51,5 @@ public class Seat extends BaseEntity {
 
     public void changeStatus(SeatStatus status){
         this.status = status;
-        this.version++;
     }
 }

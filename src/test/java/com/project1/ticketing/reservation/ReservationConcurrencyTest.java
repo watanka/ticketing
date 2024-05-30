@@ -92,7 +92,7 @@ public class ReservationConcurrencyTest {
             seat.changeStatus(SeatStatus.RESERVED);
 
             concertCoreRepository.saveSeat(seat);
-            System.out.println(seat.getVersion());
+//            System.out.println(seat.getVersion());
         }
 
 

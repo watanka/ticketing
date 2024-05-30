@@ -17,6 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.redisson.api.RedissonClient;
 
 import static org.mockito.Mockito.when;
 
@@ -37,6 +38,8 @@ public class ReservationServiceTest {
     ReservationService reservationService;
 
     List<Reservation> reservationList;
+    RedissonClient redissonClient;
+
     @BeforeEach
     void setUp(){
         reservationRepository = Mockito.mock(ReservationCoreRepository.class);
@@ -44,11 +47,12 @@ public class ReservationServiceTest {
         concertRepository = Mockito.mock(ConcertCoreRepository.class);
         userManager = Mockito.mock(UserManager.class);
         reservationEventPublisher = Mockito.mock(ReservationEventPublisher.class) ;
-
+        redissonClient = Mockito.mock(RedissonClient.class);
         reservationService = new ReservationService(reservationRepository,
                                                     reservationValidator,
                                                     concertRepository,
                                                     userManager,
+                                                    redissonClient,
                                                     reservationEventPublisher
                                                     );
 

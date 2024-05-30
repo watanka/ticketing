@@ -13,7 +13,7 @@ import static jakarta.persistence.LockModeType.OPTIMISTIC_FORCE_INCREMENT;
 
 public interface SeatJpaRepository extends JpaRepository<Seat, Long> {
 
-    @Lock(OPTIMISTIC_FORCE_INCREMENT)
+//    @Lock(OPTIMISTIC_FORCE_INCREMENT)
     Seat save(Seat seat);
 
     Seat findById(long seatId);

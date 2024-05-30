@@ -15,6 +15,8 @@ import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import lombok.AllArgsConstructor;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.scheduling.annotation.Async;
@@ -27,12 +29,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.springframework.transaction.TransactionDefinition.*;
 
 @Service
 @AllArgsConstructor
+
 public class ReservationService implements IReservationService {
 
     ReservationCoreRepository reservationRepository;
@@ -40,6 +44,8 @@ public class ReservationService implements IReservationService {
 
     ConcertCoreRepository concertRepository;
     UserManager userManager;
+
+    RedissonClient redissonClient;
 
     ReservationEventPublisher reservationEventPublisher;
 
@@ -51,32 +57,54 @@ public class ReservationService implements IReservationService {
         long seatId = request.seatId();
         long concertTimeId = request.concertTimeId();
 
-        System.out.println("콘서트 시간 확인");
-        ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId);
+        // Redisson Lock
+        String lockName = "Seat" + request.seatId();
+        RLock rLock = redissonClient.getLock(lockName);
 
-        System.out.println("좌석 상태 검증 시작");
-//        reservationValidator.validateSeat(seatId);
-        System.out.println("좌석 조회");
-        Seat seat = concertRepository.findSeatById(seatId);
+        long waitTime = 1L;
+        long leaseTime = 1000L;
+        TimeUnit timeUnit = TimeUnit.SECONDS;
 
-        seat.changeStatus(SeatStatus.RESERVED);
-        concertRepository.saveSeat(seat);
+        try{
+            boolean available = rLock.tryLock(waitTime, leaseTime, timeUnit);
+            if (!available){
+                throw new RuntimeException("락 획득 실패.");
+            }
 
-        System.out.println("좌석 상태 변경");
+            System.out.println("콘서트 시간 확인");
+            ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId);
 
-        System.out.println("예약 생성");
-        Reservation reservation = Reservation.builder()
-                .userId(userId)
-                .concertTimeId(concertTime.getId())
-                .seatNum(seat.getSeatNum())
-                .seatId(seatId)
-                .price(seat.getPrice())
-                .expiredAt(ZonedDateTime.now().plusMinutes(5))
-                .build();
+            System.out.println("좌석 상태 검증 시작");
+            reservationValidator.validateSeat(seatId);
+            System.out.println("좌석 조회");
+            Seat seat = concertRepository.findSeatById(seatId);
 
-        reservationRepository.save(reservation);
+            seat.changeStatus(SeatStatus.RESERVED);
+            concertRepository.saveSeat(seat);
 
-        return ReservationResponse.from(reservation);
+            System.out.println("좌석 상태 변경");
+
+            System.out.println("예약 생성");
+            Reservation reservation = Reservation.builder()
+                    .userId(userId)
+                    .concertTimeId(concertTime.getId())
+                    .seatNum(seat.getSeatNum())
+                    .seatId(seatId)
+                    .price(seat.getPrice())
+                    .expiredAt(ZonedDateTime.now().plusMinutes(5))
+                    .build();
+
+            reservationRepository.save(reservation);
+            return ReservationResponse.from(reservation);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (rLock.isLocked() && rLock.isHeldByCurrentThread()){
+                rLock.unlock();
+            }
+        }
+
+
     }
 
     public void updateReservationStatus(){
