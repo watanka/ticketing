@@ -69,8 +69,6 @@ public class ConcertService implements IConcertService{
         if (seat != null){
             seat.changeStatus(status);
         }
-        concertRepository.saveSeat(seat);
-
     }
 
     public Seat findSeatById(long seatId){

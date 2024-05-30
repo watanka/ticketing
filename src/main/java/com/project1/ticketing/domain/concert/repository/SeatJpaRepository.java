@@ -9,17 +9,19 @@ import org.springframework.data.jpa.repository.Lock;
 import java.util.List;
 import java.util.Optional;
 
-import static jakarta.persistence.LockModeType.OPTIMISTIC_FORCE_INCREMENT;
+import static jakarta.persistence.LockModeType.*;
+
 
 public interface SeatJpaRepository extends JpaRepository<Seat, Long> {
 
-    @Lock(OPTIMISTIC_FORCE_INCREMENT)
+
     Seat save(Seat seat);
 
     Seat findById(long seatId);
     List<Seat> findAllByConcertTimeId(long concertTimeId);
     boolean existsByConcertTimeIdAndStatus(long concertTimeId, SeatStatus status);
 
+    @Lock(PESSIMISTIC_READ)
     Seat findSeatByConcertTimeIdAndSeatNum(long concertTimeId, long seatNum);
     Optional<Seat> findByIdAndStatus(long seatId, SeatStatus status);
 }

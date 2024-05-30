@@ -15,6 +15,8 @@ import com.project1.ticketing.domain.reservation.event.ReservationEventPublisher
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.persistence.PessimisticLockException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -44,17 +46,22 @@ public class ReservationService implements IReservationService {
     ReservationEventPublisher reservationEventPublisher;
 
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
     public ReservationResponse reserve(ReservationRequest request){
 
-        Seat seat = concertService.findSeatByConcertTimeIdAndSeatNum(request.concertTimeId(), request.seatNum());
+        try{
+            Seat seat = concertService.findSeatByConcertTimeIdAndSeatNum(request.concertTimeId(), request.seatNum());
 
-        reservationValidator.validateSeat(seat);
-        concertService.patchSeatStatus(seat, SeatStatus.RESERVED);
 
-        Reservation reservation = reservationRepository.save(request.toEntity());
+            reservationValidator.validateSeat(seat);
+            concertService.patchSeatStatus(seat, SeatStatus.RESERVED);
+            Reservation reservation = reservationRepository.save(request.toEntity());
+            return ReservationResponse.from(reservation);
+        } catch (PessimisticLockException e){
+            throw new RuntimeException("비관적 락 획득 실패");
+        }
 
-        return ReservationResponse.from(reservation);
+
     }
 
     public void updateReservationStatus(){
