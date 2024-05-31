@@ -18,7 +18,5 @@ public interface ReservationCoreRepository {
     Reservation findById(long reservationId);
     List<Reservation> findAllByUserId(long userId);
 
-    Optional<Reservation> findBySeatId(long seatId);
-
     List<Reservation> findAllByStatus(ReservationStatus status);
 }

@@ -43,7 +43,6 @@ public class Seat extends BaseEntity {
     public static Seat from(SeatResponse seatResponse){
         return Seat.builder()
                 .id(seatResponse.getId())
-//                .concertHallId(seatResponse.getConcertHallId())
                 .price(seatResponse.getPrice())
                 .status(SeatStatus.fromBool(seatResponse.isAvailable()))
                 .build();

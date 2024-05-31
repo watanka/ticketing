@@ -23,7 +23,7 @@ public class PaymentUnitTest {
         ZonedDateTime expiredAt = ZonedDateTime.now();
 
 
-        Reservation reservation = new Reservation(userId, concertId, concertTime, seatId, seatNum, price, expiredAt);
+        Reservation reservation = new Reservation(userId, concertId, concertTime, seatId, seatNum, expiredAt);
 
         Payment payment = new Payment(reservation);
 
@@ -43,7 +43,7 @@ public class PaymentUnitTest {
         ZonedDateTime expiredAt = ZonedDateTime.now();
 
 
-        Reservation reservation = new Reservation(userId, concertId, concertTime, seatId, seatNum, price, expiredAt);
+        Reservation reservation = new Reservation(userId, concertId, concertTime, seatId, seatNum, expiredAt);
 
 
         Payment payment = new Payment(reservation);

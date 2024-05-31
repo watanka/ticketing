@@ -58,7 +58,7 @@ public class ReservationServiceIntegrationTest {
         ConcertTime concertTime = ConcertTime.from(concertService.getAvailableTimes(concertId).get(0));
         Seat selectedSeat = Seat.from( concertService.getAvailableSeats(concertTime.getId()).get(0));
 
-        ReservationRequest reservationRequest = new ReservationRequest(userId, concertTime.getId(), selectedSeat.getId());
+        ReservationRequest reservationRequest = new ReservationRequest(userId, concertId, concertTime.getId(), selectedSeat.getId());
         ReservationResponse reservationResponse = reservationService.reserve(reservationRequest);
 
         Reservation foundReservation = reservationCoreRepository.findById(reservationResponse.id());

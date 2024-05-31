@@ -1,6 +1,7 @@
 package com.project1.ticketing.reservation;
 
 import com.project1.ticketing.api.dto.request.ReservationRequest;
+import com.project1.ticketing.domain.concert.components.ConcertService;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
@@ -32,6 +33,7 @@ public class ReservationServiceTest {
     ReservationValidator reservationValidator;
 
     ConcertCoreRepository concertRepository;
+    ConcertService concertService;
     UserManager userManager;
 
     ReservationEventPublisher reservationEventPublisher;
@@ -50,7 +52,7 @@ public class ReservationServiceTest {
         redissonClient = Mockito.mock(RedissonClient.class);
         reservationService = new ReservationService(reservationRepository,
                                                     reservationValidator,
-                                                    concertRepository,
+                                                    concertService,
                                                     userManager,
                                                     redissonClient,
                                                     reservationEventPublisher

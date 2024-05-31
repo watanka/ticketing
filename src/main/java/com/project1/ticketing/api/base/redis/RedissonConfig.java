@@ -1,4 +1,4 @@
-package com.project1.ticketing.domain.redis;
+package com.project1.ticketing.api.base.redis;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
