@@ -12,6 +12,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Builder
 @Getter
+@Table(indexes = {@Index(name = "concert_time_index", columnList = "concert_time_id")})
 public class Seat extends BaseEntity {
 
     @Id
