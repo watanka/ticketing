@@ -19,7 +19,7 @@ public class ConcertTimeResponse {
     public static ConcertTimeResponse from(ConcertTime concertTime){
         return ConcertTimeResponse.builder()
                 .id(concertTime.getId())
-                .time(concertTime.getTime())
+                .time(concertTime.getConcertTime())
 //                .concertHallId(concertTime.getConcertHallId())
 //                .maxSeatNum(concertTime.getMaxSeatNum())
 //                .currAvailableSeatNum(concertTime.getCurrAvailableSeatNum())

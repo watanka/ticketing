@@ -1,8 +1,8 @@
-INSERT INTO concert (concert_id, name, created_at, updated_at) VALUES (1, '아일릿 데뷔 콘서트', now(), now());
-INSERT INTO concert (concert_id, name, created_at, updated_at) VALUES (2, '나훈아 50주년 콘서트', now(), now());
+INSERT INTO concert (name, created_at, updated_at) VALUES ('NewJeans Concert', now(), now());
+INSERT INTO concert (name, created_at, updated_at) VALUES ('NaHunAh The Legend', now(), now());
 
-INSERT INTO  concert_time (concert_time_id, concert_id, time, created_at, updated_at) VALUES (1, 1, '2024-05-20T18:30:00Z', now(), now());
-INSERT INTO  concert_time (concert_time_id, concert_id, time, created_at, updated_at) VALUES (2, 2, '2024-05-20T18:30:00Z', now(), now());
+INSERT INTO  concert_time (concert_id, concert_time, created_at, updated_at) VALUES (1, '2024-06-02T13:16:01+03:00', now(), now());
+INSERT INTO  concert_time (concert_id, concert_time, created_at, updated_at) VALUES (2, '2024-06-02T13:16:01+03:00', now(), now());
 
 INSERT INTO seat (seat_num, concert_time_id, price, status, created_at, updated_at) VALUES (1, 1, 500000, 'AVAILABLE', now(), now());
 INSERT INTO seat (seat_num, concert_time_id, price, status, created_at, updated_at) VALUES (2, 1, 300000, 'AVAILABLE', now(), now());
