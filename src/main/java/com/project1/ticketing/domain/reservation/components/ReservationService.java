@@ -3,7 +3,6 @@ package com.project1.ticketing.domain.reservation.components;
 import com.project1.ticketing.api.base.redis.DistributedLock;
 import com.project1.ticketing.api.dto.request.ReservationRequest;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
-import com.project1.ticketing.api.base.redis.RedissonClient;
 import com.project1.ticketing.domain.concert.components.ConcertService;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
@@ -14,6 +13,8 @@ import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import lombok.AllArgsConstructor;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

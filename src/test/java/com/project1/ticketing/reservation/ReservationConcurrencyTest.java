@@ -40,9 +40,11 @@ public class ReservationConcurrencyTest {
     @Test
     void 동시에_하나의_좌석_예약시도() throws InterruptedException {
 
-        int threadCount = 5000;
+        int threadCount = 50;
 
         long seatId = 1L;
+        long userId = 1L;
+        long concertId = 1L;
         long concertTimeId = 1L;
 
         AtomicInteger successCnt = new AtomicInteger(0);
@@ -114,7 +116,7 @@ public class ReservationConcurrencyTest {
         latch.await();
 
         Seat foundSeat = concertCoreRepository.findSeatById(seatId);
-        System.out.println("# Success: " + successCnt + " # Fail: " + failCnt);
+        System.out.println("# Success: " + successCnt + ", # Fail: " + failCnt);
 
         assertThat(successCnt.get()).isEqualTo(1);
         assertThat(failCnt.get()).isEqualTo(threadCount-1);

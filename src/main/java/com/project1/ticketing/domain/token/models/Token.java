@@ -23,16 +23,14 @@ public class Token{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long tokenId;
     private long userId;
-    private boolean isExpired;
     private ZonedDateTime expiredAt;
     private TokenStatus status;
     private long waitingNum;
 
     @Builder
-    public Token(long waitingNum, long userId, boolean isExpired, ZonedDateTime expiredAt, TokenStatus status) {
+    public Token(long waitingNum, long userId, ZonedDateTime expiredAt, TokenStatus status) {
         this.waitingNum = waitingNum;
         this.userId = userId;
-        this.isExpired = isExpired;
         this.expiredAt = expiredAt;
         this.status = status;
     }
@@ -42,7 +40,6 @@ public class Token{
 
     public void expire(){
         this.status = TokenStatus.DONE;
-        this.isExpired = true;
     }
 
     public void queue(){

@@ -40,7 +40,6 @@ public class TokenService {
 
         Token newToken = Token.builder()
                 .userId(userId)
-                .isExpired(false)
                 .expiredAt(ZonedDateTime.now())
                 .waitingNum(waitingNum)
                 .status(status)
