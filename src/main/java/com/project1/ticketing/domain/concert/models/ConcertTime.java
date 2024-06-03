@@ -32,9 +32,9 @@ public class ConcertTime extends BaseEntity {
 //    private List<Seat> seats = new ArrayList<>();
 
     //Test 용도
-    public ConcertTime(long id, ZonedDateTime concertTime){
-        this.id = id;
+    public ConcertTime(ZonedDateTime concertTime, long concertId){
         this.concertTime = concertTime;
+        this.concertId = concertId;
     }
 
 

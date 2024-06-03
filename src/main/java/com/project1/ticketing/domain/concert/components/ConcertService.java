@@ -3,34 +3,29 @@ package com.project1.ticketing.domain.concert.components;
 import com.project1.ticketing.api.dto.response.ConcertResponse;
 import com.project1.ticketing.api.dto.response.ConcertTimeResponse;
 import com.project1.ticketing.api.dto.response.SeatResponse;
+import com.project1.ticketing.domain.concert.models.Concert;
 import com.project1.ticketing.domain.concert.models.ConcertTime;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ConcertService implements IConcertService{
 
-    ConcertCoreRepository concertRepository;
+    private final ConcertCoreRepository concertRepository;
+    private final ConcertValidator concertValidator;
+    private final ConcertFilter concertFilter;
 
 
-
-    @Autowired
-    ConcertValidator concertValidator;
-    @Autowired
-    ConcertFilter concertFilter;
-    @Autowired
-    public ConcertService(ConcertCoreRepository concertRepository, ConcertValidator concertValidator, ConcertFilter concertFilter) {
-        this.concertRepository = concertRepository;
-        this.concertValidator = concertValidator;
-        this.concertFilter = concertFilter;
-    }
 
 
 
@@ -73,6 +68,22 @@ public class ConcertService implements IConcertService{
 
     public Seat findSeatById(long seatId){
         return concertRepository.findSeatById(seatId);
+    }
+
+
+    public Concert registerConcert(String name){
+        return concertRepository.saveConcert(new Concert(name));
+    }
+
+    public ConcertTime registerConcertTime(ZonedDateTime concertTime, long concertId){
+        return concertRepository.saveConcertTime(
+                new ConcertTime(concertTime, concertId)
+        );
+    }
+
+    public Seat registerSeat(long seatNum, long concertTimeId, long price){
+        return concertRepository.saveSeat(
+                new Seat(seatNum, concertTimeId, price));
     }
 
 }
