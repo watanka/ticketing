@@ -1,32 +1,27 @@
 package com.project1.ticketing.domain.reservation.components;
 
+import com.project1.ticketing.api.base.redis.DistributedLock;
 import com.project1.ticketing.api.dto.request.ReservationRequest;
 import com.project1.ticketing.api.dto.response.ReservationResponse;
-import com.project1.ticketing.domain.concert.models.ConcertTime;
+import com.project1.ticketing.domain.concert.components.ConcertService;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
-import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
-import com.project1.ticketing.domain.concert.repository.SeatJpaRepository;
 import com.project1.ticketing.domain.point.components.UserManager;
 import com.project1.ticketing.domain.point.models.User;
-import com.project1.ticketing.domain.reservation.event.ReservationEvent;
 import com.project1.ticketing.domain.reservation.event.ReservationEventPublisher;
 import com.project1.ticketing.domain.reservation.models.Reservation;
 import com.project1.ticketing.domain.reservation.models.ReservationStatus;
 import com.project1.ticketing.domain.reservation.repository.ReservationCoreRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.springframework.transaction.TransactionDefinition.*;
@@ -37,46 +32,48 @@ public class ReservationService implements IReservationService {
 
     ReservationCoreRepository reservationRepository;
     ReservationValidator reservationValidator;
-
-    ConcertCoreRepository concertRepository;
+    ConcertService concertService;
     UserManager userManager;
+
+    RedissonClient redissonClient;
 
     ReservationEventPublisher reservationEventPublisher;
 
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional
+    @DistributedLock(key = "'reserveLock'.concat(':').concat(#request.concertTimeId()).concat('_').concat(#request.seatNum())")
     public ReservationResponse reserve(ReservationRequest request){
 
-        long userId = request.userId();
-        long seatId = request.seatId();
-        long concertTimeId = request.concertTimeId();
+        // Redisson Lock
+        String lockName = "Seat" + request.concertTimeId() + "_" + request.seatNum();
+        RLock rLock = redissonClient.getLock(lockName);
 
-        System.out.println("콘서트 시간 확인");
-        ConcertTime concertTime = concertRepository.findConcertTimeById(concertTimeId);
+        long waitTime = 1L;
+        long leaseTime = 1000L;
+        TimeUnit timeUnit = TimeUnit.SECONDS;
 
-        System.out.println("좌석 상태 검증 시작");
-//        reservationValidator.validateSeat(seatId);
-        System.out.println("좌석 조회");
-        Seat seat = concertRepository.findSeatById(seatId);
+        try{
+            boolean available = rLock.tryLock(waitTime, leaseTime, timeUnit);
+            if (!available){
+                throw new RuntimeException("락 획득 실패.");
+            }
+            Seat seat = concertService.findSeatByConcertTimeIdAndSeatNum(request.concertTimeId(), request.seatNum());
 
-        seat.changeStatus(SeatStatus.RESERVED);
-        concertRepository.saveSeat(seat);
 
-        System.out.println("좌석 상태 변경");
+            reservationValidator.validateSeat(seat);
+            concertService.patchSeatStatus(seat, SeatStatus.RESERVED);
+            Reservation reservation = reservationRepository.save(request.toEntity());
+            return ReservationResponse.from(reservation);
 
-        System.out.println("예약 생성");
-        Reservation reservation = Reservation.builder()
-                .userId(userId)
-                .concertTimeId(concertTime.getId())
-                .seatNum(seat.getSeatNum())
-                .seatId(seatId)
-                .price(seat.getPrice())
-                .expiredAt(ZonedDateTime.now().plusMinutes(5))
-                .build();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (rLock.isLocked() && rLock.isHeldByCurrentThread()){
+                rLock.unlock();
+            }
+        }
 
-        reservationRepository.save(reservation);
 
-        return ReservationResponse.from(reservation);
     }
 
     public void updateReservationStatus(){
@@ -84,15 +81,11 @@ public class ReservationService implements IReservationService {
 
         for (Reservation reservation : reservationList) {
             if (ZonedDateTime.now().isAfter(reservation.getExpiredAt())){
-
                 // 예약 상태 변경
                 updateSingleReservationStatus(reservation, ReservationStatus.CANCELLED);
-
                 // 좌석 상태 변경
-                long seatId = reservation.getSeatId();
-                Seat foundSeat = concertRepository.findSeatById(seatId);
-                foundSeat.changeStatus(SeatStatus.AVAILABLE);
-                concertRepository.saveSeat(foundSeat);
+                Seat foundSeat = concertService.findSeatByConcertTimeIdAndSeatNum(reservation.getConcertTimeId(), reservation.getSeatNum());
+                concertService.patchSeatStatus(foundSeat, SeatStatus.AVAILABLE);
             }
         }
     }
@@ -129,7 +122,7 @@ public class ReservationService implements IReservationService {
     @Override
     public boolean checkSeatReserved(long seatId) {
 
-        Seat seat =  concertRepository.findSeatById(seatId);
+        Seat seat =  concertService.findSeatById(seatId);
         return seat.getStatus().toBoolean();
     }
 
@@ -139,13 +132,12 @@ public class ReservationService implements IReservationService {
         // 예약 확인
         Reservation reservation = reservationRepository.findById(reservationId);
         // 좌석 확인
-        Seat seat = concertRepository.findSeatById(reservation.getSeatId());
+        Seat seat = concertService.findSeatByConcertTimeIdAndSeatNum(reservation.getConcertTimeId(), reservation.getSeatNum());
         // 예약 상태 변경
         reservation.setStatus(ReservationStatus.CANCELLED);
         reservationRepository.save(reservation);
         // 좌석 상태 변경
-        seat.changeStatus(SeatStatus.AVAILABLE);
-        concertRepository.saveSeat(seat);
+        concertService.patchSeatStatus(seat, SeatStatus.AVAILABLE);
 
         return ReservationResponse.from(reservation);
     }

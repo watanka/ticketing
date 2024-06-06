@@ -27,8 +27,8 @@ public class Seat extends BaseEntity {
     @Enumerated(EnumType.STRING)
     SeatStatus status;
 
-    @Version
-    private int version;
+//    @Version
+//    private int version;
 
 
 
@@ -43,7 +43,6 @@ public class Seat extends BaseEntity {
     public static Seat from(SeatResponse seatResponse){
         return Seat.builder()
                 .id(seatResponse.getId())
-//                .concertHallId(seatResponse.getConcertHallId())
                 .price(seatResponse.getPrice())
                 .status(SeatStatus.fromBool(seatResponse.isAvailable()))
                 .build();
@@ -51,6 +50,5 @@ public class Seat extends BaseEntity {
 
     public void changeStatus(SeatStatus status){
         this.status = status;
-        this.version++;
     }
 }

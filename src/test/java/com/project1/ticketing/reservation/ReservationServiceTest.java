@@ -1,6 +1,7 @@
 package com.project1.ticketing.reservation;
 
 import com.project1.ticketing.api.dto.request.ReservationRequest;
+import com.project1.ticketing.domain.concert.components.ConcertService;
 import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.concert.repository.ConcertCoreRepository;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.redisson.api.RedissonClient;
 
 import static org.mockito.Mockito.when;
 
@@ -31,12 +33,15 @@ public class ReservationServiceTest {
     ReservationValidator reservationValidator;
 
     ConcertCoreRepository concertRepository;
+    ConcertService concertService;
     UserManager userManager;
 
     ReservationEventPublisher reservationEventPublisher;
     ReservationService reservationService;
 
     List<Reservation> reservationList;
+    RedissonClient redissonClient;
+
     @BeforeEach
     void setUp(){
         reservationRepository = Mockito.mock(ReservationCoreRepository.class);
@@ -44,11 +49,12 @@ public class ReservationServiceTest {
         concertRepository = Mockito.mock(ConcertCoreRepository.class);
         userManager = Mockito.mock(UserManager.class);
         reservationEventPublisher = Mockito.mock(ReservationEventPublisher.class) ;
-
+        redissonClient = Mockito.mock(RedissonClient.class);
         reservationService = new ReservationService(reservationRepository,
                                                     reservationValidator,
-                                                    concertRepository,
+                                                    concertService,
                                                     userManager,
+                                                    redissonClient,
                                                     reservationEventPublisher
                                                     );
 
