@@ -17,6 +17,7 @@ public interface ConcertCoreRepository {
 
     Seat saveSeat(Seat seat);
 
+    Seat findSeatByConcertTimeIdAndSeatNum(long concertTimeId, long seatNum);
     // read
 
     List<Concert> findAllConcerts();

@@ -12,6 +12,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Builder
 @Getter
+@Table(indexes = {@Index(name = "concert_time_index", columnList = "concert_time_id")})
 public class Seat extends BaseEntity {
 
     @Id
@@ -27,8 +28,8 @@ public class Seat extends BaseEntity {
     @Enumerated(EnumType.STRING)
     SeatStatus status;
 
-    @Version
-    private int version;
+//    @Version
+//    private int version;
 
 
 
@@ -43,7 +44,6 @@ public class Seat extends BaseEntity {
     public static Seat from(SeatResponse seatResponse){
         return Seat.builder()
                 .id(seatResponse.getId())
-//                .concertHallId(seatResponse.getConcertHallId())
                 .price(seatResponse.getPrice())
                 .status(SeatStatus.fromBool(seatResponse.isAvailable()))
                 .build();
@@ -51,6 +51,5 @@ public class Seat extends BaseEntity {
 
     public void changeStatus(SeatStatus status){
         this.status = status;
-        this.version++;
     }
 }

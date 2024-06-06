@@ -23,7 +23,7 @@ public class ConcertTime extends BaseEntity {
     @Column(name="concert_time_id")
     long id;
 
-    private ZonedDateTime time;
+    private ZonedDateTime concertTime;
 
     @Column(name="concert_id")
     private long concertId;
@@ -32,9 +32,9 @@ public class ConcertTime extends BaseEntity {
 //    private List<Seat> seats = new ArrayList<>();
 
     //Test 용도
-    public ConcertTime(long id, ZonedDateTime time){
-        this.id = id;
-        this.time = time;
+    public ConcertTime(ZonedDateTime concertTime, long concertId){
+        this.concertTime = concertTime;
+        this.concertId = concertId;
     }
 
 
@@ -46,7 +46,7 @@ public class ConcertTime extends BaseEntity {
     public static ConcertTime from(ConcertTimeResponse concertTimeResponse){
         return ConcertTime.builder()
                 .id(concertTimeResponse.getId())
-                .time(concertTimeResponse.getTime())
+                .concertTime(concertTimeResponse.getTime())
 //                .concertHallId(concertTimeResponse.getConcertHallId())
 //                .maxSeatNum(concertTimeResponse.getMaxSeatNum())
 //                .currAvailableSeatNum(concertTimeResponse.getCurrAvailableSeatNum())

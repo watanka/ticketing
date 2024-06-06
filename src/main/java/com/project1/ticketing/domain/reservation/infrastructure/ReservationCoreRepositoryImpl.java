@@ -33,10 +33,6 @@ public class ReservationCoreRepositoryImpl implements ReservationCoreRepository 
         return reservationRepository.findAllByUserId(userId);
     }
 
-    @Override
-    public Optional<Reservation> findBySeatId(long seatId) {
-        return reservationRepository.findBySeatId(seatId);
-    }
 
     @Override
     public List<Reservation> findAllByStatus(ReservationStatus status) {

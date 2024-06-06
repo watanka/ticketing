@@ -1,5 +1,6 @@
 package com.project1.ticketing.domain.reservation.components;
 
+import com.project1.ticketing.domain.concert.models.Seat;
 import com.project1.ticketing.domain.concert.models.SeatStatus;
 import com.project1.ticketing.domain.concert.repository.SeatJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,8 @@ public class ReservationValidator {
         this.seatRepository = seatRepository;
     }
 
-    public void validateSeat(long seatId) {
-        if (seatRepository.findByIdAndStatus(seatId, SeatStatus.AVAILABLE).isEmpty()) {
+    public void validateSeat(Seat seat) {
+        if (seat.getStatus() != SeatStatus.AVAILABLE) {
             throw new RuntimeException("해당 좌석은 예약이 불가능합니다.");
         }
     }
