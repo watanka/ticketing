@@ -21,25 +21,19 @@ public class TokenController {
 
     private final TokenService tokenService;
 
-    @Operation(summary = "Queue token")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful response",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = TokenResponse.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid input")
-    })
-    @PostMapping("/queue")
-    public ResponseEntity<TokenResponse> queue(@RequestBody TokenRequest request){
-
-        TokenResponse tokenResponse = tokenService.queue(request.userId());
-        return ResponseEntity.ok().body(tokenResponse);
-
-    }
-
     @Operation(summary = "check token")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TokenResponse.class)))
     @GetMapping("/tokens")
-    public ResponseEntity<TokenResponse> checkWaitNum(@RequestParam(value="userId") long userId){
+    public ResponseEntity<TokenResponse> checkWaitNum(@RequestHeader(value = "Authorization", required = false) String token) {
+
+        // 토큰 유무 체크
+        if (token == null){
+            //토큰이 없을 경우, 발급해준다.
+            tokenService.queue();
+        }else{
+
+        }
+
         TokenResponse tokenResponse = tokenService.checkWaitingNum(userId);
         return ResponseEntity.ok().body(tokenResponse);
     }

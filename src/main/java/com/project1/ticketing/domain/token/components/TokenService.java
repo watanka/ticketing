@@ -5,6 +5,7 @@ import com.project1.ticketing.domain.token.models.Token;
 import com.project1.ticketing.domain.token.models.TokenStatus;
 import com.project1.ticketing.domain.token.repository.ITokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -19,14 +20,14 @@ import static java.util.Collections.min;
 @RequiredArgsConstructor
 public class TokenService {
 
+    private final JwtProvider jwtProvider;
     private final ITokenRepository tokenRepository;
 
 
-    public TokenResponse queue(long userId){
+    public JwtPayload queue(String token){
         // TODO: 검증로직 추가
         // 존재하는 유저인지
         // 이미 토큰을 발급받지는 않았는지?
-        TokenStatus status = TokenStatus.WAIT;;
         long waitingNum = 0;
 
         List<Token> tokenWaiting = tokenRepository.findByStatus(TokenStatus.WAIT);
@@ -38,17 +39,13 @@ public class TokenService {
             waitingNum = tokenWaiting.size() + 1;
         }
 
-        Token newToken = Token.builder()
-                .userId(userId)
-                .isExpired(false)
-                .expiredAt(ZonedDateTime.now())
-                .waitingNum(waitingNum)
-                .status(status)
-                .build();
+        // 새로운 토큰 발급
+        JwtPayload jwtPayload = new JwtPayload();
 
+        // 새로 발급한 토큰 등록
         tokenRepository.save(newToken);
 
-        return TokenResponse.from(newToken);
+        return jwtPayload;
     }
 
 
@@ -80,7 +77,6 @@ public class TokenService {
     }
 
     public long updateWaitingNum(){
-
 
         List<Token> tokensToUpdateWaitingNum = tokenRepository.findByStatus(TokenStatus.WAIT);
         if (tokensToUpdateWaitingNum.size() == 0){
