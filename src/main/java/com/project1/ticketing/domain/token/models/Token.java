@@ -1,7 +1,7 @@
 package com.project1.ticketing.domain.token.models;
 
 
-import com.project1.ticketing.domain.token.components.TokenService;
+//import com.project1.ticketing.domain.token.components.TokenService;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,50 +12,22 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
-@Entity
-@Getter
-@Setter
-@ToString
-public class Token{
+public record Token(
+        Date issuedAt,
+        Map<String, Object> claim
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long tokenId;
-    private long userId;
-    private boolean isExpired;
-    private ZonedDateTime expiredAt;
-    private TokenStatus status;
-    private long waitingNum;
+        // JWT claim에 들어갈 내용
 
-    @Builder
-    public Token(long waitingNum, long userId, boolean isExpired, ZonedDateTime expiredAt, TokenStatus status) {
-        this.waitingNum = waitingNum;
-        this.userId = userId;
-        this.isExpired = isExpired;
-        this.expiredAt = expiredAt;
-        this.status = status;
-    }
+){
 
-    protected Token() {
-    }
-
-    public void expire(){
-        this.status = TokenStatus.DONE;
-        this.isExpired = true;
-    }
-
-    public void queue(){
-        this.status = TokenStatus.WAIT;
-    }
-
-    public void activate(){
-        this.status = TokenStatus.ACTIVE;
-        this.expiredAt = ZonedDateTime.now().plusMinutes(5); // TODO: 상수로 변경
-    }
-
-    public void updateWaitingNum(long waitingNum){
-        this.waitingNum = waitingNum;
+    public Token(Date issuedAt, Map<String, Object> claim) {
+        this.issuedAt = issuedAt;
+        this.claim = claim;
     }
 
 }

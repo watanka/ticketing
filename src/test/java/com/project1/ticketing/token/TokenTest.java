@@ -1,33 +1,33 @@
 package com.project1.ticketing.token;
 
-import com.project1.ticketing.Token;
-import com.project1.ticketing.TokenManager;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import com.project1.ticketing.domain.token.components.JwtProvider;
+import com.project1.ticketing.domain.token.models.Token;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
+import java.util.Date;
 
-import static org.mockito.Mockito.when;
-
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class TokenTest {
-    TokenManager tokenManager;
-
-    @BeforeEach
-    void setup(){
 
 
-    }
-
+    @Autowired
+    private JwtProvider jwtProvider;
 
 
     @Test
-    @DisplayName("활성화 토큰 수 체크")
-    void 활성화된_토큰_갯수를_체크한다(){
+    @DisplayName("Jwt 토큰을 생성한다.")
+    void 토큰_생성_확인(){
+        long userId = 1;
 
-        long numCurrentActivatedToken = 10L;
+        String token = jwtProvider.create(userId, new Date());
+
+        System.out.println(token);
 
 
 

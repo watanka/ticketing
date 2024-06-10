@@ -2,6 +2,8 @@ package com.project1.ticketing;
 
 import com.project1.ticketing.domain.token.models.TokenStatus;
 
+import java.util.Date;
+
 public class Token{
     private String uuid;
     private String tokenId;
@@ -20,6 +22,9 @@ public class Token{
         this.uuid = uuid;
         this.status = status;
         this.waitingNum = waitingNum;
+    }
+
+    public Token(Date date, String s) {
     }
 
     public TokenStatus getStatus(){

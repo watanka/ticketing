@@ -10,7 +10,7 @@ import java.util.List;
 public interface ITokenRepository {
 
     Token save(Token token);
-    Token findByUserId(long userId);
+    Token findByToken(String token);
 
     List<Token> findByStatus(TokenStatus status);
 

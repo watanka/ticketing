@@ -8,14 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
-public interface TokenJpaRepository extends JpaRepository<Token, Long> {
-
-    Token save(Token token);
-    Token findById(long userId);
-
-    List<Token> findAllByStatus(TokenStatus tokenStatus);
-
-//    List<Token> findTopNByOrderByExpiredAtAsc(int n);
-
-}
+//
+//public interface TokenJpaRepository extends JpaRepository<Token, Long> {
+//
+//    Token save(Token token);
+//    Token findById(long userId);
+//
+//    List<Token> findAllByStatus(TokenStatus tokenStatus);
+//
+////    List<Token> findTopNByOrderByExpiredAtAsc(int n);
+//
+//}

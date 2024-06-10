@@ -2,8 +2,17 @@ spring:
   profiles:
     active: local
 ---
+service:
+    jwt:
+      secret-key: my-secret-for-jwt-secret-supposed-tobe-longer
+
+
 
 spring:
+  application:
+    name: ticketing
+  jwt:
+    access-expiration: 300000
   sql:
     init:
       mode: always
