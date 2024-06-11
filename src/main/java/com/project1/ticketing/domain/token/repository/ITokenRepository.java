@@ -11,7 +11,7 @@ public interface ITokenRepository {
 
     String findByToken(String token);
 
-    List<Long> getActivateUserList(long numActivate);
+    List<String> getActivateUserList(long numActivate);
 
     Long getWaitingNum(String token);
 }

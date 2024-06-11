@@ -9,6 +9,9 @@ public class TokenRedisRepository implements ITokenRepository {
 
     // [대기열]: SortedSet
     // [활성화 토큰리스트]: Set
+    private final String waitingQueueName = "waiting_queue";
+
+    private final String activatedQueueName = "activated_queue";
 
     @Override
     public String insert(String token, long userId) {
@@ -26,7 +29,7 @@ public class TokenRedisRepository implements ITokenRepository {
     }
 
     @Override
-    public List<Long> getActivateUserList(long numActivate) {
+    public List<String> getActivateUserList(long numActivate) {
         // ZRANGE 0 numActivate [대기열]
         // ZSET activateList [활성화 토큰리스트]
 

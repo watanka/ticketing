@@ -44,8 +44,8 @@ public class TokenService {
         jwtProvider.verifyToken(tokenFound);
     }
 
-    public List<Long> activateTokens(long numActivation){
-        List<Long> userToActviateList = tokenRepository.getActivateUserList(numActivation);
+    public List<String> activateTokens(long numActivation){
+        List<String> userToActviateList = tokenRepository.getActivateUserList(numActivation);
         // 유저 리스트에게 jwt 토큰 부여
 //        userToActviateList.stream().map(userId -> createToken(userId));
         return null;
