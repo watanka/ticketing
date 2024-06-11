@@ -1,12 +1,8 @@
 package com.project1.ticketing.api.dto.response;
 
 
-import com.project1.ticketing.domain.token.models.Token;
 import com.project1.ticketing.domain.token.models.TokenStatus;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
 
 @Builder

@@ -1,8 +1,9 @@
 package com.project1.ticketing.domain.token.components;
 
-import com.project1.ticketing.domain.token.models.Token;
-import io.jsonwebtoken.impl.DefaultClaims;
+import com.project1.ticketing.api.utils.exceptions.InvalidTokenException;
+import com.project1.ticketing.api.utils.response.BaseResponseStatus;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ClaimsBuilder;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -30,37 +31,33 @@ public class JwtProvider {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
     }
 
-    private Claims generateClaims(long userId){
-        Claims claims = new DefaultClaims() {
-        };
-        claims.put("sub", String.valueOf(userId));
-        claims.put("created", new Date());
-        claims.put("issuedAt", new Date());
-        return claims;
+    public Claims getClaims(String jwtToken){
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(jwtToken)
+                .getPayload();
 
     }
 
-//    private Claims getClaimsFromToken(String token){
-//        return Jwts.parser()
-//                .setSigningKey(secretKey)
-//                .(token)
-//                .getBody();
-//    }
-
     public String create(long userId, Date issuedAt){
-        Claims claims = generateClaims(userId);
         return Jwts.builder()
-                .setClaims(claims)
-                .issuer(issuer)
-                .issuedAt(issuedAt)
-                .expiration(new Date(issuedAt.getTime() + accessExpiration))
+                .claim("userId", String.valueOf(userId))
+                .setIssuer(issuer)
+                .setIssuedAt(issuedAt)
+                .setExpiration(new Date(issuedAt.getTime() + accessExpiration))
                 .signWith(secretKey, Jwts.SIG.HS512)
                 .compact();
     }
 
     public Jws<Claims> verifyToken(String jwtToken){
-        return Jwts.parser().verifyWith(secretKey).build()
-                .parseSignedClaims(jwtToken);
+        try{
+            return Jwts.parser().verifyWith(secretKey).build()
+                    .parseSignedClaims(jwtToken);
+
+        }catch (Exception e){
+            throw new InvalidTokenException(BaseResponseStatus.FAIL);
+        }
     }
 
 }

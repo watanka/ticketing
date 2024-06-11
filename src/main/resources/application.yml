@@ -4,7 +4,7 @@ spring:
 ---
 service:
     jwt:
-      secret-key: my-secret-for-jwt-secret-supposed-tobe-longer
+      secret-key: my-secret-for-jwt-secret-supposed-tobe-longer-longer-very-long-my-secret-for-jwt-secret-supposed-tobe-longer-longer-very-long-my-secret-for-jwt-secret-supposed-tobe-longer-longer-very-long
 
 
 
@@ -13,6 +13,13 @@ spring:
     name: ticketing
   jwt:
     access-expiration: 300000
+  queue:
+    num-activation-per-min: 5000
+  redis:
+    url: "localhost"
+    port: 6379
+    timeout: 2000
+
   sql:
     init:
       mode: always

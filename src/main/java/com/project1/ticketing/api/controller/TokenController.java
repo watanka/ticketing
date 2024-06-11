@@ -21,7 +21,7 @@ public class TokenController {
 
 //    private final TokenService tokenService;
 
-    @Operation(summary = "check token")
+    @Operation(summary = "대기열 조회")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TokenResponse.class)))
     @GetMapping("/tokens")
     public ResponseEntity<TokenResponse> checkWaitNum(@RequestHeader(value = "Authorization", required = false) String token) {

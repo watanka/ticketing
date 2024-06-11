@@ -1,7 +1,5 @@
 package com.project1.ticketing.domain.token.repository;
 
-import com.project1.ticketing.domain.token.models.Token;
-import com.project1.ticketing.domain.token.models.TokenStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,10 +7,11 @@ import java.util.List;
 @Repository
 public interface ITokenRepository {
 
-    Token save(Token token);
-    Token findByToken(String token);
+    String insert(String token, long userId);
 
-    List<Token> findByStatus(TokenStatus status);
+    String findByToken(String token);
 
-//    List<Token> findTokensOrderByExpiredAt(int n);
+    List<Long> getActivateUserList(long numActivate);
+
+    Long getWaitingNum(String token);
 }
