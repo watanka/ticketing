@@ -7,11 +7,20 @@ import java.util.List;
 @Repository
 public interface ITokenRepository {
 
-    String insert(String token, long userId);
+    long insert(String keyName, String token, long currentTimeMillis);
 
-    String findByToken(String token);
+    void remove(String keyName, String token);
 
-    List<String> getActivateUserList(long numActivate);
+    boolean checkTokenInQueue(String keyName, String token);
 
-    Long getWaitingNum(String token);
+
+    long removeTokensInRange(String keyName, long start, long end);
+
+    List<String> getTokenInRange(String keyName, long start, long end);
+
+    long getWaitingNum(String keyName, String token);
+
+    void removeAll();
+
+    long getTotalLength(String keyName);
 }

@@ -1,7 +1,6 @@
 package com.project1.ticketing.token;
 
-import com.project1.ticketing.domain.token.components.JedisService;
-import org.assertj.core.api.Assertions;
+import com.project1.ticketing.domain.token.repository.TokenJedisRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,17 +15,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JedisTest {
 
     @Autowired
-    JedisService jedisService;
+    TokenJedisRepository tokenRepository;
 
     String testingQueue = "testing_queue";
 
     @BeforeEach
     public void setUp(){
-        jedisService.removeAll();
+        tokenRepository.removeAll();
     }
 
     void insertToken(String keyName, String token, long userId, long time){
-        jedisService.insert(keyName, token, userId, time);
+        tokenRepository.insert(keyName, token, time);
     }
 
     @Test
@@ -34,7 +33,7 @@ public class JedisTest {
     void 대기열에_없는_토큰_조회(){
         String token = "token-not-in-queue";
 
-        boolean isRegistered = jedisService.checkTokenInQueue(testingQueue, token);
+        boolean isRegistered = tokenRepository.checkTokenInQueue(testingQueue, token);
 
         assertThat(isRegistered).isFalse();
     }
@@ -52,7 +51,7 @@ public class JedisTest {
         long userId = 1L;
         insertToken(testingQueue, "fake-token", userId, System.currentTimeMillis());
 
-        assertThat(jedisService.checkTokenInQueue(testingQueue, "fake-token")).isTrue();
+        assertThat(tokenRepository.checkTokenInQueue(testingQueue, "fake-token")).isTrue();
 
     }
 
@@ -74,7 +73,7 @@ public class JedisTest {
         insertToken(testingQueue, earlyToken, userId, earlyTime);
 
 
-        assertThat(jedisService.getTokenInRange(testingQueue, 0, -1))
+        assertThat(tokenRepository.getTokenInRange(testingQueue, 0, -1))
                 .isEqualTo(List.of(earlyToken, nowToken, lateToken)); // 시간 순서대로
     }
 
@@ -85,10 +84,10 @@ public class JedisTest {
         String token = "fake-token";
         insertToken(testingQueue, token, userId, System.currentTimeMillis());
 
-        jedisService.remove(testingQueue, token);
+        tokenRepository.remove(testingQueue, token);
 
-        assertThat(jedisService.checkTokenInQueue(testingQueue, token)).isFalse();
-        assertThat(jedisService.getTotalLength(testingQueue)).isZero();
+        assertThat(tokenRepository.checkTokenInQueue(testingQueue, token)).isFalse();
+        assertThat(tokenRepository.getTotalLength(testingQueue)).isZero();
 
 
     }
@@ -106,11 +105,11 @@ public class JedisTest {
         insertToken(testingQueue, "late-token", userId, System.currentTimeMillis() + 100);
 
         //when: 4개의 토큰 대기열에서 제거
-        jedisService.removeTokensInRange(testingQueue, 0, 3);
+        tokenRepository.removeTokensInRange(testingQueue, 0, 3);
 
         //then
-        assertThat(jedisService.getTotalLength(testingQueue)).isOne();
-        assertThat(jedisService.checkTokenInQueue(testingQueue,"late-token")).isTrue();
+        assertThat(tokenRepository.getTotalLength(testingQueue)).isOne();
+        assertThat(tokenRepository.checkTokenInQueue(testingQueue,"late-token")).isTrue();
 
     }
 

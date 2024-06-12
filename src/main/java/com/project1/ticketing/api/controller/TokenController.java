@@ -4,6 +4,7 @@ import com.project1.ticketing.api.dto.request.TokenRequest;
 import com.project1.ticketing.api.dto.response.TokenResponse;
 import com.project1.ticketing.api.usecase.TokenUseCase;
 //import com.project1.ticketing.domain.token.components.TokenService;
+import com.project1.ticketing.domain.token.components.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TokenController {
 
-//    private final TokenService tokenService;
+    private final TokenService tokenService;
 
     @Operation(summary = "대기열 조회")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TokenResponse.class)))
@@ -45,4 +46,12 @@ public class TokenController {
 //        return ResponseEntity.ok().body(tokenResponse);
         return null;
     }
+
+    @PostMapping("/token")
+    public ResponseEntity<TokenResponse> registerToken(long userId){
+        String token = tokenService.register(userId);
+
+        return null;
+    }
+
 }

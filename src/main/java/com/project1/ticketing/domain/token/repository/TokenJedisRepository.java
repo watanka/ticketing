@@ -1,17 +1,17 @@
-package com.project1.ticketing.domain.token.components;
+package com.project1.ticketing.domain.token.repository;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.*;
+import redis.clients.jedis.ConnectionPoolConfig;
+import redis.clients.jedis.JedisPooled;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class JedisService {
+@Repository
+public class TokenJedisRepository implements ITokenRepository {
     private final String url;
     private final int port;
 
@@ -19,9 +19,9 @@ public class JedisService {
 
 
     @Autowired
-    public JedisService(ConnectionPoolConfig jedisPoolConfig,
-                        @Value("${spring.redis.url}") String url,
-                        @Value("${spring.redis.port}") int port) {
+    public TokenJedisRepository(ConnectionPoolConfig jedisPoolConfig,
+                                @Value("${spring.redis.url}") String url,
+                                @Value("${spring.redis.port}") int port) {
 
         this.url = url;
         this.port = port;
@@ -29,37 +29,48 @@ public class JedisService {
 
     }
 
-    public long insert(String keyName, String token, long userId, long currentTimeMillis){
+    @Override
+    public long insert(String keyName, String token, long currentTimeMillis){
         // key : token
         // rank: issuedAt
         // member: userId
-        long queueOrder = jedis.zadd(keyName, currentTimeMillis, token);
+        return jedis.zadd(keyName, currentTimeMillis, token);
 
-        return queueOrder;
     }
 
+    @Override
     public void remove(String keyName, String token){
         jedis.zrem(keyName, token);
     }
 
+    @Override
     public void removeAll(){
         jedis.flushDB();
     }
 
+    @Override
     public boolean checkTokenInQueue(String keyName, String token){
         Optional<Long> rankOfToken = Optional.ofNullable(jedis.zrank(keyName, token));
         return rankOfToken.isPresent();
 
     }
 
+    @Override
     public List<String> getTokenInRange(String keyName, long start, long end){
         return jedis.zrange(keyName, start, end);
     }
 
+    @Override
     public long removeTokensInRange(String keyName, long start, long end){
         return jedis.zremrangeByRank(keyName, start, end);
     }
 
+    @Override
+    public long getWaitingNum(String keyName, String token) {
+        return jedis.zrank(keyName, token);
+    }
+
+    @Override
     public long getTotalLength(String keyName){
         return jedis.zcard(keyName);
     }

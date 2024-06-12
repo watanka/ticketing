@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class TokenTest {
+public class JwtTest {
 
     @Autowired
     private JwtProvider jwtProvider;
